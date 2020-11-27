@@ -1,6 +1,22 @@
 import Phaser from 'phaser'
 
 import { debugDraw } from '../utils/debug'
+import { createCharacterAnims } from '../anims/CharacterAnims'
+import { createLizardAnims } from '../anims/EnemyAnims'
+import Lizard from '../enemies/Lizard'
+
+const CHARACTER_START_COORDS = {x: 128, y: 128}
+const LIZARD_START_COORDS = [
+	{x: 256, y: 256},
+	{x: 800, y: 128},
+	{x: 700, y: 800},
+	{x: 800, y: 800},
+	{x: 700, y: 900},
+	{x: 800, y: 800},
+	{x: 700, y: 1000},
+	{x: 800, y: 1000}
+]
+
 export default class Game extends Phaser.Scene {
 
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -11,51 +27,38 @@ export default class Game extends Phaser.Scene {
 	}
 
 	preload() {
+		// Cursors
 		this.cursors = this.input.keyboard.createCursorKeys()
+		// Anims 
+		createCharacterAnims(this.anims)
+		createLizardAnims(this.anims)
     }
 
 	create() {
+		// Set up map/layers
 		const map = this.make.tilemap({key: 'dungeon'})
 		const tileset = map.addTilesetImage('dungeon', 'tiles')
 		map.createStaticLayer('Ground', tileset)
 		const wallsLayer = map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
-		// debugDraw(wallsLayer, this)
-		this.faune = this.physics.add.sprite(128, 128, 'faune', 'walk-down-1.png')
+		// Add characters
+		this.faune = this.physics.add.sprite(CHARACTER_START_COORDS.x, CHARACTER_START_COORDS.y, 'faune', 'walk-down-1.png')
 		this.faune.body.setSize(this.faune.width*0.5, this.faune.width*0.75)
-		this.anims.create({
-			key: 'faune-idle-up', 
-			frames: [{key: 'faune', frame: 'walk-up-3.png'}]
+		const lizards = this.physics.add.group({
+			classType: Lizard,
+			createCallback:(go)=>{
+				const lizGo = go as Lizard
+				lizGo.body.onCollide = true
+			}
 		})
-		this.anims.create({
-			key: 'faune-idle-down', 
-			frames: [{key: 'faune', frame: 'walk-down-3.png'}]
-		})
-		this.anims.create({
-			key: 'faune-idle-side', 
-			frames: [{key: 'faune', frame: 'walk-side-3.png'}]
-		})
-		this.anims.create({
-			key: 'faune-walk-up',
-			frames: this.anims.generateFrameNames('faune', { start: 1, end: 8, prefix: 'walk-up-', suffix: '.png' }),
-			repeat: -1,
-			frameRate: 15
-		})
-		this.anims.create({
-			key: 'faune-walk-down',
-			frames: this.anims.generateFrameNames('faune', { start: 1, end: 8, prefix: 'walk-down-', suffix: '.png' }),
-			repeat: -1,
-			frameRate: 15
-		})
-		this.anims.create({
-			key: 'faune-walk-side',
-			frames: this.anims.generateFrameNames('faune', { start: 1, end: 8, prefix: 'walk-side-', suffix: '.png' }),
-			repeat: -1,
-			frameRate: 15
-		})
-		this.faune.anims.play('faune-idle-down')
+		LIZARD_START_COORDS.forEach(coord=>lizards.get(coord.x, coord.y, 'lizard'))
+		// Colliders
 		this.physics.add.collider(this.faune, wallsLayer)
+		this.physics.add.collider(lizards, wallsLayer)
+		// Initial state
+		this.faune.anims.play('faune-idle-down')
 		this.cameras.main.startFollow(this.faune, true)
+		// debugDraw(wallsLayer, this)
 	}
 	
 	update(t: number, dt: number) {

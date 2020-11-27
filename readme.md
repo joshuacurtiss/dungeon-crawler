@@ -6,7 +6,8 @@ Zelda-type top-down perspective game.
 
 ## Progress
 
-So far, I've completed parts 1 and 2. We have a map and a character that walks around. 
+So far, I've completed parts 1 to 3. We have a map and a character that can walk around, with enemies that walk around but 
+they neither hurt you nor can you hurt them. 
 
 ## To Build This Game
 
