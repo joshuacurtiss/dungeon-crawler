@@ -32,6 +32,11 @@ const createCharacterAnims = (anims: Phaser.Animations.AnimationManager) => {
         repeat: -1,
         frameRate: 15
     })
+    anims.create({
+        key: 'faune-faint', 
+        frames: anims.generateFrameNames('faune', { start: 1, end: 4, prefix: 'faint-', suffix: '.png' }),
+        frameRate: 8
+    })
 
 }
 

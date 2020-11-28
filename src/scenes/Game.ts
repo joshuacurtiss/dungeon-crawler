@@ -6,6 +6,7 @@ import { createLizardAnims } from '../anims/EnemyAnims'
 import Lizard from '../enemies/Lizard'
 import '../characters/Faune'
 import Faune from '../characters/Faune'
+import { sceneEvents } from '../events/EventCenter'
 
 const CHARACTER_START_COORDS = {x: 128, y: 128}
 const LIZARD_START_COORDS = [
@@ -23,6 +24,7 @@ export default class Game extends Phaser.Scene {
 
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
+	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
 	constructor() {
 		super('game')
@@ -37,6 +39,8 @@ export default class Game extends Phaser.Scene {
     }
 
 	create() {
+		// Set up UI
+		this.scene.run('game-ui')
 		// Set up map/layers
 		const map = this.make.tilemap({key: 'dungeon'})
 		const tileset = map.addTilesetImage('dungeon', 'tiles')
@@ -56,7 +60,7 @@ export default class Game extends Phaser.Scene {
 		// Colliders
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(lizards, wallsLayer)
-		this.physics.add.collider(lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
+		this.playerLizardsCollider = this.physics.add.collider(lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
 		// debugDraw(wallsLayer, this)
@@ -67,6 +71,10 @@ export default class Game extends Phaser.Scene {
 		const lizard = obj2 as Lizard
 		const dir = new Phaser.Math.Vector2(player.x-lizard.x, player.y-lizard.y).normalize().scale(200)
 		this.faune.handleDamage(dir)
+		sceneEvents.emit('player-health-changed', this.faune.health)
+		if( this.faune.health<=0 ) {
+			this.playerLizardsCollider?.destroy()
+		}
 	}
 	
 	update(t: number, dt: number) {
