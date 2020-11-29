@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import Lizard from '../enemies/Lizard'
 
 declare global {
     namespace Phaser.GameObjects {
@@ -15,32 +16,37 @@ enum HealthState {
 }
 
 const DAMAGETIME = 250
-const SPEED = 100
 
 export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     private damageTime = 0
     private healthState = HealthState.IDLE
     private _health = 3.0
+    private speed = 100
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
         this.anims.play('faune-idle-down')
     }
 
-    get health() {
-        return this._health
+    get dead() {
+        return this.healthState===HealthState.DEAD
     }
 
-    handleDamage(dir:Phaser.Math.Vector2) {
+    get health() {
+        return this._health>0 ? this._health : 0
+    }
+
+    handleDamage(lizard:Lizard) {
         if( this.healthState===HealthState.DAMAGE ) return
-        if( this._health <= 0 ) return
+        if( this.dead ) return
+		const dir = new Phaser.Math.Vector2(this.x-lizard.x, this.y-lizard.y).normalize().scale(200)
         this.setVelocity(dir.x, dir.y)
         this.setTint(0xff0000)
         this.healthState = HealthState.DAMAGE
         this.damageTime = 0
-        this._health -= 0.5
-        if( this._health <= 0 ) {
+        this._health -= lizard.damageInflicted
+        if( this.health<=0 ) {
             this.healthState = HealthState.DEAD
             this.play('faune-faint')
             this.setVelocity(0, 0)
@@ -70,20 +76,20 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( this.healthState===HealthState.DEAD ) return
 		if( cursors.left?.isDown ) {
 			this.anims.play('faune-walk-side', true)
-			this.setVelocity(-SPEED, 0)
+			this.setVelocity(-this.speed, 0)
 			this.scaleX = -1
 			this.body.offset.x = 24
 		} else if( cursors.right?.isDown) {
 			this.anims.play('faune-walk-side', true)
-			this.setVelocity(SPEED, 0)
+			this.setVelocity(this.speed, 0)
 			this.scaleX = 1
 			this.body.offset.x = 8
 		} else if( cursors.up?.isDown) {
 			this.anims.play('faune-walk-up', true)
-			this.setVelocity(0, -SPEED)
+			this.setVelocity(0, -this.speed)
 		} else if( cursors.down?.isDown) {
 			this.anims.play('faune-walk-down', true)
-			this.setVelocity(0, SPEED)
+			this.setVelocity(0, this.speed)
 		} else {
 			const dir = this.anims.currentAnim.key.split('-')[2]
 			this.play(`faune-idle-${dir}`)

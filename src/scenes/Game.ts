@@ -69,12 +69,9 @@ export default class Game extends Phaser.Scene {
 	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const player = obj1 as Faune
 		const lizard = obj2 as Lizard
-		const dir = new Phaser.Math.Vector2(player.x-lizard.x, player.y-lizard.y).normalize().scale(200)
-		player.handleDamage(dir)
+		player.handleDamage(lizard)
 		sceneEvents.emit('player-health-changed', player.health)
-		if( player.health<=0 ) {
-			this.playerLizardsCollider?.destroy()
-		}
+		if( player.dead ) this.playerLizardsCollider?.destroy()
 	}
 	
 	update(t: number, dt: number) {

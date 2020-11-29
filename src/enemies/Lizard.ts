@@ -17,6 +17,7 @@ const randomDirection = (exclude?: Direction) => {
 
 export default class Lizard extends Phaser.Physics.Arcade.Sprite {
 
+    public damageInflicted = 0.5
     private direction = randomDirection(Direction.LEFT)
     private speed = 50
     private moveEvent: Phaser.Time.TimerEvent
