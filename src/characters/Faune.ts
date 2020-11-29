@@ -22,6 +22,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     private damageTime = 0
     private healthState = HealthState.IDLE
     private _health = 3.0
+    private knives?:Phaser.Physics.Arcade.Group
     private speed = 100
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
@@ -35,6 +36,10 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     get health() {
         return this._health>0 ? this._health : 0
+    }
+
+    setKnives(knives: Phaser.Physics.Arcade.Group) {
+        this.knives = knives
     }
 
     handleDamage(lizard:Lizard) {
@@ -52,6 +57,29 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             this.setVelocity(0, 0)
             this.setTint(0xffffff)
         }
+    }
+
+    private throwKnife() {
+        if( !this.knives ) return
+        const dir = this.anims.currentAnim.key.split('-')[2]
+        const vec = new Phaser.Math.Vector2(0, 0)
+        switch( dir ) {
+            case 'up':
+                vec.y = -1
+                break
+            case 'down':
+                vec.y = 1
+                break
+            default:
+                vec.x = this.scaleX<0 ? -1 : 1
+                break
+        }
+        const angle = vec.angle()
+        const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
+        knife.setActive(true)
+        knife.setVisible(true)
+        knife.setRotation(angle)
+        knife.setVelocity(vec.x * 300, vec.y * 300)
     }
 
     preUpdate(t:number, dt:number) {
@@ -74,7 +102,11 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( !cursors ) return;
         if( this.healthState===HealthState.DAMAGE ) return
         if( this.healthState===HealthState.DEAD ) return
-		if( cursors.left?.isDown ) {
+        if( Phaser.Input.Keyboard.JustDown(cursors.space!) ) {
+            this.throwKnife()
+            return // Don't walk and throw knives
+        }
+        if( cursors.left?.isDown ) {
 			this.anims.play('faune-walk-side', true)
 			this.setVelocity(-this.speed, 0)
 			this.scaleX = -1
