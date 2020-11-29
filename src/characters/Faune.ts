@@ -1,6 +1,8 @@
 import Phaser from 'phaser'
+import Chest from '../items/Chest'
 import Lizard from '../enemies/Lizard'
 
+import { sceneEvents } from '../events/EventCenter'
 declare global {
     namespace Phaser.GameObjects {
         interface GameObjectFactory {
@@ -19,10 +21,13 @@ const DAMAGETIME = 250
 
 export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
+    private _coins = 0
+    private _health = 3.0
+
+    private activeChest?: Chest
     private damageTime = 0
     private healthState = HealthState.IDLE
-    private _health = 3.0
-    private knives?:Phaser.Physics.Arcade.Group
+    private knives?: Phaser.Physics.Arcade.Group
     private speed = 100
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
@@ -36,6 +41,10 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     get health() {
         return this._health>0 ? this._health : 0
+    }
+
+    setChest(chest: Chest) {
+        this.activeChest = chest 
     }
 
     setKnives(knives: Phaser.Physics.Arcade.Group) {
@@ -103,7 +112,13 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( this.healthState===HealthState.DAMAGE ) return
         if( this.healthState===HealthState.DEAD ) return
         if( Phaser.Input.Keyboard.JustDown(cursors.space!) ) {
-            this.throwKnife()
+            if( this.activeChest ) {
+                const coins = this.activeChest.open()
+                this._coins += coins
+                sceneEvents.emit('player-coins-changed', this._coins)
+            } else {
+                this.throwKnife()
+            }
             return // Don't walk and throw knives
         }
         // Calculate velocity based on cursor
@@ -132,6 +147,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         }
         // Finally, set velocity
         this.setVelocity(velX, velY)
+        // If you're moving, you don't have an active chest
+        if( velX || velY ) this.activeChest = undefined
     }
 
 }
