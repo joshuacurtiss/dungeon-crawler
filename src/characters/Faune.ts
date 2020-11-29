@@ -106,27 +106,32 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             this.throwKnife()
             return // Don't walk and throw knives
         }
-        if( cursors.left?.isDown ) {
-			this.anims.play('faune-walk-side', true)
-			this.setVelocity(-this.speed, 0)
-			this.scaleX = -1
-			this.body.offset.x = 24
-		} else if( cursors.right?.isDown) {
-			this.anims.play('faune-walk-side', true)
-			this.setVelocity(this.speed, 0)
-			this.scaleX = 1
-			this.body.offset.x = 8
-		} else if( cursors.up?.isDown) {
-			this.anims.play('faune-walk-up', true)
-			this.setVelocity(0, -this.speed)
-		} else if( cursors.down?.isDown) {
-			this.anims.play('faune-walk-down', true)
-			this.setVelocity(0, this.speed)
-		} else {
+        // Calculate velocity based on cursor
+        let velX = 0
+        let velY = 0
+        if( cursors.up?.isDown ) velY = -this.speed
+        else if( cursors.down?.isDown ) velY = this.speed
+        if( cursors.left?.isDown ) velX = -this.speed
+        else if( cursors.right?.isDown ) velX = this.speed
+        // Animate accordingly
+        if( velY<0 ) {
+            this.anims.play('faune-walk-up', true)
+        } else if( velY>0 ) {
+            this.anims.play('faune-walk-down', true)
+        } else if( velX<0 ) {
+            this.anims.play('faune-walk-side', true)
+            this.scaleX = -1
+            this.body.offset.x = 24
+        } else if( velX>0 ) {
+            this.anims.play('faune-walk-side', true)
+            this.scaleX = 1
+            this.body.offset.x = 8
+        } else {
 			const dir = this.anims.currentAnim.key.split('-')[2]
-			this.play(`faune-idle-${dir}`)
-			this.setVelocity(0, 0)
-		}
+			this.play(`faune-idle-${dir}`)            
+        }
+        // Finally, set velocity
+        this.setVelocity(velX, velY)
     }
 
 }
