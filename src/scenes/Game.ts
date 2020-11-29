@@ -57,7 +57,8 @@ export default class Game extends Phaser.Scene {
 		})
 		const chestsLayer = map.getObjectLayer('Chests')
 		chestsLayer.objects.forEach(chestObj=>{
-			chests.get(chestObj.x! + 7, chestObj.y! - 7, 'treasure')
+			const chest = chests.get(chestObj.x! + 7, chestObj.y! - 7, 'treasure') as Chest
+			chest.setCoinSprite(this.physics.add.sprite(chest.x, chest.y, 'treasure', 'coin_anim_f0.png'))
 		})
 		// Add characters/entities
 		this.knives = this.physics.add.group({
