@@ -10,18 +10,6 @@ import Faune from '../characters/Faune'
 import { sceneEvents } from '../events/EventCenter'
 import Chest from '../items/Chest'
 
-const CHARACTER_START_COORDS = {x: 128, y: 128}
-const LIZARD_START_COORDS = [
-	{x: 256, y: 200},
-	{x: 800, y: 128},
-	{x: 700, y: 800},
-	{x: 800, y: 800},
-	{x: 700, y: 900},
-	{x: 800, y: 800},
-	{x: 700, y: 1000},
-	{x: 800, y: 1000}
-]
-
 export default class Game extends Phaser.Scene {
 
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -52,28 +40,34 @@ export default class Game extends Phaser.Scene {
 		map.createStaticLayer('Ground', tileset)
 		const wallsLayer = map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
+		// Chests
 		const chests = this.physics.add.staticGroup({
 			classType: Chest
 		})
-		const chestsLayer = map.getObjectLayer('Chests')
-		chestsLayer.objects.forEach(chestObj=>{
+		map.getObjectLayer('Items').objects.filter(obj=>obj.type==='chest').forEach(chestObj=>{
 			const chest = chests.get(chestObj.x! + 7, chestObj.y! - 7, 'treasure') as Chest
 			chest.setCoinSprite(this.physics.add.sprite(chest.x, chest.y, 'treasure', 'coin_anim_f0.png'))
 		})
-		// Add characters/entities
-		this.knives = this.physics.add.group({
-			classType: Phaser.Physics.Arcade.Image
-		})
-		this.faune = this.add.faune(128, 128, 'faune')
-		this.faune.setKnives(this.knives)
+		// Add characters
 		this.lizards = this.physics.add.group({
 			classType: Lizard,
-			createCallback:(go)=>{
+			createCallback:go=>{
 				const lizGo = go as Lizard
 				lizGo.body.onCollide = true
 			}
 		})
-		LIZARD_START_COORDS.forEach(coord=>this.lizards.get(coord.x, coord.y, 'lizard'))
+		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='lizard').forEach(lizObj=>{
+			this.lizards.get(lizObj.x, lizObj.y, 'lizard')
+		})
+		this.knives = this.physics.add.group({
+			classType: Phaser.Physics.Arcade.Image
+		})
+		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
+			if( this.add[playerObj.name] ) {
+				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
+				this[playerObj.name].setKnives(this.knives)
+			}
+		})
 		// Colliders
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
 		this.physics.add.collider(this.faune, wallsLayer)
