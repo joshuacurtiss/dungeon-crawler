@@ -3,7 +3,7 @@ import { sceneEvents } from '../events/EventCenter'
 
 export default class GameUI extends Phaser.Scene {
 
-    private hearts?: Phaser.GameObjects.Group
+    private hearts!: Phaser.GameObjects.Group
 
     constructor() {
         super({key: 'game-ui'})
