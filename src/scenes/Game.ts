@@ -10,7 +10,7 @@ import { sceneEvents } from '../events/EventCenter'
 
 const CHARACTER_START_COORDS = {x: 128, y: 128}
 const LIZARD_START_COORDS = [
-	{x: 256, y: 256},
+	{x: 256, y: 200},
 	{x: 800, y: 128},
 	{x: 700, y: 800},
 	{x: 800, y: 800},
@@ -70,9 +70,9 @@ export default class Game extends Phaser.Scene {
 		const player = obj1 as Faune
 		const lizard = obj2 as Lizard
 		const dir = new Phaser.Math.Vector2(player.x-lizard.x, player.y-lizard.y).normalize().scale(200)
-		this.faune.handleDamage(dir)
-		sceneEvents.emit('player-health-changed', this.faune.health)
-		if( this.faune.health<=0 ) {
+		player.handleDamage(dir)
+		sceneEvents.emit('player-health-changed', player.health)
+		if( player.health<=0 ) {
 			this.playerLizardsCollider?.destroy()
 		}
 	}
