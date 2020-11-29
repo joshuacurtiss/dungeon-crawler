@@ -26,6 +26,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     private activeChest?: Chest
     private damageTime = 0
+    private _dir = new Phaser.Math.Vector2(0, 100)
     private healthState = HealthState.IDLE
     private knives?: Phaser.Physics.Arcade.Group
     private speed = 100
@@ -39,8 +40,28 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         return this.healthState===HealthState.DEAD
     }
 
+    get dir() {
+        return this._dir
+    }
+
     get health() {
         return this._health>0 ? this._health : 0
+    }
+
+    get moving() {
+        return this.body.velocity.x || this.body.velocity.y
+    }
+
+    get dirAnim():string {
+        // If they're moving, show the walking animation
+        if( this.moving ) {
+            if( this.dir.y<0 ) return 'faune-walk-up'
+            if( this.dir.y>0 ) return 'faune-walk-down'
+            if( this.dir.x!==0 ) return 'faune-walk-side'
+        }
+        // Not moving? Show idle animation.
+        const dir = this.anims.currentAnim.key.split('-')[2]
+        return 'faune-idle-' + dir
     }
 
     setChest(chest: Chest) {
@@ -49,6 +70,21 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     setKnives(knives: Phaser.Physics.Arcade.Group) {
         this.knives = knives
+    }
+
+    setDir(x:number, y:number) {
+        // Do not set if not moving
+        if( !x && !y ) return 
+        this._dir.setTo(x, y)
+        if( y!==0 ) {
+            return
+        } else if( x<0 ) {
+            this.scaleX = -1
+            this.body.offset.x = 24
+        } else if( x>0 ) {
+            this.scaleX = 1
+            this.body.offset.x = 8
+        }
     }
 
     handleDamage(lizard:Lizard) {
@@ -70,25 +106,12 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     private throwKnife() {
         if( !this.knives ) return
-        const dir = this.anims.currentAnim.key.split('-')[2]
-        const vec = new Phaser.Math.Vector2(0, 0)
-        switch( dir ) {
-            case 'up':
-                vec.y = -1
-                break
-            case 'down':
-                vec.y = 1
-                break
-            default:
-                vec.x = this.scaleX<0 ? -1 : 1
-                break
-        }
-        const angle = vec.angle()
+        const angle = this.dir.angle()
         const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
         knife.setActive(true)
         knife.setVisible(true)
         knife.setRotation(angle)
-        knife.setVelocity(vec.x * 300, vec.y * 300)
+        knife.setVelocity(this.dir.x * 3, this.dir.y * 3)
     }
 
     preUpdate(t:number, dt:number) {
@@ -122,33 +145,18 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             return // Don't walk and throw knives
         }
         // Calculate velocity based on cursor
-        let velX = 0
-        let velY = 0
-        if( cursors.up?.isDown ) velY = -this.speed
-        else if( cursors.down?.isDown ) velY = this.speed
-        if( cursors.left?.isDown ) velX = -this.speed
-        else if( cursors.right?.isDown ) velX = this.speed
-        // Animate accordingly
-        if( velY<0 ) {
-            this.anims.play('faune-walk-up', true)
-        } else if( velY>0 ) {
-            this.anims.play('faune-walk-down', true)
-        } else if( velX<0 ) {
-            this.anims.play('faune-walk-side', true)
-            this.scaleX = -1
-            this.body.offset.x = 24
-        } else if( velX>0 ) {
-            this.anims.play('faune-walk-side', true)
-            this.scaleX = 1
-            this.body.offset.x = 8
-        } else {
-			const dir = this.anims.currentAnim.key.split('-')[2]
-			this.play(`faune-idle-${dir}`)            
-        }
-        // Finally, set velocity
-        this.setVelocity(velX, velY)
+        let x = 0
+        let y = 0
+        if( cursors.up?.isDown ) y = -this.speed
+        else if( cursors.down?.isDown ) y = this.speed
+        if( cursors.left?.isDown ) x = -this.speed
+        else if( cursors.right?.isDown ) x = this.speed
+        // Animate and set velocity accordingly
+        this.setDir(x, y)
+        this.play(this.dirAnim, true)
+        this.setVelocity(x, y)
         // If you're moving, you don't have an active chest
-        if( velX || velY ) this.activeChest = undefined
+        if( x || y ) this.activeChest = undefined
     }
 
 }
