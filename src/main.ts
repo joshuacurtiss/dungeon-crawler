@@ -5,13 +5,13 @@ import Game from './scenes/Game'
 import GameUI from './scenes/GameUI'
 
 const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
-const DEFAULT_HEIGHT = 500
+const DEFAULT_HEIGHT = 400
 const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT
 
 export default new Phaser.Game({
 	type: Phaser.AUTO,
-	width: 400,
-	height: 250,
+	width: 800,
+	height: 600,
 	physics: {
 		default: 'arcade',
 		arcade: {
