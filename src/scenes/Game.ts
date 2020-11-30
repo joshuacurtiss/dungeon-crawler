@@ -60,7 +60,8 @@ export default class Game extends Phaser.Scene {
 			this.lizards.get(lizObj.x, lizObj.y, 'lizard')
 		})
 		this.knives = this.physics.add.group({
-			classType: Phaser.Physics.Arcade.Image
+			classType: Phaser.Physics.Arcade.Image,
+			maxSize: 3
 		})
 		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
 			if( this.add[playerObj.name] ) {
