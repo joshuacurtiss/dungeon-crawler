@@ -65,7 +65,7 @@ export default class Game extends Phaser.Scene {
 				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
 				const myKnives = this.physics.add.group({
 					classType: Phaser.Physics.Arcade.Image,
-					maxSize: 3
+					maxSize: 2
 				})
 				this[playerObj.name].setKnives(myKnives)
 				knives.push(myKnives)
