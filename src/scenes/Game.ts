@@ -59,14 +59,16 @@ export default class Game extends Phaser.Scene {
 		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='lizard').forEach(lizObj=>{
 			this.lizards.get(lizObj.x, lizObj.y, 'lizard')
 		})
-		this.knives = this.physics.add.group({
-			classType: Phaser.Physics.Arcade.Image,
-			maxSize: 3
-		})
+		const knives:Phaser.Physics.Arcade.Group[] = []
 		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
 			if( this.add[playerObj.name] ) {
 				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
-				this[playerObj.name].setKnives(this.knives)
+				const myKnives = this.physics.add.group({
+					classType: Phaser.Physics.Arcade.Image,
+					maxSize: 3
+				})
+				this[playerObj.name].setKnives(myKnives)
+				knives.push(myKnives)
 			}
 		})
 		// Colliders
@@ -74,8 +76,10 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.lizards, wallsLayer)
 		this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
-		this.physics.add.collider(this.knives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
-		this.physics.add.collider(this.knives, this.lizards, this.handleKnifeLizardCollision, undefined, this)
+		knives.forEach((myKnives:Phaser.Physics.Arcade.Group)=>{
+			this.physics.add.collider(myKnives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
+			this.physics.add.collider(myKnives, this.lizards, this.handleKnifeLizardCollision, undefined, this)
+		})
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
 		// debugDraw(wallsLayer, this)
@@ -88,13 +92,10 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		this.knives.killAndHide(obj1)
 		obj1.destroy()
 	}
 
 	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		this.knives.killAndHide(obj1)
-		this.lizards.killAndHide(obj2)
 		obj1.destroy()
 		obj2.destroy()
 	}
