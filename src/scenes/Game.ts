@@ -98,7 +98,7 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		this.sound.play('monster-death')
+		this.sound.play('monster-' + Phaser.Math.Between(1,5))
 		obj1.destroy()
 		obj2.destroy()
 	}
@@ -107,7 +107,6 @@ export default class Game extends Phaser.Scene {
 		const player = obj1 as Faune
 		const lizard = obj2 as Lizard
 		player.handleDamage(lizard)
-		this.sound.play('monster-'+Phaser.Math.Between(1,5))
 		sceneEvents.emit('player-health-changed', player.health)
 		if( player.dead ) this.playerLizardsCollider?.destroy()
 	}
