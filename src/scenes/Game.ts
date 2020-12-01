@@ -14,7 +14,6 @@ export default class Game extends Phaser.Scene {
 
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
-	private knives!: Phaser.Physics.Arcade.Group
 	private lizards!: Phaser.Physics.Arcade.Group
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
 
