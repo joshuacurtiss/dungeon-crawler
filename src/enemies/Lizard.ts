@@ -21,6 +21,7 @@ export default class Lizard extends Phaser.Physics.Arcade.Sprite {
     }
 
     destroy(fromScene?: boolean) {
+		this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
         this.moveEvent.destroy()
         super.destroy(fromScene)
     }

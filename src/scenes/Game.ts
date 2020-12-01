@@ -10,12 +10,15 @@ import Faune from '../characters/Faune'
 import { sceneEvents } from '../events/EventCenter'
 import Chest from '../items/Chest'
 
+const COMBOS = ['GONE', 'SPAWN', 'HEART']
+
 export default class Game extends Phaser.Scene {
 
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
 	private lizards!: Phaser.Physics.Arcade.Group
 	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
+	private map!: Phaser.Tilemaps.Tilemap
 
 	constructor() {
 		super('game')
@@ -24,6 +27,16 @@ export default class Game extends Phaser.Scene {
 	preload() {
 		// Cursors
 		this.cursors = this.input.keyboard.createCursorKeys()
+		// Key Combos
+		const comboConfig= {
+			maxKeyDelay: 5000,
+			resetOnMatch: true, 
+			resetOnWrongKey: true
+		}
+		COMBOS.forEach(combo=>{
+			this.input.keyboard.createCombo(combo, comboConfig)
+		})
+		this.input.keyboard.on('keycombomatch', this.handleKeyCombo, this)
 		// Anims 
 		createCharacterAnims(this.anims)
 		createLizardAnims(this.anims)
@@ -34,16 +47,16 @@ export default class Game extends Phaser.Scene {
 		// Set up UI
 		this.scene.run('game-ui')
 		// Set up map/layers
-		const map = this.make.tilemap({key: 'dungeon'})
-		const tileset = map.addTilesetImage('dungeon', 'tiles')
-		map.createStaticLayer('Ground', tileset)
-		const wallsLayer = map.createStaticLayer('Walls', tileset)
+		this.map = this.make.tilemap({key: 'dungeon'})
+		const tileset = this.map.addTilesetImage('dungeon', 'tiles')
+		this.map.createStaticLayer('Ground', tileset)
+		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
 		// Chests
 		const chests = this.physics.add.staticGroup({
 			classType: Chest
 		})
-		map.getObjectLayer('Items').objects.filter(obj=>obj.type==='chest').forEach(chestObj=>{
+		this.map.getObjectLayer('Items').objects.filter(obj=>obj.type==='chest').forEach(chestObj=>{
 			const chest = chests.get(chestObj.x! + 7, chestObj.y! - 7, 'treasure') as Chest
 			chest.setCoinSprite(this.physics.add.sprite(chest.x, chest.y, 'treasure', 'coin_anim_f0.png'))
 		})
@@ -55,11 +68,9 @@ export default class Game extends Phaser.Scene {
 				lizGo.body.onCollide = true
 			}
 		})
-		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='lizard').forEach(lizObj=>{
-			this.lizards.get(lizObj.x, lizObj.y, 'lizard')
-		})
+		this.spawnEnemies()
 		const knives:Phaser.Physics.Arcade.Group[] = []
-		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
+		this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
 			if( this.add[playerObj.name] ) {
 				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
 				const myKnives = this.physics.add.group({
@@ -85,6 +96,12 @@ export default class Game extends Phaser.Scene {
 		// debugDraw(wallsLayer, this)
 	}
 
+	private spawnEnemies() {
+		this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='lizard').forEach(lizObj=>{
+			this.lizards.get(lizObj.x, lizObj.y, 'lizard')
+		})
+	}
+
 	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const player = obj1 as Faune
 		const chest = obj2 as Chest
@@ -97,7 +114,6 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		this.sound.play('monster-' + Phaser.Math.Between(1,5))
 		obj1.destroy()
 		obj2.destroy()
 	}
@@ -107,6 +123,31 @@ export default class Game extends Phaser.Scene {
 		const lizard = obj2 as Lizard
 		player.handleDamage(lizard)
 		if( player.dead ) this.playerLizardsCollider?.destroy()
+	}
+
+	private handleKeyCombo(combo:Phaser.Input.Keyboard.KeyCombo) {
+		const code = combo.keyCodes.map(charcode=>String.fromCharCode(charcode)).join('')
+		if (code==='GONE') {
+			// GONE: Kill all lizards
+			console.log(`Lizards be gone! (${this.lizards.children.size})`)
+			this.lizards.children.entries.forEach((lizard, i)=>{
+				setTimeout(()=>{
+					this.sound.play('monster-' + Phaser.Math.Between(1,5))
+					lizard.destroy()
+					
+				}, i * 200)
+			})
+		} else if (code==='SPAWN') {
+			// SPAWN: Respawn enemeies!
+			console.log("More baddies!")
+			this.spawnEnemies()
+		} else if (code==='HEART') {
+			// HEART: Add a heart to health
+			console.log("Be healed!")
+			this.faune.health++
+		} else {
+			console.log('Unknown combo ' + code)
+		}
 	}
 	
 	update(t: number, dt: number) {
