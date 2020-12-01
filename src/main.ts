@@ -19,6 +19,9 @@ export default new Phaser.Game({
 			debug: false
 		}
 	},
+	render: {
+		pixelArt: true
+	},
 	scene: [Preloader, Game, GameUI],
 	scale: {
 		mode: Phaser.Scale.FIT,
