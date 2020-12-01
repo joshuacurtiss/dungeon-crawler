@@ -21,7 +21,6 @@ export default class Chest extends Phaser.Physics.Arcade.Sprite {
     open() {
         if( this.opened ) return 0
         this.play('chest-open')
-        this.scene.sound.play('coin')
         // If coin exists, show it then fade it.
         if( this.coinSprite ) {
             const sprite = this.coinSprite

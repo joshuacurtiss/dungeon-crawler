@@ -106,7 +106,6 @@ export default class Game extends Phaser.Scene {
 		const player = obj1 as Faune
 		const lizard = obj2 as Lizard
 		player.handleDamage(lizard)
-		sceneEvents.emit('player-health-changed', player.health)
 		if( player.dead ) this.playerLizardsCollider?.destroy()
 	}
 	

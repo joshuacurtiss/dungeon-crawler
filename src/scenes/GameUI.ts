@@ -4,6 +4,7 @@ import { sceneEvents } from '../events/EventCenter'
 export default class GameUI extends Phaser.Scene {
 
     private hearts!: Phaser.GameObjects.Group
+    private coinsLabel!: Phaser.GameObjects.Text
 
     constructor() {
         super({key: 'game-ui'})
@@ -12,7 +13,7 @@ export default class GameUI extends Phaser.Scene {
     create() {
         const coinSprite = this.add.sprite(9, 28, 'treasure', 'coin_anim_f0.png')
         coinSprite.play('coin-spin')
-        const coinsLabel = this.add.text(18, 21, '0', {
+        this.coinsLabel = this.add.text(18, 21, '0', {
             fontSize: 13
         })
         this.hearts = this.add.group({
@@ -27,14 +28,17 @@ export default class GameUI extends Phaser.Scene {
             },
             quantity: 3
         })
-        sceneEvents.on('player-coins-changed', (coins: number)=>{
-            coinsLabel.text = coins.toLocaleString()
-        })
+        sceneEvents.on('player-coins-changed', this.handleCoinsChanged, this)
         sceneEvents.on('player-health-changed', this.handlePlayerHealthChanged, this)
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
             sceneEvents.off('play-health-changed', this.handlePlayerHealthChanged, this)
             sceneEvents.off('play-coins-changed')
         })
+    }
+
+    handleCoinsChanged(coins: number) {
+        this.coinsLabel.text = coins.toLocaleString()
+        this.sound.play('coin')
     }
 
     handlePlayerHealthChanged(health: number) {

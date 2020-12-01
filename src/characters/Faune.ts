@@ -30,6 +30,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     private healthState = HealthState.IDLE
     private knives?: Phaser.Physics.Arcade.Group
     private speed = 100
+    private maxHealth = 3
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
@@ -44,8 +45,25 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         return this._dir
     }
 
+    get coins() {
+        return this._coins>0 ? this._coins : 0
+    }
+
+    set coins(newval:number) {
+        if( newval<0 ) newval=0
+        if( this._coins!==newval ) sceneEvents.emit('player-coins-changed', newval)
+        this._coins=newval
+    }
+
     get health() {
         return this._health>0 ? this._health : 0
+    }
+
+    set health(newval:number) {
+        if( newval<0 ) newval=0
+        else if( newval>this.maxHealth ) newval=this.maxHealth
+        if( this._health!==newval ) sceneEvents.emit('player-health-changed', newval)
+        this._health=newval
     }
 
     get moving() {
@@ -95,7 +113,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         this.setTint(0xff0000)
         this.healthState = HealthState.DAMAGE
         this.damageTime = 0
-        this._health -= lizard.damageInflicted
+        this.health -= lizard.damageInflicted
         if( this.health<=0 ) {
             this.healthState = HealthState.DEAD
             this.play('faune-faint')
@@ -142,8 +160,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( Phaser.Input.Keyboard.JustDown(cursors.space!) ) {
             if( this.activeChest ) {
                 const coins = this.activeChest.open()
-                this._coins += coins
-                sceneEvents.emit('player-coins-changed', this._coins)
+                if( coins ) this.coins += coins
             } else {
                 this.throwKnife()
             }
