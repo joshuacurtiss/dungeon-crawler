@@ -1,0 +1,207 @@
+{
+  "frames": {
+    "big_demon_run_anim_f2.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 22,
+        "h": 34
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 2,
+        "w": 22,
+        "h": 34
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "big_demon_idle_anim_f1.png": {
+      "frame": {
+        "x": 22,
+        "y": 0,
+        "w": 23,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 5,
+        "w": 23,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "big_demon_idle_anim_f2.png": {
+      "frame": {
+        "x": 45,
+        "y": 0,
+        "w": 22,
+        "h": 31
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 5,
+        "y": 5,
+        "w": 22,
+        "h": 31
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "big_demon_idle_anim_f0.png": {
+      "frame": {
+        "x": 0,
+        "y": 34,
+        "w": 23,
+        "h": 30
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 5,
+        "y": 6,
+        "w": 23,
+        "h": 30
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "big_demon_run_anim_f1.png": {
+      "frame": {
+        "x": 23,
+        "y": 31,
+        "w": 22,
+        "h": 29
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 3,
+        "w": 22,
+        "h": 29
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "big_demon_idle_anim_f3.png": {
+      "frame": {
+        "x": 45,
+        "y": 31,
+        "w": 26,
+        "h": 28
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 3,
+        "y": 8,
+        "w": 26,
+        "h": 28
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "big_demon_run_anim_f0.png": {
+      "frame": {
+        "x": 67,
+        "y": 0,
+        "w": 22,
+        "h": 28
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 6,
+        "w": 22,
+        "h": 28
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "big_demon_run_anim_f3.png": {
+      "frame": {
+        "x": 71,
+        "y": 28,
+        "w": 23,
+        "h": 28
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 4,
+        "y": 8,
+        "w": 23,
+        "h": 28
+      },
+      "sourceSize": {
+        "w": 32,
+        "h": 36
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.6",
+    "image": "big_demon.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 94,
+      "h": 64
+    },
+    "scale": 1
+  }
+}
