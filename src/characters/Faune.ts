@@ -101,6 +101,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             this.play('faune-faint')
             this.setVelocity(0, 0)
             this.setTint(0xffffff)
+        } else {
+            this.scene.sound.play('ouch-f')
         }
     }
 
@@ -113,6 +115,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             knife.setVisible(true)
             knife.setRotation(angle)
             knife.setVelocity(this.dir.x * 3, this.dir.y * 3)
+            this.scene.sound.play('melee-' + (Phaser.Math.Between(1,2)))
         }
     }
 

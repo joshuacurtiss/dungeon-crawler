@@ -82,6 +82,7 @@ export default class Game extends Phaser.Scene {
 		})
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
+		this.sound.play('music-game')
 		// debugDraw(wallsLayer, this)
 	}
 
@@ -92,10 +93,12 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		this.sound.play('impact')
 		obj1.destroy()
 	}
 
 	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		this.sound.play('monster-death')
 		obj1.destroy()
 		obj2.destroy()
 	}
@@ -104,6 +107,7 @@ export default class Game extends Phaser.Scene {
 		const player = obj1 as Faune
 		const lizard = obj2 as Lizard
 		player.handleDamage(lizard)
+		this.sound.play('monster-'+Phaser.Math.Between(1,5))
 		sceneEvents.emit('player-health-changed', player.health)
 		if( player.dead ) this.playerLizardsCollider?.destroy()
 	}

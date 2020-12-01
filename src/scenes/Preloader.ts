@@ -16,6 +16,21 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('ui-heart-full', 'ui/heart_full.png')
         this.load.image('ui-heart-half', 'ui/heart_half.png')
         this.load.image('knife', 'weapons/knife.png')
+        this.load.audio('coin', 'audio/coin.mp3')
+        this.load.audio('door', 'audio/door.mp3')
+        this.load.audio('impact', 'audio/impact.mp3')
+        this.load.audio('ouch-m', 'audio/ouch-m.mp3')
+        this.load.audio('ouch-f', 'audio/ouch-f.mp3')
+        this.load.audio('melee-1', 'audio/melee-1.wav')
+        this.load.audio('melee-2', 'audio/melee-2.wav')
+        this.load.audio('monster-1', 'audio/monster-1.mp3')
+        this.load.audio('monster-2', 'audio/monster-2.mp3')
+        this.load.audio('monster-3', 'audio/monster-3.mp3')
+        this.load.audio('monster-4', 'audio/monster-4.mp3')
+        this.load.audio('monster-5', 'audio/monster-5.mp3')
+        this.load.audio('monster-death', 'audio/monster-death.mp3')
+        this.load.audio('rise', 'audio/rise-3.mp3')
+        this.load.audio('music-game', 'audio/music-game.mp3')
     }
 
     create() {
