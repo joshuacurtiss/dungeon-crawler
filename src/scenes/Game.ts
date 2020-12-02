@@ -13,7 +13,7 @@ import Faune from '../characters/Faune'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 
-const COMBOS = ['GONE', 'SPAWN', 'HEART']
+const COMBOS = ['GONE', 'LIZ', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
@@ -182,10 +182,14 @@ export default class Game extends Phaser.Scene {
 			console.log('Baddies be gone!')
 			this.allEnemies.forEach((group: Phaser.Physics.Arcade.Group)=>{
 				group.children.entries.forEach((enemy, i)=>{
-					setTimeout(()=>{
-						enemy.destroy()
-					}, i * 200)
+					setTimeout(()=>{enemy.destroy()}, i * 200)
 				})
+			})
+		} else if (code==='LIZ') {
+			// LIZ: Kill all lizards!
+			console.log('Lizards be gone!')
+			if( this.enemies ) this.enemies['lizard'].children.entries.forEach((enemy, i)=>{
+				setTimeout(()=>{enemy.destroy()}, i * 200)
 			})
 		} else if (code==='SPAWN') {
 			// SPAWN: Respawn enemeies!
