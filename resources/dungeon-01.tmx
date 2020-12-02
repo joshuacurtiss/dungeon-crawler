@@ -5355,8 +5355,8 @@
   <object id="1" type="chest" gid="596" x="354.667" y="175.333" width="16" height="16"/>
   <object id="2" type="chest" gid="596" x="644" y="290" width="16" height="16"/>
   <object id="3" type="chest" gid="596" x="557.333" y="1138" width="16" height="16"/>
-  <object id="21" type="spikes" gid="354" x="719.849" y="496.077" width="16" height="16"/>
-  <object id="22" type="spikes" gid="354" x="735.932" y="496" width="16" height="16"/>
+  <object id="21" type="floor_spikes" gid="354" x="719.849" y="496.077" width="16" height="16"/>
+  <object id="22" type="floor_spikes" gid="354" x="735.932" y="496" width="16" height="16"/>
   <object id="24" type="chest" gid="596" x="825" y="1137" width="16" height="16"/>
   <object id="28" type="potion" gid="468" x="689" y="1135" width="16" height="16"/>
   <object id="29" type="potion" gid="468" x="823" y="1007.5" width="16" height="16"/>

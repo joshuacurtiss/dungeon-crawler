@@ -61,8 +61,21 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     }
 
     set health(newval:number) {
+        if( this.dead ) return
+        // Keep in boundaries
         if( newval<0 ) newval=0
         else if( newval>this.maxHealth ) newval=this.maxHealth
+        if( newval<=0 ) {
+            // Death 
+            this.healthState = HealthState.DEAD
+            this.play('faune-faint')
+            this.setVelocity(0, 0)
+            this.setTint(0xffffff)
+        } else if( newval<this._health ) {
+            // Hurt
+            this.scene.sound.play('ouch-f')
+        }
+        // Apply the change, emit the event
         if( this._health!==newval ) sceneEvents.emit('player-health-changed', newval)
         this._health=newval
     }
@@ -121,14 +134,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         this.healthState = HealthState.DAMAGE
         this.damageTime = 0
         this.health -= lizard.damageInflicted
-        if( this.health<=0 ) {
-            this.healthState = HealthState.DEAD
-            this.play('faune-faint')
-            this.setVelocity(0, 0)
-            this.setTint(0xffffff)
-        } else {
-            this.scene.sound.play('ouch-f')
-        }
     }
 
     private throwKnife() {

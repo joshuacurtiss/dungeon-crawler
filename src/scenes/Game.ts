@@ -3,7 +3,7 @@ import Phaser from 'phaser'
 import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createLizardAnims } from '../anims/EnemyAnims'
-import { createTreasureAnims } from '../anims/TreasureAnims'
+import { createItemAnims } from '../anims/ItemAnims'
 import Lizard from '../enemies/Lizard'
 import '../characters/Faune'
 import Faune from '../characters/Faune'
@@ -42,7 +42,7 @@ export default class Game extends Phaser.Scene {
 		// Anims 
 		createCharacterAnims(this.anims)
 		createLizardAnims(this.anims)
-		createTreasureAnims(this.anims)
+		createItemAnims(this.anims)
     }
 
 	create() {
@@ -74,6 +74,16 @@ export default class Game extends Phaser.Scene {
 				const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type) as Flask
 				if( obj.type==='poison' ) flask.power=-1
 			})
+		// Spikes
+		const spikes = this.physics.add.staticGroup({
+			classType: Phaser.Physics.Arcade.Sprite
+		})
+		this.map.getObjectLayer('Items').objects
+			.filter(obj=>obj.type==='floor_spikes')
+			.forEach(obj=>{
+				const spike = spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type)
+				spike.play('spikes-spring')
+			})
 		// Add characters
 		this.lizards = this.physics.add.group({
 			classType: Lizard,
@@ -96,8 +106,9 @@ export default class Game extends Phaser.Scene {
 			}
 		})
 		// Colliders
-		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
-		this.physics.add.collider(this.faune, flasks, this.handlePlayerFlaskCollision, undefined, this)
+		this.physics.add.overlap(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
+		this.physics.add.overlap(this.faune, flasks, this.handlePlayerFlaskCollision, undefined, this)
+		this.physics.add.overlap(this.faune, spikes, this.handlePlayerSpikeOverlap, undefined, this)
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.lizards, wallsLayer)
 		this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
@@ -127,6 +138,12 @@ export default class Game extends Phaser.Scene {
 		const player = obj1 as Faune
 		const flask = obj2 as Flask
 		player.drink(flask)
+	}
+
+	private handlePlayerSpikeOverlap(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const player = obj1 as Faune
+		const spike = obj2 as Phaser.Physics.Arcade.Sprite
+		if( spike.frame.name.indexOf('f0')<0 ) player.health-=10
 	}
 
 	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {

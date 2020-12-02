@@ -272,11 +272,11 @@
                  "id":21,
                  "name":"",
                  "rotation":0,
-                 "type":"spikes",
+                 "type":"floor_spikes",
                  "visible":true,
                  "width":16,
-                 "x":719.848620616086,
-                 "y":496.077068255297
+                 "x":719.849,
+                 "y":496.077
                 }, 
                 {
                  "gid":354,
@@ -284,10 +284,10 @@
                  "id":22,
                  "name":"",
                  "rotation":0,
-                 "type":"spikes",
+                 "type":"floor_spikes",
                  "visible":true,
                  "width":16,
-                 "x":735.931859583477,
+                 "x":735.932,
                  "y":496
                 }, 
                 {
@@ -335,8 +335,8 @@
                  "type":"poison",
                  "visible":true,
                  "width":16,
-                 "x":688.933492632417,
-                 "y":289.049098253399
+                 "x":688.933,
+                 "y":289.049
                 }],
          "opacity":1,
          "type":"objectgroup",
