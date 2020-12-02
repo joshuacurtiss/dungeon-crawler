@@ -170,7 +170,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( this.healthState===HealthState.DAMAGE ) return
         if( this.healthState===HealthState.DEAD ) return
         if( Phaser.Input.Keyboard.JustDown(cursors.space!) ) {
-            if( this.activeChest ) {
+            if( this.activeChest && ! this.activeChest.opened ) {
                 const coins = this.activeChest.open()
                 if( coins ) this.coins += coins
             } else {
