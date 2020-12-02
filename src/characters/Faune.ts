@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
-import Lizard from '../enemies/Lizard'
+import Enemy from '../enemies/Enemy'
 
 import { sceneEvents } from '../events/EventCenter'
 declare global {
@@ -125,15 +125,15 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         this.health+=flask.open()
     }
 
-    handleDamage(lizard:Lizard) {
+    handleDamage(enemy:Enemy) {
         if( this.healthState===HealthState.DAMAGE ) return
         if( this.dead ) return
-		const dir = new Phaser.Math.Vector2(this.x-lizard.x, this.y-lizard.y).normalize().scale(200)
+		const dir = new Phaser.Math.Vector2(this.x-enemy.x, this.y-enemy.y).normalize().scale(200)
         this.setVelocity(dir.x, dir.y)
         this.setTint(0xff0000)
         this.healthState = HealthState.DAMAGE
         this.damageTime = 0
-        this.health -= lizard.damageInflicted
+        this.health -= enemy.damageInflicted
     }
 
     private throwKnife() {

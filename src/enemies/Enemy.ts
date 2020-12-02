@@ -30,7 +30,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         super.destroy(fromScene)
     }
 
-    protected changeDirection() {
+    public changeDirection() {
         this.direction = this.randomDirection()
     }
 

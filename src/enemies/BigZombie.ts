@@ -1,18 +1,18 @@
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class Lizard extends Enemy {
+export default class BigZombie extends Enemy {
 
-    public damageInflicted: number = 0.5
-    public speed: number = Phaser.Math.Between(40, 75)
+    public damageInflicted: number = 2.0
+    public speed: number = Phaser.Math.Between(25, 50)
 
-    protected animIdle: string = 'lizard-idle'
-    protected animRun: string = 'lizard-run'
+    protected animIdle: string = 'big_zombie-idle'
+    protected animRun: string = 'big_zombie-run'
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 5000),
+            delay: Phaser.Math.Between(3500, 8000),
             callback: ()=>this.changeDirection(),
             loop: true
         })

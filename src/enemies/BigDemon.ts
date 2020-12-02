@@ -1,13 +1,13 @@
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class Lizard extends Enemy {
+export default class BigDemon extends Enemy {
 
-    public damageInflicted: number = 0.5
-    public speed: number = Phaser.Math.Between(40, 75)
+    public damageInflicted: number = 1.0
+    public speed: number = Phaser.Math.Between(75, 125)
 
-    protected animIdle: string = 'lizard-idle'
-    protected animRun: string = 'lizard-run'
+    protected animIdle: string = 'big_demon-idle'
+    protected animRun: string = 'big_demon-run'
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)

@@ -11,6 +11,8 @@ export default class Preloader extends Phaser.Scene {
         this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon-01.json')
         this.load.atlas('faune', 'character/faune.png', 'character/faune.json')
         this.load.atlas('lizard', 'enemies/lizard.png', 'enemies/lizard.json')
+        this.load.atlas('big_demon', 'enemies/big_demon.png', 'enemies/big_demon.json')
+        this.load.atlas('big_zombie', 'enemies/big_zombie.png', 'enemies/big_zombie.json')
         this.load.atlas('treasure', 'items/treasure.png', 'items/treasure.json')
         this.load.atlas('floor_spikes', 'items/floor_spikes.png', 'items/floor_spikes.json')
         this.load.image('ui-heart-empty', 'ui/heart_empty.png')

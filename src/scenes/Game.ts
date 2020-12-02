@@ -2,12 +2,14 @@ import Phaser from 'phaser'
 
 import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
-import { createLizardAnims } from '../anims/EnemyAnims'
+import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
+import Enemy from '../enemies/Enemy'
+import BigDemon from '../enemies/BigDemon'
+import BigZombie from '../enemies/BigZombie'
 import Lizard from '../enemies/Lizard'
 import '../characters/Faune'
 import Faune from '../characters/Faune'
-import { sceneEvents } from '../events/EventCenter'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 
@@ -18,12 +20,16 @@ export default class Game extends Phaser.Scene {
 
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
-	private lizards!: Phaser.Physics.Arcade.Group
-	private playerLizardsCollider?: Phaser.Physics.Arcade.Collider
+	private enemies?: Object = {}
+	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
 
 	constructor() {
 		super('game')
+	}
+
+	get allEnemies() {
+		return this.enemies ? Object.keys(this.enemies).map(key=>this.enemies![key]) : []
 	}
 
 	preload() {
@@ -41,7 +47,7 @@ export default class Game extends Phaser.Scene {
 		this.input.keyboard.on('keycombomatch', this.handleKeyCombo, this)
 		// Anims 
 		createCharacterAnims(this.anims)
-		createLizardAnims(this.anims)
+		createEnemyAnims(this.anims)
 		createItemAnims(this.anims)
     }
 
@@ -85,13 +91,16 @@ export default class Game extends Phaser.Scene {
 				spike.play('spikes-spring')
 			})
 		// Add characters
-		this.lizards = this.physics.add.group({
-			classType: Lizard,
-			createCallback:go=>{
-				const lizGo = go as Lizard
-				lizGo.body.onCollide = true
-			}
-		})
+		const enemyCreateCallback = go =>{
+			const enemyGo = go as Enemy
+			enemyGo.body.onCollide = true
+			enemyGo.changeDirection()
+		}
+		this.enemies = {
+			'lizard': this.physics.add.group({classType: Lizard, createCallback: enemyCreateCallback}),
+			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: enemyCreateCallback}),
+			'big_zombie': this.physics.add.group({classType: BigZombie, createCallback: enemyCreateCallback})
+		}
 		this.spawnEnemies()
 		const knives:Phaser.Physics.Arcade.Group[] = []
 		this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
@@ -110,11 +119,11 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.overlap(this.faune, flasks, this.handlePlayerFlaskCollision, undefined, this)
 		this.physics.add.overlap(this.faune, spikes, this.handlePlayerSpikeOverlap, undefined, this)
 		this.physics.add.collider(this.faune, wallsLayer)
-		this.physics.add.collider(this.lizards, wallsLayer)
-		this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
+		this.physics.add.collider(this.allEnemies, wallsLayer)
+		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.faune, this.handlePlayerEnemyCollision, undefined, this)
 		knives.forEach((myKnives:Phaser.Physics.Arcade.Group)=>{
 			this.physics.add.collider(myKnives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
-			this.physics.add.collider(myKnives, this.lizards, this.handleKnifeLizardCollision, undefined, this)
+			this.physics.add.collider(myKnives, this.allEnemies, this.handleKnifeEnemyCollision, undefined, this)
 		})
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
@@ -123,9 +132,11 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private spawnEnemies() {
-		this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='lizard').forEach(lizObj=>{
-			this.lizards.get(lizObj.x, lizObj.y, 'lizard')
-		})
+		this.map.getObjectLayer('Characters').objects
+			.filter(obj=>obj.type==='enemy')
+			.forEach(obj=>{
+				if( this.enemies?.[obj.name] ) this.enemies[obj.name].get(obj.x, obj.y, obj.name)
+			})
 	}
 
 	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
@@ -151,29 +162,29 @@ export default class Game extends Phaser.Scene {
 		obj1.destroy()
 	}
 
-	private handleKnifeLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+	private handleKnifeEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		obj1.destroy()
 		obj2.destroy()
 	}
 
-	private handlePlayerLizardCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const player = obj1 as Faune
-		const lizard = obj2 as Lizard
-		player.handleDamage(lizard)
-		if( player.dead ) this.playerLizardsCollider?.destroy()
+		const enemy = obj2 as Enemy
+		player.handleDamage(enemy)
+		if( player.dead ) this.playerEnemiesCollider?.destroy()
 	}
 
 	private handleKeyCombo(combo:Phaser.Input.Keyboard.KeyCombo) {
 		const code = combo.keyCodes.map(charcode=>String.fromCharCode(charcode)).join('')
 		if (code==='GONE') {
-			// GONE: Kill all lizards
-			console.log(`Lizards be gone! (${this.lizards.children.size})`)
-			this.lizards.children.entries.forEach((lizard, i)=>{
-				setTimeout(()=>{
-					this.sound.play('monster-' + Phaser.Math.Between(1,5))
-					lizard.destroy()
-					
-				}, i * 200)
+			// GONE: Kill all enemies
+			console.log('Baddies be gone!')
+			this.allEnemies.forEach((group: Phaser.Physics.Arcade.Group)=>{
+				group.children.entries.forEach((enemy, i)=>{
+					setTimeout(()=>{
+						enemy.destroy()
+					}, i * 200)
+				})
 			})
 		} else if (code==='SPAWN') {
 			// SPAWN: Respawn enemeies!
