@@ -3,17 +3,15 @@ import Enemy from './Enemy'
 
 export default class BigDemon extends Enemy {
 
-    public damageInflicted: number = 1.0
-    public speed: number = Phaser.Math.Between(75, 125)
-
-    protected animIdle: string = 'big_demon-idle'
-    protected animRun: string = 'big_demon-run'
-
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
+        this.animIdle = 'big_demon-idle'
+        this.animRun = 'big_demon-run'
+        this.damageInflicted = 1.0
         this.health = 2
+        this.speed = Phaser.Math.Between(75, 125)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 5000),
+            delay: Phaser.Math.Between(1500, 4000),
             callback: ()=>this.changeDirection(),
             loop: true
         })
