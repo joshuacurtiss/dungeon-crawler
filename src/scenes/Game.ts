@@ -163,8 +163,9 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleKnifeEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const enemy = obj2 as Enemy
 		obj1.destroy()
-		obj2.destroy()
+		enemy.handleDamage(-1)
 	}
 
 	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {

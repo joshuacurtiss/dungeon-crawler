@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     public damageInflicted: number = 1
+    public health: number = 1
     public speed: number = 50
     protected animIdle?: string
     protected animRun?: string
@@ -13,6 +14,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame)
         this.direction = new Phaser.Math.Vector2(0, 0)
         scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
+    }
+
+    get dead(): boolean {
+        return this.health<=0
     }
 
     get direction(): Phaser.Math.Vector2 {
@@ -36,6 +41,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     protected randomDirection(): Phaser.Math.Vector2 {
         return new Phaser.Math.Vector2(Phaser.Math.Between(-1,1) * this.speed, Phaser.Math.Between(-1,1) * this.speed)
+    }
+
+    public handleDamage(amt: number) {
+        this.health+=amt
+        if( this.dead ) this.destroy()
     }
     
     private handleTileCollision(go: Phaser.GameObjects.GameObject) {

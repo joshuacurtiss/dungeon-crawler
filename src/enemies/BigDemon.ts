@@ -11,11 +11,17 @@ export default class BigDemon extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
+        this.health = 2
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(1500, 5000),
             callback: ()=>this.changeDirection(),
             loop: true
         })
+    }
+
+    public handleDamage(amt: number) {
+        super.handleDamage(amt)
+		if( !this.dead ) this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
     }
 
     destroy(fromScene?: boolean) {
