@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import Chest from '../items/Chest'
+import Flask from '../items/Flask'
 import Lizard from '../enemies/Lizard'
 
 import { sceneEvents } from '../events/EventCenter'
@@ -103,6 +104,12 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             this.scaleX = 1
             this.body.offset.x = 8
         }
+    }
+
+    drink(flask:Flask) {
+        console.log(`Drinking flash with power of ${flask.power}.`)
+        this.scene.sound.play(flask.power>0 ? 'rise' : 'ouch-f')
+        this.health+=flask.open()
     }
 
     handleDamage(lizard:Lizard) {

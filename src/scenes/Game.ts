@@ -9,8 +9,10 @@ import '../characters/Faune'
 import Faune from '../characters/Faune'
 import { sceneEvents } from '../events/EventCenter'
 import Chest from '../items/Chest'
+import Flask from '../items/Flask'
 
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
+const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
 
@@ -56,10 +58,22 @@ export default class Game extends Phaser.Scene {
 		const chests = this.physics.add.staticGroup({
 			classType: Chest
 		})
-		this.map.getObjectLayer('Items').objects.filter(obj=>obj.type==='chest').forEach(chestObj=>{
-			const chest = chests.get(chestObj.x! + 7, chestObj.y! - 7, 'treasure') as Chest
-			chest.setCoinSprite(this.physics.add.sprite(chest.x, chest.y, 'treasure', 'coin_anim_f0.png'))
+		this.map.getObjectLayer('Items').objects
+			.filter(obj=>obj.type==='chest')
+			.forEach(chestObj=>{
+				const chest = chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y, 'treasure') as Chest
+				chest.setCoinSprite(this.physics.add.sprite(chest.x, chest.y, 'treasure', 'coin_anim_f0.png'))
+			})
+		// Flasks
+		const flasks = this.physics.add.staticGroup({
+			classType: Flask
 		})
+		this.map.getObjectLayer('Items').objects
+			.filter(obj=>obj.type==='poison' || obj.type==='potion')
+			.forEach(obj=>{
+				const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type) as Flask
+				if( obj.type==='poison' ) flask.power=-1
+			})
 		// Add characters
 		this.lizards = this.physics.add.group({
 			classType: Lizard,
@@ -83,6 +97,7 @@ export default class Game extends Phaser.Scene {
 		})
 		// Colliders
 		this.physics.add.collider(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
+		this.physics.add.collider(this.faune, flasks, this.handlePlayerFlaskCollision, undefined, this)
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.lizards, wallsLayer)
 		this.playerLizardsCollider = this.physics.add.collider(this.lizards, this.faune, this.handlePlayerLizardCollision, undefined, this)
@@ -106,6 +121,12 @@ export default class Game extends Phaser.Scene {
 		const player = obj1 as Faune
 		const chest = obj2 as Chest
 		player.setChest(chest)
+	}
+
+	private handlePlayerFlaskCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const player = obj1 as Faune
+		const flask = obj2 as Flask
+		player.drink(flask)
 	}
 
 	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
