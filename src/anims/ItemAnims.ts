@@ -23,7 +23,7 @@ const createItemAnims = (anims: Phaser.Animations.AnimationManager) => {
         yoyo: true,
         frameRate: 8,
         repeat: -1,
-        repeatDelay: 2200
+        repeatDelay: 750
     })
 
 }
