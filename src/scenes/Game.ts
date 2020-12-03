@@ -128,7 +128,7 @@ export default class Game extends Phaser.Scene {
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
 		this.sound.play('music-game')
-		// debugDraw(wallsLayer, this)
+		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
 	}
 
 	private spawnEnemies() {

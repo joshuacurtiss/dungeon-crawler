@@ -8,6 +8,8 @@ const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeigh
 const DEFAULT_HEIGHT = 400
 const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT
 
+const debug = location.search.toLowerCase().indexOf('debug')>0
+
 export default new Phaser.Game({
 	type: Phaser.AUTO,
 	width: 800,
@@ -16,7 +18,7 @@ export default new Phaser.Game({
 		default: 'arcade',
 		arcade: {
 			gravity: { y: 0 },
-			debug: false
+			debug
 		}
 	},
 	render: {
