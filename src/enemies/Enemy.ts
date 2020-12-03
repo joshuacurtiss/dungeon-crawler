@@ -58,7 +58,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.setVelocity(this.direction.x, this.direction.y)
         if( this.direction.x<0 ) {
             this.scaleX = -1
-            this.body.offset.x = 16
+            this.body.offset.x = this.body.width
         } else if( this.direction.x>0 ) {
             this.scaleX = 1
             this.body.offset.x = 0
