@@ -82,7 +82,7 @@ export default class Game extends Phaser.Scene {
 			classType: Flask
 		})
 		this.map.getObjectLayer('Items').objects
-			.filter(obj=>obj.type==='poison' || obj.type==='potion')
+			.filter(obj=>obj.type==='poison' || obj.type==='potion' || obj.type.indexOf('flask_')===0)
 			.forEach(obj=>{
 				const type = obj.type==='poison' ? 'flask_big_red' : obj.type==='potion' ? 'flask_big_blue' : obj.type
 				const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, type) as Flask
