@@ -10,11 +10,17 @@ export default class BigDemon extends Enemy {
         this.damageInflicted = 1.0
         this.health = 2
         this.speed = Phaser.Math.Between(75, 125)
+        this.customOffset.set(5, 5)
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(1500, 4000),
             callback: ()=>this.changeDirection(),
             loop: true
         })
+    }
+
+    public setup() {
+        this.setBodySize(21, 28)
+        super.setup()
     }
 
     public handleDamage(amt: number) {

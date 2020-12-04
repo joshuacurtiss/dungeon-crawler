@@ -200,6 +200,7 @@ Phaser.GameObjects.GameObjectFactory.register('faune', function(this: Phaser.Gam
     this.displayList.add(sprite)
     this.updateList.add(sprite)
     this.scene.physics.world.enableBody(sprite, Phaser.Physics.Arcade.DYNAMIC_BODY)
-    sprite.body.setSize(sprite.width*0.5, sprite.width*0.75)
+    sprite.body.setSize(sprite.width*0.5, sprite.height*0.6)
+    sprite.body.offset.set(sprite.width*0.25, sprite.height*0.3)
     return sprite
 })

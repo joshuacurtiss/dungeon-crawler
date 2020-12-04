@@ -5,15 +5,20 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     public damageInflicted: number = 1
     public health: number = 1
     public speed: number = 50
+    public customOffset = new Phaser.Math.Vector2(0, 0)
     protected animIdle?: string
     protected animRun?: string
-    private _direction!: Phaser.Math.Vector2
+    private _direction?: Phaser.Math.Vector2
     protected moveEvent?: Phaser.Time.TimerEvent
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.direction = new Phaser.Math.Vector2(0, 0)
         scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
+    }
+
+    public setup() {
+        this.body.onCollide = true
+        this.changeDirection()
     }
 
     get dead(): boolean {
@@ -21,12 +26,14 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     get direction(): Phaser.Math.Vector2 {
-        return this._direction
+        return this._direction || new Phaser.Math.Vector2(0,0)
     }
 
     set direction(vec: Phaser.Math.Vector2) {
         if( !vec.x && !vec.y && this.animIdle ) this.anims.play(this.animIdle)
         else if( (vec.x || vec.y) && this.animRun ) this.anims.play(this.animRun)
+        this.scaleX = vec.x<0 ? -1 : vec.x>0 ? 1 : this.scaleX
+        this.body.setOffset(this.scaleX<0 ? this.body.width + this.customOffset.x : this.customOffset.x, this.customOffset.y)
         this._direction = vec
     }
 
@@ -56,13 +63,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     preUpdate(t: number, dt: number) {
         super.preUpdate(t, dt)
         this.setVelocity(this.direction.x, this.direction.y)
-        if( this.direction.x<0 ) {
-            this.scaleX = -1
-            this.body.offset.x = this.body.width
-        } else if( this.direction.x>0 ) {
-            this.scaleX = 1
-            this.body.offset.x = 0
-        }
     }
 
 }

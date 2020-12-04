@@ -10,11 +10,17 @@ export default class BigZombie extends Enemy {
         this.damageInflicted = 2.0
         this.health = 3
         this.speed = Phaser.Math.Between(25, 50)
+        this.customOffset.set(6, 12)
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(3500, 8000),
             callback: ()=>this.changeDirection(),
             loop: true
         })
+    }
+
+    public setup() {
+        this.setBodySize(18, 21)
+        super.setup()
     }
 
     public handleDamage(amt: number) {

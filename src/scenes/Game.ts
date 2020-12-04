@@ -91,11 +91,7 @@ export default class Game extends Phaser.Scene {
 				spike.play('spikes-spring')
 			})
 		// Add characters
-		const enemyCreateCallback = go =>{
-			const enemyGo = go as Enemy
-			enemyGo.body.onCollide = true
-			enemyGo.changeDirection()
-		}
+		const enemyCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Enemy).setup()
 		this.enemies = {
 			'lizard': this.physics.add.group({classType: Lizard, createCallback: enemyCreateCallback}),
 			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: enemyCreateCallback}),
