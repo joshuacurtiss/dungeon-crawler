@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="63">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="69">
  <editorsettings>
   <export target="../public/tiles/dungeon-01.json" format="json"/>
  </editorsettings>
@@ -5335,10 +5335,9 @@
 </data>
  </layer>
  <objectgroup id="5" name="Characters">
-  <object id="7" name="lizard" type="enemy" gid="489" x="423.333" y="210" width="16" height="16"/>
-  <object id="16" name="lizard" type="enemy" gid="489" x="33.3083" y="64.2064" width="16" height="16"/>
-  <object id="17" name="faune" type="player" gid="41" x="152.493" y="148.855" width="16" height="16"/>
-  <object id="18" name="robin" type="player" gid="105" x="847.285" y="132.602" width="16" height="16"/>
+  <object id="7" name="lizard_m" type="enemy" gid="489" x="423.333" y="210" width="16" height="16"/>
+  <object id="16" name="lizard_m" type="enemy" gid="489" x="33.3083" y="64.2064" width="16" height="16"/>
+  <object id="17" name="faune" type="player" gid="41" x="150" y="150" width="16" height="16"/>
   <object id="32" name="big_demon" type="enemy" gid="771" x="623.407" y="1122.5" width="16" height="16"/>
   <object id="33" gid="770" x="607.669" y="1122.5" width="16" height="16"/>
   <object id="34" gid="738" x="607.67" y="1107.18" width="16" height="16"/>
@@ -5351,21 +5350,27 @@
   <object id="41" name="big_zombie" type="enemy" gid="547" x="962.721" y="1070.99" width="16" height="16"/>
   <object id="42" gid="578" x="946.721" y="1086.99" width="16" height="16"/>
   <object id="43" gid="579" x="962.721" y="1086.99" width="16" height="16"/>
-  <object id="48" name="lizard" type="enemy" gid="489" x="660.09" y="209.612" width="16" height="16"/>
-  <object id="49" name="lizard" type="enemy" gid="489" x="698.732" y="245.203" width="16" height="16"/>
-  <object id="50" name="lizard" type="enemy" gid="489" x="819.74" y="268.591" width="16" height="16"/>
-  <object id="51" name="lizard" type="enemy" gid="489" x="856.348" y="239.102" width="16" height="16"/>
-  <object id="52" name="lizard" type="enemy" gid="489" x="572.639" y="764.829" width="16" height="16"/>
-  <object id="53" name="lizard" type="enemy" gid="489" x="630.601" y="796.352" width="16" height="16"/>
-  <object id="54" name="lizard" type="enemy" gid="489" x="817.707" y="787.2" width="16" height="16"/>
-  <object id="55" name="lizard" type="enemy" gid="489" x="874.652" y="789.234" width="16" height="16"/>
-  <object id="56" name="lizard" type="enemy" gid="489" x="924.479" y="782.116" width="16" height="16"/>
-  <object id="57" name="lizard" type="enemy" gid="489" x="579.757" y="1053.62" width="16" height="16"/>
-  <object id="58" name="lizard" type="enemy" gid="489" x="616.364" y="1023.12" width="16" height="16"/>
-  <object id="59" name="lizard" type="enemy" gid="489" x="648.905" y="1053.62" width="16" height="16"/>
-  <object id="60" name="lizard" type="enemy" gid="489" x="821.774" y="1078.03" width="16" height="16"/>
-  <object id="61" name="lizard" type="enemy" gid="489" x="850.247" y="1055.66" width="16" height="16"/>
-  <object id="62" name="lizard" type="enemy" gid="489" x="884.821" y="1033.29" width="16" height="16"/>
+  <object id="48" name="chort" type="enemy" gid="489" x="660.09" y="209.612" width="16" height="16"/>
+  <object id="49" name="chort" type="enemy" gid="489" x="698.732" y="245.203" width="16" height="16"/>
+  <object id="50" name="chort" type="enemy" gid="489" x="819.74" y="268.591" width="16" height="16"/>
+  <object id="51" name="chort" type="enemy" gid="489" x="856.348" y="239.102" width="16" height="16"/>
+  <object id="52" name="lizard_f" type="enemy" gid="489" x="572.639" y="764.829" width="16" height="16"/>
+  <object id="53" name="lizard_f" type="enemy" gid="489" x="630.601" y="796.352" width="16" height="16"/>
+  <object id="54" name="lizard_f" type="enemy" gid="489" x="817.707" y="787.2" width="16" height="16"/>
+  <object id="55" name="lizard_f" type="enemy" gid="489" x="874.652" y="789.234" width="16" height="16"/>
+  <object id="56" name="lizard_f" type="enemy" gid="489" x="924.479" y="782.116" width="16" height="16"/>
+  <object id="57" name="imp" type="enemy" gid="489" x="603.145" y="1056.67" width="16" height="16"/>
+  <object id="58" name="imp" type="enemy" gid="489" x="639.752" y="1026.17" width="16" height="16"/>
+  <object id="59" name="imp" type="enemy" gid="489" x="672.293" y="1056.67" width="16" height="16"/>
+  <object id="60" name="masked_orc" type="enemy" gid="489" x="821.774" y="1078.03" width="16" height="16"/>
+  <object id="61" name="masked_orc" type="enemy" gid="489" x="850.247" y="1055.66" width="16" height="16"/>
+  <object id="62" name="masked_orc" type="enemy" gid="489" x="884.821" y="1033.29" width="16" height="16"/>
+  <object id="63" name="knight_m" type="player" gid="169" x="831.943" y="127.992" width="16" height="16"/>
+  <object id="64" name="imp" type="enemy" gid="489" x="639.753" y="1073.96" width="16" height="16"/>
+  <object id="65" name="imp" type="enemy" gid="489" x="549.25" y="1048.54" width="16" height="16"/>
+  <object id="66" name="imp" type="enemy" gid="489" x="544.166" y="1097.35" width="16" height="16"/>
+  <object id="67" name="wizzard_f" type="player" gid="297" x="150" y="200" width="16" height="16"/>
+  <object id="68" name="wizzard_m" type="player" gid="361" x="150" y="100" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="3" name="Items">
   <object id="1" type="chest" gid="596" x="354.667" y="175.333" width="16" height="16"/>

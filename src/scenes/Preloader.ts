@@ -1,5 +1,55 @@
 import Phaser from 'phaser'
 
+const audio = {
+    'coin': 'audio/coin.mp3',
+    'door': 'audio/door.mp3',
+    'impact': 'audio/impact.mp3',
+    'melee-1': 'audio/melee-1.mp3',
+    'melee-2': 'audio/melee-2.mp3',
+    'monster-1': 'audio/monster-1.mp3',
+    'monster-2': 'audio/monster-2.mp3',
+    'monster-3': 'audio/monster-3.mp3',
+    'monster-4': 'audio/monster-4.mp3',
+    'monster-5': 'audio/monster-5.mp3',
+    'music-game': 'audio/music-game.mp3',
+    'ouch-m': 'audio/ouch-m.mp3',
+    'ouch-f': 'audio/ouch-f.mp3',
+    'rise-3': 'audio/rise-3.mp3',
+}
+
+const atlases = {
+    // Characters
+    'faune': 'characters/faune',
+    'knight_m': 'characters/knight_m',
+    'wizzard_f': 'characters/wizzard_f',
+    'wizzard_m': 'characters/wizzard_m',
+    // Enemies
+    'big_demon': 'enemies/big_demon',
+    'big_zombie': 'enemies/big_zombie',
+    'chort': 'enemies/chort',
+    'ice_zombie': 'enemies/ice_zombie',
+    'imp': 'enemies/imp',
+    'lizard_f': 'enemies/lizard_f',
+    'lizard_m': 'enemies/lizard_m',
+    'masked_orc': 'enemies/masked_orc',
+    'necromancer': 'enemies/necromancer',
+    'skelet': 'enemies/skelet',
+    // Items
+    'floor_spikes': 'items/floor_spikes',
+    'treasure': 'items/treasure',
+}
+
+const images = {
+    'flask_big_blue': 'items/flask_big_blue.png',
+    'flask_big_green': 'items/flask_big_green.png',
+    'flask_big_red': 'items/flask_big_red.png',
+    'flask_big_yellow': 'items/flask_big_yellow.png',
+    'knife': 'items/knife.png',
+    'ui-heart-empty': 'ui/heart_empty.png',
+    'ui-heart-full': 'ui/heart_full.png',
+    'ui-heart-half': 'ui/heart_half.png',
+}
+
 export default class Preloader extends Phaser.Scene {
 
     constructor() {
@@ -9,32 +59,18 @@ export default class Preloader extends Phaser.Scene {
     preload() {
         this.load.image('tiles', 'tiles/dungeon_tiles.png')
         this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon-01.json')
-        this.load.atlas('faune', 'character/faune.png', 'character/faune.json')
-        this.load.atlas('lizard', 'enemies/lizard.png', 'enemies/lizard.json')
-        this.load.atlas('big_demon', 'enemies/big_demon.png', 'enemies/big_demon.json')
-        this.load.atlas('big_zombie', 'enemies/big_zombie.png', 'enemies/big_zombie.json')
-        this.load.atlas('treasure', 'items/treasure.png', 'items/treasure.json')
-        this.load.atlas('floor_spikes', 'items/floor_spikes.png', 'items/floor_spikes.json')
-        this.load.image('ui-heart-empty', 'ui/heart_empty.png')
-        this.load.image('ui-heart-full', 'ui/heart_full.png')
-        this.load.image('ui-heart-half', 'ui/heart_half.png')
-        this.load.image('knife', 'weapons/knife.png')
-        this.load.audio('coin', 'audio/coin.mp3')
-        this.load.image('potion', 'items/flask_potion.png')
-        this.load.image('poison', 'items/flask_poison.png')
-        this.load.audio('door', 'audio/door.mp3')
-        this.load.audio('impact', 'audio/impact.mp3')
-        this.load.audio('ouch-m', 'audio/ouch-m.mp3')
-        this.load.audio('ouch-f', 'audio/ouch-f.mp3')
-        this.load.audio('melee-1', 'audio/melee-1.mp3')
-        this.load.audio('melee-2', 'audio/melee-2.mp3')
-        this.load.audio('monster-1', 'audio/monster-1.mp3')
-        this.load.audio('monster-2', 'audio/monster-2.mp3')
-        this.load.audio('monster-3', 'audio/monster-3.mp3')
-        this.load.audio('monster-4', 'audio/monster-4.mp3')
-        this.load.audio('monster-5', 'audio/monster-5.mp3')
-        this.load.audio('rise', 'audio/rise-3.mp3')
-        this.load.audio('music-game', 'audio/music-game.mp3')
+        // Atlases
+        Object.keys(atlases).forEach(key=>{
+            this.load.atlas(key, atlases[key] + '.png', atlases[key] + '.json')
+        })
+        // Image
+        Object.keys(images).forEach(key=>{
+            this.load.image(key, images[key])
+        })
+        // Audio
+        Object.keys(audio).forEach(key=>{
+            this.load.audio(key, audio[key])
+        })
     }
 
     create() {

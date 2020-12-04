@@ -1,12 +1,12 @@
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class Lizard extends Enemy {
+export default class LizardM extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.animIdle = 'lizard-idle'
-        this.animRun = 'lizard-run'
+        this.animIdle = 'lizard_m_idle'
+        this.animRun = 'lizard_m_run'
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(40, 75)
         this.customOffset.set(0, 10)

@@ -1,25 +1,24 @@
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class BigDemon extends Enemy {
+export default class Chort extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.animIdle = 'big_demon_idle'
-        this.animRun = 'big_demon_run'
-        this.damageInflicted = 1.0
-        this.health = 2
-        this.speed = Phaser.Math.Between(75, 125)
-        this.customOffset.set(5, 5)
+        this.animIdle = 'chort_idle'
+        this.animRun = 'chort_run'
+        this.damageInflicted = 0.5
+        this.speed = Phaser.Math.Between(40, 75)
+        this.customOffset.set(2, 8)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 4000),
+            delay: Phaser.Math.Between(1500, 5000),
             callback: ()=>this.changeDirection(),
             loop: true
         })
     }
 
     public setup() {
-        this.setBodySize(21, 28)
+        this.body.setSize(12, 16)
         super.setup()
     }
 

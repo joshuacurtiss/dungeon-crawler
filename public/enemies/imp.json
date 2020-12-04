@@ -1,215 +1,191 @@
 {
   "frames": {
-    "lizard_m_hit_anim_f0.png": {
+    "imp_idle_anim_f0.png": {
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 15,
-        "h": 19
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 6,
-        "w": 15,
-        "h": 19
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 28
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "lizard_m_idle_anim_f0.png": {
-      "frame": {
-        "x": 15,
-        "y": 0,
-        "w": 15,
-        "h": 19
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 9,
-        "w": 15,
-        "h": 19
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 28
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "lizard_m_idle_anim_f1.png": {
-      "frame": {
-        "x": 0,
-        "y": 19,
-        "w": 15,
-        "h": 19
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 9,
-        "w": 15,
-        "h": 19
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 28
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "lizard_m_run_anim_f0.png": {
-      "frame": {
-        "x": 15,
-        "y": 19,
-        "w": 15,
-        "h": 19
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 9,
-        "w": 15,
-        "h": 19
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 28
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "lizard_m_run_anim_f1.png": {
-      "frame": {
-        "x": 30,
-        "y": 0,
-        "w": 15,
-        "h": 19
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 7,
-        "w": 15,
-        "h": 19
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 28
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "lizard_m_run_anim_f2.png": {
-      "frame": {
-        "x": 30,
-        "y": 19,
-        "w": 15,
-        "h": 19
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 8,
-        "w": 15,
-        "h": 19
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 28
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "lizard_m_idle_anim_f3.png": {
-      "frame": {
-        "x": 0,
-        "y": 38,
-        "w": 15,
-        "h": 18
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 1,
-        "y": 10,
-        "w": 15,
-        "h": 18
-      },
-      "sourceSize": {
-        "w": 16,
-        "h": 28
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    "lizard_m_idle_anim_f2.png": {
-      "frame": {
-        "x": 15,
-        "y": 38,
         "w": 16,
         "h": 16
       },
       "rotated": false,
-      "trimmed": true,
+      "trimmed": false,
       "spriteSourceSize": {
         "x": 0,
-        "y": 12,
+        "y": 0,
         "w": 16,
         "h": 16
       },
       "sourceSize": {
         "w": 16,
-        "h": 28
+        "h": 16
       },
       "pivot": {
         "x": 0.5,
         "y": 0.5
       }
     },
-    "lizard_m_run_anim_f3.png": {
+    "imp_idle_anim_f1.png": {
       "frame": {
-        "x": 31,
-        "y": 38,
-        "w": 15,
-        "h": 17
+        "x": 0,
+        "y": 16,
+        "w": 16,
+        "h": 16
       },
       "rotated": false,
-      "trimmed": true,
+      "trimmed": false,
       "spriteSourceSize": {
-        "x": 1,
-        "y": 11,
-        "w": 15,
-        "h": 17
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
       },
       "sourceSize": {
         "w": 16,
-        "h": 28
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "imp_idle_anim_f2.png": {
+      "frame": {
+        "x": 0,
+        "y": 32,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "imp_run_anim_f0.png": {
+      "frame": {
+        "x": 0,
+        "y": 48,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "imp_run_anim_f1.png": {
+      "frame": {
+        "x": 0,
+        "y": 64,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "imp_run_anim_f2.png": {
+      "frame": {
+        "x": 0,
+        "y": 80,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "imp_run_anim_f3.png": {
+      "frame": {
+        "x": 0,
+        "y": 96,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "imp_idle_anim_f3.png": {
+      "frame": {
+        "x": 0,
+        "y": 16,
+        "w": 16,
+        "h": 16
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 16,
+        "h": 16
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 16
       },
       "pivot": {
         "x": 0.5,
@@ -220,11 +196,11 @@
   "meta": {
     "app": "http://free-tex-packer.com",
     "version": "0.6.6",
-    "image": "lizard.png",
+    "image": "imp.png",
     "format": "RGBA8888",
     "size": {
-      "w": 46,
-      "h": 56
+      "w": 16,
+      "h": 112
     },
     "scale": 1
   }

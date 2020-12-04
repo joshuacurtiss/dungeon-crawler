@@ -7,13 +7,20 @@ import { createItemAnims } from '../anims/ItemAnims'
 import Enemy from '../enemies/Enemy'
 import BigDemon from '../enemies/BigDemon'
 import BigZombie from '../enemies/BigZombie'
-import Lizard from '../enemies/Lizard'
+import Chort from '../enemies/Chort'
+import IceZombie from '../enemies/IceZombie'
+import Imp from '../enemies/Imp'
+import LizardF from '../enemies/LizardF'
+import LizardM from '../enemies/LizardM'
+import MaskedOrc from '../enemies/MaskedOrc'
+import Necromancer from '../enemies/Necromancer'
+import Skelet from '../enemies/Skelet'
 import '../characters/Faune'
 import Faune from '../characters/Faune'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 
-const COMBOS = ['GONE', 'LIZ', 'SPAWN', 'HEART']
+const COMBOS = ['GONE', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
@@ -77,8 +84,10 @@ export default class Game extends Phaser.Scene {
 		this.map.getObjectLayer('Items').objects
 			.filter(obj=>obj.type==='poison' || obj.type==='potion')
 			.forEach(obj=>{
-				const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type) as Flask
+				const type = obj.type==='poison' ? 'flask_big_red' : obj.type==='potion' ? 'flask_big_blue' : obj.type
+				const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, type) as Flask
 				if( obj.type==='poison' ) flask.power=-1
+				if( obj.name.length && ! isNaN(Number(obj.name)) ) flask.power=Number(obj.name)
 			})
 		// Spikes
 		const spikes = this.physics.add.staticGroup({
@@ -90,10 +99,17 @@ export default class Game extends Phaser.Scene {
 				const spike = spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type)
 				spike.play('spikes-spring')
 			})
-		// Add characters
+		// Add enemies and characters
 		const enemyCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Enemy).setup()
 		this.enemies = {
-			'lizard': this.physics.add.group({classType: Lizard, createCallback: enemyCreateCallback}),
+			'chort': this.physics.add.group({classType: Chort, createCallback: enemyCreateCallback}),
+			'ice_zombie': this.physics.add.group({classType: IceZombie, createCallback: enemyCreateCallback}),
+			'imp': this.physics.add.group({classType: Imp, createCallback: enemyCreateCallback}),
+			'lizard_m': this.physics.add.group({classType: LizardM, createCallback: enemyCreateCallback}),
+			'lizard_f': this.physics.add.group({classType: LizardF, createCallback: enemyCreateCallback}),
+			'masked_orc': this.physics.add.group({classType: MaskedOrc, createCallback: enemyCreateCallback}),
+			'necromancer': this.physics.add.group({classType: Necromancer, createCallback: enemyCreateCallback}),
+			'skelet': this.physics.add.group({classType: Skelet, createCallback: enemyCreateCallback}),
 			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: enemyCreateCallback}),
 			'big_zombie': this.physics.add.group({classType: BigZombie, createCallback: enemyCreateCallback})
 		}
@@ -180,12 +196,6 @@ export default class Game extends Phaser.Scene {
 				group.children.entries.forEach((enemy, i)=>{
 					setTimeout(()=>{enemy.destroy()}, i * 200)
 				})
-			})
-		} else if (code==='LIZ') {
-			// LIZ: Kill all lizards!
-			console.log('Lizards be gone!')
-			if( this.enemies ) this.enemies['lizard'].children.entries.forEach((enemy, i)=>{
-				setTimeout(()=>{enemy.destroy()}, i * 200)
 			})
 		} else if (code==='SPAWN') {
 			// SPAWN: Respawn enemeies!

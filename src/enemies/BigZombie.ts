@@ -5,8 +5,8 @@ export default class BigZombie extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.animIdle = 'big_zombie-idle'
-        this.animRun = 'big_zombie-run'
+        this.animIdle = 'big_zombie_idle'
+        this.animRun = 'big_zombie_run'
         this.damageInflicted = 2.0
         this.health = 3
         this.speed = Phaser.Math.Between(25, 50)

@@ -121,7 +121,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     drink(flask:Flask) {
         console.log(`Drinking flash with power of ${flask.power}.`)
-        this.scene.sound.play(flask.power>0 ? 'rise' : 'ouch-f')
+        this.scene.sound.play(flask.power>0 ? 'rise-3' : 'ouch-f')
         this.health+=flask.open()
     }
 
