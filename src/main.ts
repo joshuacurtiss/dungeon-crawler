@@ -5,7 +5,7 @@ import Game from './scenes/Game'
 import GameUI from './scenes/GameUI'
 
 const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
-const DEFAULT_HEIGHT = 400
+const DEFAULT_HEIGHT = 300
 const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT
 
 const debug = location.search.toLowerCase().indexOf('debug')>0
