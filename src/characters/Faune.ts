@@ -139,7 +139,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     private throwKnife() {
         if( !this.knives ) return
         const angle = this.dir.angle()
-        const knife = this.knives.get(this.x, this.y, 'knife') as Phaser.Physics.Arcade.Image
+        const knife = this.knives.get(this.x, this.y, 'weapon_knife') as Phaser.Physics.Arcade.Image
         if( knife ) {
             knife.setActive(true)
             knife.setVisible(true)
