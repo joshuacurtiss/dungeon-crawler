@@ -63,7 +63,7 @@ export default class Game extends Phaser.Scene {
 		this.scene.run('game-ui')
 		// Set up map/layers
 		this.map = this.make.tilemap({key: 'dungeon'})
-		const tileset = this.map.addTilesetImage('dungeon', 'tiles')
+		const tileset = this.map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
 		this.map.createStaticLayer('Ground', tileset)
 		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
