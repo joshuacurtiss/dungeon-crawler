@@ -134,7 +134,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.overlap(this.faune, flasks, this.handlePlayerFlaskCollision, undefined, this)
 		this.physics.add.overlap(this.faune, spikes, this.handlePlayerSpikeOverlap, undefined, this)
 		this.physics.add.collider(this.faune, wallsLayer)
-		this.physics.add.collider(this.allEnemies, wallsLayer)
+		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.faune, this.handlePlayerEnemyCollision, undefined, this)
 		knives.forEach((myKnives:Phaser.Physics.Arcade.Group)=>{
 			this.physics.add.collider(myKnives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
@@ -170,6 +170,11 @@ export default class Game extends Phaser.Scene {
 			.forEach(obj=>{
 				if( this.enemies[obj.name] ) this.enemies[obj.name].get(obj.x, obj.y, obj.name)
 			})
+	}
+
+	private handleEnemyWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const enemy = obj1 as Enemy
+		enemy.changeDirection()
 	}
 
 	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
