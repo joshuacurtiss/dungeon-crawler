@@ -9,6 +9,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     protected animIdle?: string
     protected animRun?: string
     private _direction?: Phaser.Math.Vector2
+    private _onCamera: boolean = false
     protected moveEvent?: Phaser.Time.TimerEvent
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
@@ -30,11 +31,31 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     set direction(vec: Phaser.Math.Vector2) {
+        if( ! this.onCamera ) return
         if( !vec.x && !vec.y && this.animIdle ) this.anims.play(this.animIdle)
         else if( (vec.x || vec.y) && this.animRun ) this.anims.play(this.animRun)
         this.scaleX = vec.x<0 ? -1 : vec.x>0 ? 1 : this.scaleX
         this.body.setOffset(this.scaleX<0 ? this.body.width + this.customOffset.x : this.customOffset.x, this.customOffset.y)
         this._direction = vec
+    }
+
+    get onCamera(): boolean {
+        return this._onCamera
+    }
+
+    set onCamera(newval:boolean) {
+        if( this._onCamera===newval ) return
+        this._onCamera = newval
+        // If on camera again, change direction to trigger updates. 
+        // Otherwise, stop animation amd ...
+        // Eliminate velocity..
+        if( newval ) {
+            this.changeDirection()
+        } else {
+            this.anims.stop()
+            this._direction?.setTo(0, 0)
+            this.setVelocity(0, 0)
+        }
     }
 
     destroy(fromScene?: boolean) {

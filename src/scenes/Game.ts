@@ -20,14 +20,17 @@ import Faune from '../characters/Faune'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 
+const CAMCHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
 
+	private lastCamCheck: number = 0
+	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
-	private enemies?: Object = {}
+	private enemies: Object = {}
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
 
@@ -139,15 +142,33 @@ export default class Game extends Phaser.Scene {
 		})
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
+		setTimeout(()=>{ this.checkCamera() }, 0) // After next tick so camera view is defined
 		this.sound.play('music-game')
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
+	}
+
+	private checkCamera(t:number=CAMCHECKINTERVAL+1) {
+		const cam = this.cameras.main.worldView
+		const rect = this.extendedCameraView
+		// Adjust extended view with current camera
+		rect.setPosition(cam.x - cam.width * 0.3, cam.y - cam.height * 0.3)
+		// If the width/height were never set, set them now
+		if( rect.isEmpty() ) rect.setSize(cam.width *= 1.6, cam.height *= 1.6)
+		// Check each enemy if he's in the extended view.
+		Object.keys(this.enemies).forEach(key=>{
+			(this.enemies[key] as Phaser.Physics.Arcade.Group).children.each(go=>{
+				const enemy=go as Enemy
+				enemy.onCamera = rect.contains(enemy.x, enemy.y)
+			})
+		})
+		this.lastCamCheck = t
 	}
 
 	private spawnEnemies() {
 		this.map.getObjectLayer('Characters').objects
 			.filter(obj=>obj.type==='enemy')
 			.forEach(obj=>{
-				if( this.enemies?.[obj.name] ) this.enemies[obj.name].get(obj.x, obj.y, obj.name)
+				if( this.enemies[obj.name] ) this.enemies[obj.name].get(obj.x, obj.y, obj.name)
 			})
 	}
 
@@ -211,6 +232,8 @@ export default class Game extends Phaser.Scene {
 	}
 	
 	update(t: number, dt: number) {
+		super.update(t, dt)
+		if( t > this.lastCamCheck + CAMCHECKINTERVAL ) this.checkCamera(t)
 		if( this.faune ) {
 			this.faune.update(this.cursors)
 		}
