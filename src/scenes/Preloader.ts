@@ -3,6 +3,8 @@ import Phaser from 'phaser'
 const audio = {
     'coin': 'audio/coin.mp3',
     'door': 'audio/door.mp3',
+    'fireball': 'audio/fireball.mp3',
+    'fireball-hit': 'audio/fireball-hit.mp3',
     'impact': 'audio/impact.mp3',
     'melee-1': 'audio/melee-1.mp3',
     'melee-2': 'audio/melee-2.mp3',
