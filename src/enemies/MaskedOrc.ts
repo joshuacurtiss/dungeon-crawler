@@ -8,10 +8,10 @@ export default class MaskedOrc extends Enemy {
         this.animIdle = 'masked_orc_idle'
         this.animRun = 'masked_orc_run'
         this.damageInflicted = 0.5
-        this.speed = Phaser.Math.Between(40, 75)
+        this.speed = Phaser.Math.Between(50, 60)
         this.customOffset.set(3, 4)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 5000),
+            delay: Phaser.Math.Between(2500, 5000),
             callback: ()=>this.changeDirection(),
             loop: true
         })

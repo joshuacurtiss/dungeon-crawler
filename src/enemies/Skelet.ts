@@ -8,10 +8,10 @@ export default class Skelet extends Enemy {
         this.animIdle = 'skelet_idle'
         this.animRun = 'skelet_run'
         this.damageInflicted = 0.5
-        this.speed = Phaser.Math.Between(40, 75)
+        this.speed = Phaser.Math.Between(30, 50)
         this.customOffset.set(3, 2)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 5000),
+            delay: Phaser.Math.Between(1500, 2500),
             callback: ()=>this.changeDirection(),
             loop: true
         })

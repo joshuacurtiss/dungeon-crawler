@@ -8,10 +8,10 @@ export default class Chort extends Enemy {
         this.animIdle = 'chort_idle'
         this.animRun = 'chort_run'
         this.damageInflicted = 0.5
-        this.speed = Phaser.Math.Between(40, 75)
+        this.speed = Phaser.Math.Between(75, 125)
         this.customOffset.set(2, 8)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 5000),
+            delay: Phaser.Math.Between(500, 2500),
             callback: ()=>this.changeDirection(),
             loop: true
         })

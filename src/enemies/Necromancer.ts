@@ -8,10 +8,10 @@ export default class Necromancer extends Enemy {
         this.animIdle = 'necromancer_idle'
         this.animRun = 'necromancer_run'
         this.damageInflicted = 0.5
-        this.speed = Phaser.Math.Between(40, 75)
+        this.speed = Phaser.Math.Between(60, 90)
         this.customOffset.set(3, 4)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 5000),
+            delay: Phaser.Math.Between(3000, 6000),
             callback: ()=>this.changeDirection(),
             loop: true
         })

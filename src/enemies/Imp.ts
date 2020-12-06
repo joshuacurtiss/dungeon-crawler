@@ -8,10 +8,10 @@ export default class Imp extends Enemy {
         this.animIdle = 'imp_idle'
         this.animRun = 'imp_run'
         this.damageInflicted = 0.5
-        this.speed = Phaser.Math.Between(40, 75)
+        this.speed = Phaser.Math.Between(50, 90)
         this.customOffset.set(3, 3)
         this.moveEvent = scene.time.addEvent({
-            delay: Phaser.Math.Between(1500, 5000),
+            delay: Phaser.Math.Between(300, 2000),
             callback: ()=>this.changeDirection(),
             loop: true
         })
