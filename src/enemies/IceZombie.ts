@@ -23,13 +23,8 @@ export default class Chort extends Enemy {
     }
 
     public handleDamage(amt: number) {
+        this.scene.sound.play('monster-ice-' + Phaser.Math.Between(1,3))
         super.handleDamage(amt)
-		if( !this.dead ) this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
-    }
-
-    destroy(fromScene?: boolean) {
-		this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
-        super.destroy(fromScene)
     }
 
 }

@@ -25,11 +25,11 @@ export default class BigDemon extends Enemy {
 
     public handleDamage(amt: number) {
         super.handleDamage(amt)
-		if( !this.dead ) this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
+		if( !this.dead ) this.scene.sound.play('monster-demon-' + Phaser.Math.Between(1,2))
     }
 
     destroy(fromScene?: boolean) {
-		this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
+		this.scene.sound.play('monster-demon-3')
         super.destroy(fromScene)
     }
 

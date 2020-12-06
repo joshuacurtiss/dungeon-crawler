@@ -196,7 +196,7 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		this.sound.play('impact')
+		this.sound.play('melee-hit')
 		obj1.destroy()
 	}
 

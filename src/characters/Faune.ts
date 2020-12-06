@@ -69,11 +69,12 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             // Death 
             this.healthState = HealthState.DEAD
             this.play('faune-faint')
+            this.scene.sound.play('die-f')
             this.setVelocity(0, 0)
             this.setTint(0xffffff)
         } else if( newval<this._health ) {
             // Hurt
-            this.scene.sound.play('ouch-f')
+            this.scene.sound.play('hit-f-' + Phaser.Math.Between(1,3))
         }
         // Apply the change, emit the event
         if( this._health!==newval ) sceneEvents.emit('player-health-changed', newval)
@@ -121,7 +122,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
 
     drink(flask:Flask) {
         console.log(`Drinking flask: ${flask.power>0 ? '+' : ''}${flask.power}`)
-        this.scene.sound.play(flask.power>0 ? 'rise-3' : 'ouch-f')
+        this.scene.sound.play(flask.power>0 ? 'rise-3' : 'hit-f-1')
         this.health+=flask.open()
     }
 
