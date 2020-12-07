@@ -114,7 +114,7 @@ export default class Preloader extends Phaser.Scene {
         percentText.setOrigin(0.5, 0.5)
         loadingText.setOrigin(0.5, 0.5)
         progressBox.fillStyle(0x222222, 0.8)
-        progressBox.fillRect(width/4-10, height/2-30, width/2+20, 50)
+        progressBox.fillRect(width/4-5, height/2-25, width/2+10, 40)
         this.load.on('progress', function (value) {
             percentText.setText(Math.floor(value * 100) + '%');
             progressBar.clear()
