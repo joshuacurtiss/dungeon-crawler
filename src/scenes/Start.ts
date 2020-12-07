@@ -71,9 +71,7 @@ export default class Start extends Phaser.Scene {
                 duration: 800
             })
             this.cameras.main.fadeOut(1000, 0, 0, 0)
-            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, (cam, effect) => {
-                this.scene.start('game')
-            })
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>this.scene.start('game'))
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.up!) ) {
             console.log("Up")
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.down!) ) {

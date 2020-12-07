@@ -20,6 +20,9 @@ import Faune from '../characters/Faune'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 
+type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
+type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
+
 const CAMCHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
@@ -30,7 +33,7 @@ export default class Game extends Phaser.Scene {
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
-	private enemies: Object = {}
+	private enemies!: EnemyList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
 
@@ -175,7 +178,7 @@ export default class Game extends Phaser.Scene {
 			})
 	}
 
-	private handleEnemyWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+	private handleEnemyWallCollision(obj1: Phaser.GameObjects.GameObject) {
 		const enemy = obj1 as Enemy
 		enemy.changeDirection()
 	}
@@ -198,7 +201,7 @@ export default class Game extends Phaser.Scene {
 		if( spike.frame.name.indexOf('f0')<0 ) player.health-=10
 	}
 
-	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject) {
 		this.sound.play('melee-hit')
 		obj1.destroy()
 	}

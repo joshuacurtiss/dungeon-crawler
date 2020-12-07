@@ -2,15 +2,7 @@ import Phaser from 'phaser'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 import Enemy from '../enemies/Enemy'
-
 import { sceneEvents } from '../events/EventCenter'
-declare global {
-    namespace Phaser.GameObjects {
-        interface GameObjectFactory {
-            faune(x: number, y: number, texture: string, frame?: string|number): Faune
-        }
-    }
-}
 
 enum HealthState {
     IDLE,
@@ -170,7 +162,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( !cursors ) return;
         if( this.healthState===HealthState.DAMAGE ) return
         if( this.healthState===HealthState.DEAD ) return
-        if( Phaser.Input.Keyboard.JustDown(cursors.space!) ) {
+        if( cursors.space && Phaser.Input.Keyboard.JustDown(cursors.space) ) {
             if( this.activeChest && ! this.activeChest.opened ) {
                 const coins = this.activeChest.open()
                 if( coins ) this.coins += coins
