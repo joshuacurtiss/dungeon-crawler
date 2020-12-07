@@ -63,9 +63,10 @@ export default class Game extends Phaser.Scene {
 
 	create() {
 		// Set up UI
+		this.cameras.main.fadeIn(1000, 0, 0, 0)
 		this.scene.run('game-ui')
 		// Set up map/layers
-		this.map = this.make.tilemap({key: 'dungeon'})
+		this.map = this.make.tilemap({key: 'dungeon-01'})
 		const tileset = this.map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
 		this.map.createStaticLayer('Ground', tileset)
 		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
@@ -74,7 +75,7 @@ export default class Game extends Phaser.Scene {
 		const chests = this.physics.add.staticGroup({
 			classType: Chest
 		})
-		this.map.getObjectLayer('Items').objects
+		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='chest')
 			.forEach(chestObj=>{
 				const chest = chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y, 'treasure') as Chest
@@ -84,7 +85,7 @@ export default class Game extends Phaser.Scene {
 		const flasks = this.physics.add.staticGroup({
 			classType: Flask
 		})
-		this.map.getObjectLayer('Items').objects
+		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='poison' || obj.type==='potion' || obj.type.indexOf('flask_')===0)
 			.forEach(obj=>{
 				const type = obj.type==='poison' ? 'flask_big_red' : obj.type==='potion' ? 'flask_big_blue' : obj.type
@@ -96,7 +97,7 @@ export default class Game extends Phaser.Scene {
 		const spikes = this.physics.add.staticGroup({
 			classType: Phaser.Physics.Arcade.Sprite
 		})
-		this.map.getObjectLayer('Items').objects
+		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='floor_spikes')
 			.forEach(obj=>{
 				const spike = spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type)
@@ -118,7 +119,7 @@ export default class Game extends Phaser.Scene {
 		}
 		this.spawnEnemies()
 		const knives:Phaser.Physics.Arcade.Group[] = []
-		this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
+		this.map.getObjectLayer('Characters')?.objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
 			if( this.add[playerObj.name] ) {
 				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
 				const myKnives = this.physics.add.group({
@@ -143,7 +144,9 @@ export default class Game extends Phaser.Scene {
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
 		setTimeout(()=>{ this.checkCamera() }, 0) // After next tick so camera view is defined
-		this.sound.play('music-game')
+		this.sound.play('music-game', {
+			loop: true
+		})
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
 	}
 

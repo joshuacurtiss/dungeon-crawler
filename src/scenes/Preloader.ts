@@ -122,7 +122,6 @@ export default class Preloader extends Phaser.Scene {
             progressBar.fillRect(width/4, height/2-20, width/2 * value, 30)
         })
         this.load.on('complete', function () {
-            console.log('complete')
             loadingText.destroy()
             percentText.destroy()
             progressBar.destroy()
@@ -130,7 +129,8 @@ export default class Preloader extends Phaser.Scene {
         })
         // Tiles
         this.load.image('tiles', 'tiles/dungeon_tiles_extruded.png')
-        this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon-01.json')
+        this.load.tilemapTiledJSON('dungeon-01', 'tiles/dungeon-01.json')
+        this.load.tilemapTiledJSON('dungeon-start', 'tiles/start.json')
         // Atlases
         Object.keys(atlases).forEach(key=>{
             this.load.atlas(key, atlases[key] + '.png', atlases[key] + '.json')
@@ -146,7 +146,7 @@ export default class Preloader extends Phaser.Scene {
     }
 
     create() {
-        this.scene.start('game')
+        this.scene.start('start')
     }
     
 }
