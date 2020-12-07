@@ -31,6 +31,7 @@ const audio = {
     'monster-zombie-2': 'audio/monster-zombie-2.mp3',
     'monster-zombie-3': 'audio/monster-zombie-3.mp3',
     'music-game': 'audio/music-game.mp3',
+    'music-menu': 'audio/music-menu.mp3',
     'hit-f-1': 'audio/hit-f-1.mp3',
     'hit-f-2': 'audio/hit-f-2.mp3',
     'hit-f-3': 'audio/hit-f-3.mp3',
@@ -87,6 +88,47 @@ export default class Preloader extends Phaser.Scene {
     }
 
     preload() {
+        // Progress handlers
+        const progressBar = this.add.graphics()
+        const progressBox = this.add.graphics()
+        const width = this.cameras.main.width
+        const height = this.cameras.main.height
+        const loadingText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 50,
+            text: 'Loading...',
+            style: {
+                font: '20px monospace',
+                fill: '#ffffff'
+            }
+        })
+        const percentText = this.make.text({
+            x: width / 2,
+            y: height / 2 - 5,
+            text: '0%',
+            style: {
+                font: '18px monospace',
+                fill: '#ffffff'
+            }
+        })
+        percentText.setOrigin(0.5, 0.5)
+        loadingText.setOrigin(0.5, 0.5)
+        progressBox.fillStyle(0x222222, 0.8)
+        progressBox.fillRect(width/4-10, height/2-30, width/2+20, 50)
+        this.load.on('progress', function (value) {
+            percentText.setText(Math.floor(value * 100) + '%');
+            progressBar.clear()
+            progressBar.fillStyle(0xffffff, 1)
+            progressBar.fillRect(width/4, height/2-20, width/2 * value, 30)
+        })
+        this.load.on('complete', function () {
+            console.log('complete')
+            loadingText.destroy()
+            percentText.destroy()
+            progressBar.destroy()
+            progressBox.destroy()
+        })
+        // Tiles
         this.load.image('tiles', 'tiles/dungeon_tiles_extruded.png')
         this.load.tilemapTiledJSON('dungeon', 'tiles/dungeon-01.json')
         // Atlases
