@@ -13,6 +13,7 @@ import Imp from '../enemies/Imp'
 import LizardF from '../enemies/LizardF'
 import LizardM from '../enemies/LizardM'
 import MaskedOrc from '../enemies/MaskedOrc'
+import Mushroom from '../enemies/Mushroom'
 import Necromancer from '../enemies/Necromancer'
 import Skelet from '../enemies/Skelet'
 import '../characters/Faune'
@@ -20,7 +21,7 @@ import Faune from '../characters/Faune'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 
-type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
+type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
 
 const CAMCHECKINTERVAL = 1000
@@ -115,6 +116,7 @@ export default class Game extends Phaser.Scene {
 			'lizard_m': this.physics.add.group({classType: LizardM, createCallback: enemyCreateCallback}),
 			'lizard_f': this.physics.add.group({classType: LizardF, createCallback: enemyCreateCallback}),
 			'masked_orc': this.physics.add.group({classType: MaskedOrc, createCallback: enemyCreateCallback}),
+			'mushroom': this.physics.add.group({classType: Mushroom, createCallback: enemyCreateCallback}),
 			'necromancer': this.physics.add.group({classType: Necromancer, createCallback: enemyCreateCallback}),
 			'skelet': this.physics.add.group({classType: Skelet, createCallback: enemyCreateCallback}),
 			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: enemyCreateCallback}),

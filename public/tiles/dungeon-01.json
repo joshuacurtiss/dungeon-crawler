@@ -43,7 +43,7 @@
                  "gid":489,
                  "height":16,
                  "id":7,
-                 "name":"lizard_m",
+                 "name":"mushroom",
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,
@@ -60,8 +60,8 @@
                  "type":"enemy",
                  "visible":true,
                  "width":16,
-                 "x":33.3083,
-                 "y":64.2064
+                 "x":37.3758208460443,
+                 "y":95.7296865568436
                 }, 
                 {
                  "gid":41,
@@ -403,7 +403,7 @@
                  "gid":169,
                  "height":16,
                  "id":63,
-                 "name":"knight_m",
+                 "name":"fighter",
                  "rotation":0,
                  "type":"player",
                  "visible":true,
@@ -448,28 +448,28 @@
                  "y":1097.35
                 }, 
                 {
-                 "gid":297,
-                 "height":16,
-                 "id":67,
-                 "name":"wizzard_f",
-                 "rotation":0,
-                 "type":"player",
-                 "visible":true,
-                 "width":16,
-                 "x":150,
-                 "y":200
-                }, 
-                {
                  "gid":361,
                  "height":16,
                  "id":68,
-                 "name":"wizzard_m",
+                 "name":"mage",
                  "rotation":0,
                  "type":"player",
                  "visible":true,
                  "width":16,
                  "x":150,
                  "y":100
+                }, 
+                {
+                 "gid":105,
+                 "height":16,
+                 "id":70,
+                 "name":"ranger",
+                 "rotation":0,
+                 "type":"player",
+                 "visible":true,
+                 "width":16,
+                 "x":150,
+                 "y":200
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -588,7 +588,19 @@
                  "visible":true,
                  "width":16,
                  "x":688.933,
-                 "y":289.049
+                 "y":290
+                }, 
+                {
+                 "gid":468,
+                 "height":16,
+                 "id":71,
+                 "name":"1",
+                 "rotation":0,
+                 "type":"flask_big_blue",
+                 "visible":true,
+                 "width":16,
+                 "x":769.014643075046,
+                 "y":290
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -597,7 +609,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":70,
+ "nextobjectid":72,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",

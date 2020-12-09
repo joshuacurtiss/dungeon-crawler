@@ -29,6 +29,16 @@ const createEnemyAnims = (anims: Phaser.Animations.AnimationManager) => {
             frameRate: 8
         })
     })
+    // Mushroom is different
+    for (const dir of ['up','down','side']) {
+        anims.create({
+            key: 'mushroom_run-' + dir,
+            frames: anims.generateFrameNames('mushroom', {start: 1, end: 3, prefix: dir + '-', suffix: '.png'}),
+            repeat: -1,
+            yoyo: true,
+            frameRate: 8,
+        })
+    }
 
 }
 

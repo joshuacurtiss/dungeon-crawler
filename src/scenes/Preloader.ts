@@ -56,6 +56,7 @@ const atlases = {
     'lizard_f': 'enemies/lizard_f',
     'lizard_m': 'enemies/lizard_m',
     'masked_orc': 'enemies/masked_orc',
+    'mushroom': 'enemies/mushroom',
     'necromancer': 'enemies/necromancer',
     'skelet': 'enemies/skelet',
     // Items
