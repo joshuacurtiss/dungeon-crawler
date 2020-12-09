@@ -20,6 +20,8 @@ import '../characters/Faune'
 import Faune from '../characters/Faune'
 import Chest from '../items/Chest'
 import Flask from '../items/Flask'
+import Item from '../items/Item'
+import Spikes from '../items/Spikes'
 
 type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
@@ -76,19 +78,14 @@ export default class Game extends Phaser.Scene {
 		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
 		// Chests
-		const chests = this.physics.add.staticGroup({
-			classType: Chest
-		})
+		const chests = this.physics.add.staticGroup({ classType: Chest })
 		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='chest')
 			.forEach(chestObj=>{
-				const chest = chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y, 'treasure') as Chest
-				chest.setCoinSprite(this.physics.add.sprite(chest.x, chest.y, 'treasure', 'coin_anim_f0.png'))
+				chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y, 'treasure')
 			})
 		// Flasks
-		const flasks = this.physics.add.staticGroup({
-			classType: Flask
-		})
+		const flasks = this.physics.add.staticGroup({ classType: Flask })
 		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='poison' || obj.type==='potion' || obj.type.indexOf('flask_')===0)
 			.forEach(obj=>{
@@ -98,14 +95,11 @@ export default class Game extends Phaser.Scene {
 				if( obj.name.length && ! isNaN(Number(obj.name)) ) flask.power=Number(obj.name)
 			})
 		// Spikes
-		const spikes = this.physics.add.staticGroup({
-			classType: Phaser.Physics.Arcade.Sprite
-		})
+		const spikes = this.physics.add.staticGroup({ classType: Spikes })
 		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='floor_spikes')
 			.forEach(obj=>{
-				const spike = spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type)
-				spike.play('spikes-spring')
+				spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type)
 			})
 		// Add enemies and characters
 		const enemyCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Enemy).setup()
@@ -136,9 +130,8 @@ export default class Game extends Phaser.Scene {
 			}
 		})
 		// Colliders
-		this.physics.add.overlap(this.faune, chests, this.handlePlayerChestCollision, undefined, this)
-		this.physics.add.overlap(this.faune, flasks, this.handlePlayerFlaskCollision, undefined, this)
-		this.physics.add.overlap(this.faune, spikes, this.handlePlayerSpikeOverlap, undefined, this)
+		this.physics.add.overlap(this.faune, chests, this.handlePlayerTouchItem, undefined, this)
+		this.physics.add.overlap(this.faune, [flasks, spikes], this.handlePlayerOverItem, undefined, this)
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.faune, this.handlePlayerEnemyCollision, undefined, this)
@@ -185,22 +178,16 @@ export default class Game extends Phaser.Scene {
 		enemy.changeDirection()
 	}
 
-	private handlePlayerChestCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+	private handlePlayerTouchItem(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const player = obj1 as Faune
-		const chest = obj2 as Chest
-		player.setChest(chest)
+		const item = obj2 as Item
+		player.touching = item
 	}
 
-	private handlePlayerFlaskCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+	private handlePlayerOverItem(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const player = obj1 as Faune
-		const flask = obj2 as Flask
-		player.drink(flask)
-	}
-
-	private handlePlayerSpikeOverlap(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		const player = obj1 as Faune
-		const spike = obj2 as Phaser.Physics.Arcade.Sprite
-		if( spike.frame.name.indexOf('f0')<0 ) player.health-=10
+		const item = obj2 as Item
+		item.use(player)
 	}
 
 	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject) {

@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
-import Chest from '../items/Chest'
-import Flask from '../items/Flask'
+import Item from '../items/Item'
 import Enemy from '../enemies/Enemy'
 import { sceneEvents } from '../events/EventCenter'
 
@@ -17,7 +16,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     private _coins = 0
     private _health = 3.0
 
-    private activeChest?: Chest
+    public touching?: Item
     private damageTime = 0
     private _dir = new Phaser.Math.Vector2(0, 100)
     private healthState = HealthState.IDLE
@@ -89,10 +88,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         return 'faune-idle-' + dir
     }
 
-    setChest(chest: Chest) {
-        this.activeChest = chest 
-    }
-
     setKnives(knives: Phaser.Physics.Arcade.Group) {
         this.knives = knives
     }
@@ -110,12 +105,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
             this.scaleX = 1
             this.body.offset.x = 8
         }
-    }
-
-    drink(flask:Flask) {
-        console.log(`Drinking flask: ${flask.power>0 ? '+' : ''}${flask.power}`)
-        this.scene.sound.play(flask.power>0 ? 'rise-3' : 'hit-f-1')
-        this.health+=flask.open()
     }
 
     handleDamage(enemy:Enemy) {
@@ -163,12 +152,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( this.healthState===HealthState.DAMAGE ) return
         if( this.healthState===HealthState.DEAD ) return
         if( cursors.space && Phaser.Input.Keyboard.JustDown(cursors.space) ) {
-            if( this.activeChest && ! this.activeChest.opened ) {
-                const coins = this.activeChest.open()
-                if( coins ) this.coins += coins
-            } else {
-                this.throwKnife()
-            }
+            if( this.touching && ! this.touching.used ) this.touching.use(this)
+            else this.throwKnife()
             return // Don't walk and throw knives
         }
         // Calculate velocity based on cursor
@@ -183,7 +168,7 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         this.play(this.dirAnim, true)
         this.setVelocity(x, y)
         // If you're moving, you don't have an active chest
-        if( x || y ) this.activeChest = undefined
+        if( x || y ) this.touching = undefined
     }
 
 }

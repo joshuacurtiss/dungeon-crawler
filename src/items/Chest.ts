@@ -1,44 +1,31 @@
 import Phaser from 'phaser'
+import Faune from '../characters/Faune'
+import Item from './Item'
 
-export default class Chest extends Phaser.Physics.Arcade.Sprite {
-
-    private coinSprite?:Phaser.Physics.Arcade.Sprite
+export default class Chest extends Item {
 
     constructor(scene:Phaser.Scene, x:number, y:number, texture:string, frame:string|number) {
         super(scene, x, y, texture, frame)
         this.play('chest-closed')
     }
 
-    get opened() {
-        return this.anims.currentAnim.key!=='chest-closed'
-    }
-
-    setCoinSprite(coin:Phaser.Physics.Arcade.Sprite) {
-        coin.setVisible(false)
-        this.coinSprite = coin
-    }
-
-    open() {
-        if( this.opened ) return 0
+    use(player:Faune) {
+        if( this.used ) return
+        super.use(player)
         this.play('chest-open')
-        // If coin exists, show it then fade it.
-        if( this.coinSprite ) {
-            const sprite = this.coinSprite
-            sprite.setVisible(true)
-            sprite.setVelocityY(-10)
-            sprite.play('coin-spin')
-            setTimeout(()=>{
-                this.scene.tweens.add({
-                    targets: sprite,
-                    alpha: 0,
-                    onComplete: () => {
-                        this.coinSprite?.destroy()
-                    },
-                    duration: 750
-                })
-            }, 1000)
-        }
-        return Phaser.Math.Between(50, 200)
+        player.coins += Phaser.Math.Between(50, 200)
+        // Spin a coin on the chest
+        const coin = this.scene.physics.add.sprite(this.x, this.y, 'treasure')
+        coin.play('coin-spin')
+        coin.setVelocityY(-10)
+        setTimeout(()=>{
+            this.scene.tweens.add({
+                targets: coin,
+                alpha: 0,
+                onComplete: () => coin.destroy(),
+                duration: 750
+            })
+        }, 1000)
     }
 
 }

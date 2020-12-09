@@ -2,20 +2,22 @@ import Phaser from 'phaser'
 import Faune from '../characters/Faune'
 import Item from './Item'
 
-export default class Flask extends Item {
+export default class Spikes extends Item {
 
-    public power:number = 1
+    public damageInflicted: number = 10
 
     constructor(scene:Phaser.Scene, x:number, y:number, texture:string, frame:string|number) {
         super(scene, x, y, texture, frame)
+        this.play('spikes-spring')
+    }
+
+    get sprung():boolean {
+        return this.frame.name.indexOf('f0') < 0
     }
 
     use(player:Faune) {
-        console.log(`Drinking flask: ${this.power>0 ? '+' : ''}${this.power}`)
-        player.health += this.power
-        if( this.power>0 ) this.scene.sound.play('rise-3')
+        if( this.sprung ) player.health -= this.damageInflicted
         super.use(player)
-        this.destroy()
     }
 
 }
