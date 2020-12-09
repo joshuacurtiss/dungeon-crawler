@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Faune from '../characters/Faune'
+import Player from '../characters/Player'
 import Item from './Item'
 
 export default class Chest extends Item {
@@ -9,7 +9,7 @@ export default class Chest extends Item {
         this.play('chest-closed')
     }
 
-    use(player:Faune) {
+    use(player:Player) {
         if( this.used ) return
         super.use(player)
         this.play('chest-open')

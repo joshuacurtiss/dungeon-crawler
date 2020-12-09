@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Faune from '../characters/Faune'
+import Player from '../characters/Player'
 
 export default class Item extends Phaser.Physics.Arcade.Sprite {
 
@@ -23,7 +23,7 @@ export default class Item extends Phaser.Physics.Arcade.Sprite {
         return this._used
     }
 
-    use(player:Faune) { // eslint-disable-line @typescript-eslint/no-unused-vars
+    use(player:Player) { // eslint-disable-line @typescript-eslint/no-unused-vars
         this._used = true
     }
 

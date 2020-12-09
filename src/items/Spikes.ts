@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Faune from '../characters/Faune'
+import Player from '../characters/Player'
 import Item from './Item'
 
 export default class Spikes extends Item {
@@ -15,7 +15,7 @@ export default class Spikes extends Item {
         return this.frame.name.indexOf('f0') < 0
     }
 
-    use(player:Faune) {
+    use(player:Player) {
         if( this.sprung ) player.health -= this.damageInflicted
         super.use(player)
     }

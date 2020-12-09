@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
 
 import { createCharacterAnims } from '../anims/CharacterAnims'
-import '../characters/Faune'
 import Faune from '../characters/Faune'
 
 export default class Start extends Phaser.Scene {
@@ -33,11 +32,8 @@ export default class Start extends Phaser.Scene {
 		map.createStaticLayer('Ground', tileset)
 		const wallsLayer = map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
-		map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
-			if( this.add[playerObj.name] ) {
-				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
-			}
-        })
+        const playerTile = map.getObjectLayer('Characters').objects.find(obj=>obj.name==='faune') as Phaser.Types.Tilemaps.TiledObject
+        this.faune = new Faune(this, playerTile.x!, playerTile.y!)
         this.cameras.main.startFollow(this.faune, true)
         this.cursors = this.input.keyboard.createCursorKeys()
     }
@@ -55,9 +51,9 @@ export default class Start extends Phaser.Scene {
     }
 
     walk(speed:number = this.speed) {
-        this.faune.setDir(speed, 0)
+        this.faune.setDirection(speed, 0)
         this.faune.setVelocityX(speed)
-        this.faune.play(this.faune.dirAnim, true)
+        this.faune.play(this.faune.directionAnim, true)
         this.speed=speed
     }
 

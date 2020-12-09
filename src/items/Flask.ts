@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import Faune from '../characters/Faune'
+import Player from '../characters/Player'
 import Item from './Item'
 
 export default class Flask extends Item {
@@ -10,7 +10,7 @@ export default class Flask extends Item {
         super(scene, x, y, texture, frame)
     }
 
-    use(player:Faune) {
+    use(player:Player) {
         console.log(`Drinking flask: ${this.power>0 ? '+' : ''}${this.power}`)
         player.health += this.power
         if( this.power>0 ) this.scene.sound.play('rise-3')

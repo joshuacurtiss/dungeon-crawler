@@ -4,6 +4,7 @@ import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
+// Enemies
 import Enemy from '../enemies/Enemy'
 import BigDemon from '../enemies/BigDemon'
 import BigZombie from '../enemies/BigZombie'
@@ -16,12 +17,15 @@ import MaskedOrc from '../enemies/MaskedOrc'
 import Mushroom from '../enemies/Mushroom'
 import Necromancer from '../enemies/Necromancer'
 import Skelet from '../enemies/Skelet'
-import '../characters/Faune'
+// Players
 import Faune from '../characters/Faune'
+import Player from '../characters/Player'
 import Chest from '../items/Chest'
+// Items
 import Flask from '../items/Flask'
 import Item from '../items/Item'
 import Spikes from '../items/Spikes'
+// Weapons
 import Knife from '../weapons/Knife'
 import Weapon from '../weapons/Weapon'
 
@@ -40,7 +44,7 @@ export default class Game extends Phaser.Scene {
 	private lastCamCheck: number = 0
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
-	private faune!: Faune
+	private player!: Player
 	private enemies!: EnemyList
 	private weapons!: WeaponList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
@@ -126,24 +130,21 @@ export default class Game extends Phaser.Scene {
 		this.weapons = {
 			'weapon_knife': this.physics.add.group({ classType: Knife, maxSize: 2 })
 		}
-		this.map.getObjectLayer('Characters')?.objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
-			if( this.add[playerObj.name] ) {
-				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
-				this[playerObj.name].weapon = this.weapons.weapon_knife
-			}
-		})
+		const playerTile = this.map.getObjectLayer('Characters').objects.find(obj=>obj.name==='faune') as Phaser.Types.Tilemaps.TiledObject
+		this.player = new Faune(this, playerTile.x!, playerTile.y!)
+		this.player.weapon = this.weapons.weapon_knife
 		// Colliders
-		this.physics.add.overlap(this.faune, chests, this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.faune, [flasks, spikes], this.handlePlayerOverItem, undefined, this)
-		this.physics.add.collider(this.faune, wallsLayer)
+		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
+		this.physics.add.overlap(this.player, [flasks, spikes], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.collider(this.player, wallsLayer)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
-		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.faune, this.handlePlayerEnemyCollision, undefined, this)
+		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
 		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
 		// Initial state
-		this.cameras.main.startFollow(this.faune, true)
+		this.cameras.main.startFollow(this.player, true)
 		setTimeout(()=>{ this.checkCamera() }, 0) // After next tick so camera view is defined
 		this.sound.play('music-game', {
 			loop: true
@@ -207,7 +208,7 @@ export default class Game extends Phaser.Scene {
 	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const player = obj1 as Faune
 		const enemy = obj2 as Enemy
-		player.handleDamage(enemy)
+		player.hit(enemy)
 		if( player.dead ) this.playerEnemiesCollider?.destroy()
 	}
 
@@ -228,7 +229,7 @@ export default class Game extends Phaser.Scene {
 		} else if (code==='HEART') {
 			// HEART: Add a heart to health
 			console.log("Be healed!")
-			this.faune.health++
+			this.player.health++
 		} else {
 			console.log('Unknown combo ' + code)
 		}
@@ -237,8 +238,6 @@ export default class Game extends Phaser.Scene {
 	update(t: number, dt: number) {
 		super.update(t, dt)
 		if( t > this.lastCamCheck + CAMCHECKINTERVAL ) this.checkCamera(t)
-		if( this.faune ) {
-			this.faune.update(this.cursors)
-		}
+		this.player.update(this.cursors)
 	}
 }
