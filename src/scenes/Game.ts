@@ -22,9 +22,14 @@ import Chest from '../items/Chest'
 import Flask from '../items/Flask'
 import Item from '../items/Item'
 import Spikes from '../items/Spikes'
+import Knife from '../weapons/Knife'
+import Weapon from '../weapons/Weapon'
 
 type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
+
+type WeaponNames = 'weapon_knife'
+type WeaponList = Record<WeaponNames, Phaser.Physics.Arcade.Group>
 
 const CAMCHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
@@ -37,6 +42,7 @@ export default class Game extends Phaser.Scene {
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
 	private enemies!: EnemyList
+	private weapons!: WeaponList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
 
@@ -117,16 +123,13 @@ export default class Game extends Phaser.Scene {
 			'big_zombie': this.physics.add.group({classType: BigZombie, createCallback: enemyCreateCallback})
 		}
 		this.spawnEnemies()
-		const knives:Phaser.Physics.Arcade.Group[] = []
+		this.weapons = {
+			'weapon_knife': this.physics.add.group({ classType: Knife, maxSize: 2 })
+		}
 		this.map.getObjectLayer('Characters')?.objects.filter(obj=>obj.type==='player').forEach(playerObj=>{
 			if( this.add[playerObj.name] ) {
 				this[playerObj.name] = this.add[playerObj.name](playerObj.x!, playerObj.y!, playerObj.name)
-				const myKnives = this.physics.add.group({
-					classType: Phaser.Physics.Arcade.Image,
-					maxSize: 2
-				})
-				this[playerObj.name].setKnives(myKnives)
-				knives.push(myKnives)
+				this[playerObj.name].weapon = this.weapons.weapon_knife
 			}
 		})
 		// Colliders
@@ -135,9 +138,9 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.faune, wallsLayer)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.faune, this.handlePlayerEnemyCollision, undefined, this)
-		knives.forEach((myKnives:Phaser.Physics.Arcade.Group)=>{
-			this.physics.add.collider(myKnives, wallsLayer, this.handleKnifeWallCollision, undefined, this)
-			this.physics.add.collider(myKnives, this.allEnemies, this.handleKnifeEnemyCollision, undefined, this)
+		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
+			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
+			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
 		// Initial state
 		this.cameras.main.startFollow(this.faune, true)
@@ -190,15 +193,15 @@ export default class Game extends Phaser.Scene {
 		item.use(player)
 	}
 
-	private handleKnifeWallCollision(obj1: Phaser.GameObjects.GameObject) {
-		this.sound.play('melee-hit')
-		obj1.destroy()
+	private handleWeaponWallCollision(obj1: Phaser.GameObjects.GameObject) {
+		const weapon = obj1 as Weapon
+		weapon.miss()
 	}
 
-	private handleKnifeEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+	private handleWeaponEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const weapon = obj1 as Weapon
 		const enemy = obj2 as Enemy
-		obj1.destroy()
-		enemy.handleDamage(-1)
+		weapon.hit(enemy)
 	}
 
 	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {

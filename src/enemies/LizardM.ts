@@ -25,14 +25,14 @@ export default class LizardM extends Enemy {
         else this.anims.play('lizard_m_idle')
     }
 
-    public setup() {
+    setup() {
         this.body.setSize(16, 16)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
-		this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
-        super.handleDamage(amt)
+    hit() {
+        this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
+        super.hit()
     }
 
 }

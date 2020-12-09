@@ -25,14 +25,14 @@ export default class MaskedOrc extends Enemy {
         else this.anims.play('masked_orc_idle')
     }
 
-    public setup() {
+    setup() {
         this.body.setSize(12, 15)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
-		this.scene.sound.play('monster-' + Phaser.Math.Between(1,4))
-        super.handleDamage(amt)
+    hit() {
+        this.scene.sound.play('monster-' + Phaser.Math.Between(1,4))
+        super.hit()
     }
 
 }

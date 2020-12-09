@@ -26,19 +26,19 @@ export default class BigZombie extends Enemy {
         else this.anims.play('big_zombie_idle')
     }
 
-    public setup() {
+    setup() {
         this.setBodySize(18, 21)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
-        super.handleDamage(amt)
+    hit() {
+        super.hit()
 		if( !this.dead ) this.scene.sound.play('monster-zombie-' + Phaser.Math.Between(1,2))
     }
 
-    destroy(fromScene?: boolean) {
+    die() {
 		this.scene.sound.play('monster-zombie-3')
-        super.destroy(fromScene)
+        super.die()
     }
 
 }

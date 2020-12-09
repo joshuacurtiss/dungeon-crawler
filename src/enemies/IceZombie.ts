@@ -25,14 +25,14 @@ export default class Chort extends Enemy {
         else this.anims.play('ice_zombie_idle')
     }
 
-    public setup() {
+    setup() {
         this.body.setSize(8, 14)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
+    hit() {
         this.scene.sound.play('monster-ice-' + Phaser.Math.Between(1,3))
-        super.handleDamage(amt)
+        super.hit()
     }
 
 }

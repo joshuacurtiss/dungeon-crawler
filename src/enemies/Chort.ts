@@ -25,14 +25,14 @@ export default class Chort extends Enemy {
         else this.anims.play('chort_idle')
     }
 
-    public setup() {
+    setup() {
         this.body.setSize(12, 16)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
+    hit() {
 		this.scene.sound.play('monster-1')
-        super.handleDamage(amt)
+        super.hit()
     }
 
 }

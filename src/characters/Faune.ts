@@ -16,13 +16,14 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
     private _coins = 0
     private _health = 3.0
 
-    public touching?: Item
     private damageTime = 0
     private _dir = new Phaser.Math.Vector2(0, 100)
     private healthState = HealthState.IDLE
-    private knives?: Phaser.Physics.Arcade.Group
     private speed = 100
     private maxHealth = 3
+
+    public touching?: Item
+    public weapon?: Phaser.Physics.Arcade.Group
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
@@ -88,10 +89,6 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         return 'faune-idle-' + dir
     }
 
-    setKnives(knives: Phaser.Physics.Arcade.Group) {
-        this.knives = knives
-    }
-
     setDir(x:number, y:number) {
         // Do not set if not moving
         if( !x && !y ) return 
@@ -118,17 +115,10 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         this.health -= enemy.damageInflicted
     }
 
-    private throwKnife() {
-        if( !this.knives ) return
-        const angle = this.dir.angle()
-        const knife = this.knives.get(this.x, this.y, 'weapon_knife') as Phaser.Physics.Arcade.Image
-        if( knife ) {
-            knife.setActive(true)
-            knife.setVisible(true)
-            knife.setRotation(angle)
-            knife.setVelocity(this.dir.x * 3, this.dir.y * 3)
-            this.scene.sound.play('melee-' + (Phaser.Math.Between(1,2)))
-        }
+    private shoot() {
+        if( !this.weapon ) return
+        const weapon = this.weapon.get(this.x, this.y)
+        weapon?.shoot(this.dir)
     }
 
     preUpdate(t:number, dt:number) {
@@ -153,8 +143,8 @@ export default class Faune extends Phaser.Physics.Arcade.Sprite {
         if( this.healthState===HealthState.DEAD ) return
         if( cursors.space && Phaser.Input.Keyboard.JustDown(cursors.space) ) {
             if( this.touching && ! this.touching.used ) this.touching.use(this)
-            else this.throwKnife()
-            return // Don't walk and throw knives
+            else this.shoot()
+            return
         }
         // Calculate velocity based on cursor
         let x = 0

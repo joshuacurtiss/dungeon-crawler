@@ -25,14 +25,14 @@ export default class Necromancer extends Enemy {
         else this.anims.play('necromancer_idle')
     }
 
-    public setup() {
+    setup() {
         this.body.setSize(12, 15)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
-		this.scene.sound.play('monster-nec-' + Phaser.Math.Between(1,3))
-        super.handleDamage(amt)
+    hit() {
+        this.scene.sound.play('monster-nec-' + Phaser.Math.Between(1,3))
+        super.hit()
     }
 
 }

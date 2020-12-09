@@ -2,12 +2,12 @@ import Phaser from 'phaser'
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
+    private _direction?: Phaser.Math.Vector2
+    private _health: number = 1
+    private _onCamera: boolean = false
     public damageInflicted: number = 1
-    public health: number = 1
     public speed: number = 50
     public customOffset = new Phaser.Math.Vector2(0, 0)
-    private _direction?: Phaser.Math.Vector2
-    private _onCamera: boolean = false
     protected moveEvent?: Phaser.Time.TimerEvent
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
@@ -35,6 +35,16 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         this._direction = vec
     }
 
+    get health(): number {
+        return this._health
+    }
+
+    set health(newval: number) {
+        const prev = this._health
+        this._health = newval
+        if( newval<prev ) this.hit()
+    }
+
     get onCamera(): boolean {
         return this._onCamera
     }
@@ -53,6 +63,14 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
+    public hit() {
+        if( this.dead ) this.die()
+    }
+
+    public die() {
+        this.destroy()
+    }
+
     destroy(fromScene?: boolean) {
         this.moveEvent?.destroy()
         super.destroy(fromScene)
@@ -66,11 +84,6 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         return new Phaser.Math.Vector2(Phaser.Math.Between(-1,1) * this.speed, Phaser.Math.Between(-1,1) * this.speed)
     }
 
-    public handleDamage(amt: number) {
-        this.health+=amt
-        if( this.dead ) this.destroy()
-    }
-    
     private handleTileCollision(go: Phaser.GameObjects.GameObject) {
         if( go!==this ) return
         this.direction = this.randomDirection()

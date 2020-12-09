@@ -25,14 +25,14 @@ export default class Skelet extends Enemy {
         else this.anims.play('skelet_idle')
     }
 
-    public setup() {
+    setup() {
         this.body.setSize(11, 13)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
-		this.scene.sound.play('monster-bug-' + Phaser.Math.Between(1,3))
-        super.handleDamage(amt)
+    hit() {
+        this.scene.sound.play('monster-bug-' + Phaser.Math.Between(1,3))
+        super.hit()
     }
 
 }

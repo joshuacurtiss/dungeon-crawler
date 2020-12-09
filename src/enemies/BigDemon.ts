@@ -26,19 +26,19 @@ export default class BigDemon extends Enemy {
         else this.anims.play('big_demon_idle')
     }
 
-    public setup() {
+    setup() {
         this.setBodySize(21, 28)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
-        super.handleDamage(amt)
+    hit() {
+        super.hit()
 		if( !this.dead ) this.scene.sound.play('monster-demon-' + Phaser.Math.Between(1,2))
     }
 
-    destroy(fromScene?: boolean) {
+    die() {
 		this.scene.sound.play('monster-demon-3')
-        super.destroy(fromScene)
+        super.die()
     }
 
 }

@@ -25,14 +25,14 @@ export default class Mushroom extends Enemy {
         else if( vec.x ) this.anims.play('mushroom_run-side')
     }
 
-    public setup() {
+    setup() {
         this.setBodySize(10, 15)
         super.setup()
     }
 
-    public handleDamage(amt: number) {
-		this.scene.sound.play('monster-bug-' + Phaser.Math.Between(1,3))
-        super.handleDamage(amt)
+    hit() {
+        this.scene.sound.play('monster-bug-' + Phaser.Math.Between(1,3))
+        super.hit()
     }
 
 }
