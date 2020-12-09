@@ -5,8 +5,6 @@ export default class BigZombie extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.animIdle = 'big_zombie_idle'
-        this.animRun = 'big_zombie_run'
         this.damageInflicted = 2.0
         this.health = 3
         this.speed = Phaser.Math.Between(25, 50)
@@ -16,6 +14,16 @@ export default class BigZombie extends Enemy {
             callback: ()=>this.changeDirection(),
             loop: true
         })
+    }
+
+    get direction(): Phaser.Math.Vector2 {
+        return super.direction
+    }
+    set direction(vec: Phaser.Math.Vector2) {
+        super.direction = vec
+        if( ! this.onCamera ) return
+        if( vec.x || vec.y ) this.anims.play('big_zombie_run')
+        else this.anims.play('big_zombie_idle')
     }
 
     public setup() {

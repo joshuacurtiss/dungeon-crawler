@@ -5,8 +5,6 @@ export default class LizardF extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.animIdle = 'lizard_f_idle'
-        this.animRun = 'lizard_f_run'
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(40, 75)
         this.customOffset.set(0, 10)
@@ -15,6 +13,16 @@ export default class LizardF extends Enemy {
             callback: ()=>this.changeDirection(),
             loop: true
         })
+    }
+
+    get direction(): Phaser.Math.Vector2 {
+        return super.direction
+    }
+    set direction(vec: Phaser.Math.Vector2) {
+        super.direction = vec
+        if( ! this.onCamera ) return
+        if( vec.x || vec.y ) this.anims.play('lizard_f_run')
+        else this.anims.play('lizard_f_idle')
     }
 
     public setup() {

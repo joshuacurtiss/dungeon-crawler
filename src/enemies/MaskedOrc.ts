@@ -5,8 +5,6 @@ export default class MaskedOrc extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.animIdle = 'masked_orc_idle'
-        this.animRun = 'masked_orc_run'
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(50, 60)
         this.customOffset.set(3, 4)
@@ -15,6 +13,16 @@ export default class MaskedOrc extends Enemy {
             callback: ()=>this.changeDirection(),
             loop: true
         })
+    }
+
+    get direction(): Phaser.Math.Vector2 {
+        return super.direction
+    }
+    set direction(vec: Phaser.Math.Vector2) {
+        super.direction = vec
+        if( ! this.onCamera ) return
+        if( vec.x || vec.y ) this.anims.play('masked_orc_run')
+        else this.anims.play('masked_orc_idle')
     }
 
     public setup() {
