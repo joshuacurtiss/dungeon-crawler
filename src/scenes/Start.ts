@@ -5,7 +5,7 @@ import Faune from '../characters/Faune'
 
 export default class Start extends Phaser.Scene {
 
-    private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
+    private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
 	private faune!: Faune
     private speed: number = 50
 
@@ -61,6 +61,7 @@ export default class Start extends Phaser.Scene {
 		super.update(t, dt)
         if( !this.cursors ) return;
         if( Phaser.Input.Keyboard.JustDown(this.cursors.space!) ) {
+            this.cursors = undefined
             this.tweens.add({
                 targets: this.sound.get('music-menu'),
                 volume: 0,
