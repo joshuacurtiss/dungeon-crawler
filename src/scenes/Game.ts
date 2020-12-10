@@ -29,12 +29,6 @@ import Spikes from '../items/Spikes'
 import Knife from '../weapons/Knife'
 import Weapon from '../weapons/Weapon'
 
-type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
-type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
-
-type WeaponNames = 'weapon_knife'
-type WeaponList = Record<WeaponNames, Phaser.Physics.Arcade.Group>
-
 const CAMCHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
@@ -131,8 +125,7 @@ export default class Game extends Phaser.Scene {
 			'weapon_knife': this.physics.add.group({ classType: Knife, maxSize: 2 })
 		}
 		const playerTile = this.map.getObjectLayer('Characters').objects.find(obj=>obj.name==='faune') as Phaser.Types.Tilemaps.TiledObject
-		this.player = new Faune(this, playerTile.x!, playerTile.y!)
-		this.player.weapon = this.weapons.weapon_knife
+		this.player = new Faune(this, playerTile.x!, playerTile.y!, this.weapons)
 		// Colliders
 		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
 		this.physics.add.overlap(this.player, [flasks, spikes], this.handlePlayerOverItem, undefined, this)

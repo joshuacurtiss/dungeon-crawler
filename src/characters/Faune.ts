@@ -3,9 +3,10 @@ import Player from './Player'
 
 export default class Faune extends Player {
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, weapons?:WeaponList) {
         super(scene, x, y, 'faune')
         this.customOffset.set(8, 8)
+        this.weapon = weapons?.weapon_knife
         this.anims.play('faune-idle-down')
     }
 
