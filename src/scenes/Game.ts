@@ -4,30 +4,10 @@ import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
-// Enemies
-import Enemy from '../enemies/Enemy'
-import BigDemon from '../enemies/BigDemon'
-import BigZombie from '../enemies/BigZombie'
-import Chort from '../enemies/Chort'
-import IceZombie from '../enemies/IceZombie'
-import Imp from '../enemies/Imp'
-import LizardF from '../enemies/LizardF'
-import LizardM from '../enemies/LizardM'
-import MaskedOrc from '../enemies/MaskedOrc'
-import Mushroom from '../enemies/Mushroom'
-import Necromancer from '../enemies/Necromancer'
-import Skelet from '../enemies/Skelet'
-// Players
-import Faune from '../characters/Faune'
-import Player from '../characters/Player'
-import Chest from '../items/Chest'
-// Items
-import Flask from '../items/Flask'
-import Item from '../items/Item'
-import Spikes from '../items/Spikes'
-// Weapons
-import Knife from '../weapons/Knife'
-import Weapon from '../weapons/Weapon'
+import {BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet} from '../enemies'
+import {Faune, Player} from '../characters'
+import {Chest, Flask, Item, Spikes} from '../items'
+import {Knife, Weapon} from '../weapons'
 
 const CAMCHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
