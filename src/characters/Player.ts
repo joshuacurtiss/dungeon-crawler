@@ -18,11 +18,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     private damageTime = 0
     private healthState = HealthState.IDLE
-    private speed = 100
     
     public customOffset = new Phaser.Math.Vector2(0, 0)
     public damageTimeMax: number = 250
     public healthMax: number = 3
+    public speed: number = 100
     public touching?: Item
     public weapon?: Phaser.Physics.Arcade.Group
 

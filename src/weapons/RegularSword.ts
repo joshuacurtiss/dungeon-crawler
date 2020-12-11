@@ -1,11 +1,10 @@
 import Phaser from 'phaser'
 import Weapon from './Weapon'
 
-export default class Knife extends Weapon {
+export default class RegularSword extends Weapon {
 
     constructor(scene:Phaser.Scene, x:number, y:number) {
-        super(scene, x, y, 'weapon_knife')
-        this.speed = 4
+        super(scene, x, y, 'weapon_regular_sword')
     }
 
     shoot(direction:Phaser.Math.Vector2) {

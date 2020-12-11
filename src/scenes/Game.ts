@@ -5,13 +5,20 @@ import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
 import {BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet} from '../enemies'
-import {Faune, Player} from '../characters'
+import {Faune, Fighter, Mage, Player, Ranger} from '../characters'
 import {Chest, Flask, Item, Spikes} from '../items'
-import {Knife, Weapon} from '../weapons'
+import {Fireball, Knife, KnightSword, RegularSword, Weapon} from '../weapons'
 
 const CAMCHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
+
+const CHARACTERS = {
+	faune: Faune, 
+	fighter: Fighter,
+	mage: Mage,
+	ranger: Ranger
+}
 
 export default class Game extends Phaser.Scene {
 
@@ -23,6 +30,7 @@ export default class Game extends Phaser.Scene {
 	private weapons!: WeaponList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
+	public selectedCharacter: string = 'faune'
 
 	constructor() {
 		super('game')
@@ -102,10 +110,16 @@ export default class Game extends Phaser.Scene {
 		}
 		this.spawnEnemies()
 		this.weapons = {
-			'weapon_knife': this.physics.add.group({ classType: Knife, maxSize: 2 })
+			'weapon_fireball': this.physics.add.group({ classType: Fireball, maxSize: 4 }),
+			'weapon_knife': this.physics.add.group({ classType: Knife, maxSize: 8 }),
+			'weapon_knight_sword': this.physics.add.group({ classType: KnightSword, maxSize: 2 }),
+			'weapon_regular_sword': this.physics.add.group({ classType: RegularSword, maxSize: 2 }),
 		}
-		const playerTile = this.map.getObjectLayer('Characters').objects.find(obj=>obj.name==='faune') as Phaser.Types.Tilemaps.TiledObject
-		this.player = new Faune(this, playerTile.x!, playerTile.y!, this.weapons)
+		const playerTiles = this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject[]
+		playerTiles.forEach(playerTile=>{
+			const {x, y, name} = playerTile
+			if( name===this.selectedCharacter ) this.player = new CHARACTERS[name](this, x, y, this.weapons)
+		})
 		// Colliders
 		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
 		this.physics.add.overlap(this.player, [flasks, spikes], this.handlePlayerOverItem, undefined, this)
@@ -156,13 +170,13 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handlePlayerTouchItem(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		const player = obj1 as Faune
+		const player = obj1 as Player
 		const item = obj2 as Item
 		player.touching = item
 	}
 
 	private handlePlayerOverItem(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		const player = obj1 as Faune
+		const player = obj1 as Player
 		const item = obj2 as Item
 		item.use(player)
 	}
@@ -179,7 +193,7 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handlePlayerEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
-		const player = obj1 as Faune
+		const player = obj1 as Player
 		const enemy = obj2 as Enemy
 		player.hit(enemy)
 		if( player.dead ) this.playerEnemiesCollider?.destroy()
