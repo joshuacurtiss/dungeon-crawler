@@ -13,6 +13,7 @@ export default class Chest extends Item {
         if( this.used ) return
         super.use(player)
         this.play('chest-open')
+        this.sndmgr.play('coin')
         player.coins += Phaser.Math.Between(50, 200)
         // Spin a coin on the chest
         const coin = this.scene.physics.add.sprite(this.x, this.y, 'treasure')

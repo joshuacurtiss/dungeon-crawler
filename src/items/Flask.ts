@@ -13,7 +13,7 @@ export default class Flask extends Item {
     use(player:Player) {
         console.log(`Drinking flask: ${this.power>0 ? '+' : ''}${this.power}`)
         player.health += this.power
-        if( this.power>0 ) this.scene.sound.play('rise-3')
+        if( this.power>0 ) this.sndmgr.play('rise-3')
         super.use(player)
         this.destroy()
     }

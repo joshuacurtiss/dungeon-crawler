@@ -21,9 +21,9 @@ export default class Faune extends Player {
         if( prev<=0 ) return
         if( newval<=0 ) {
             this.play('faune-faint')
-            this.scene.sound.play('die-f')
+            this.sndmgr.play('die-f')
         } else if( newval<prev ) {
-            this.scene.sound.play('hit-f-' + Phaser.Math.Between(1,3))
+            this.sndmgr.play('hit-f-' + Phaser.Math.Between(1,3))
         }
     }
 

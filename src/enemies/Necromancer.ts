@@ -31,7 +31,7 @@ export default class Necromancer extends Enemy {
     }
 
     hit() {
-        this.scene.sound.play('monster-nec-' + Phaser.Math.Between(1,3))
+        this.sndmgr.play('monster-nec-' + Phaser.Math.Between(1,3))
         super.hit()
     }
 

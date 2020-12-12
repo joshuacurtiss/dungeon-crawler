@@ -31,7 +31,7 @@ export default class MaskedOrc extends Enemy {
     }
 
     hit() {
-        this.scene.sound.play('monster-' + Phaser.Math.Between(1,4))
+        this.sndmgr.play('monster-' + Phaser.Math.Between(1,4))
         super.hit()
     }
 

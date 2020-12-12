@@ -31,7 +31,7 @@ export default class Chort extends Enemy {
     }
 
     hit() {
-        this.scene.sound.play('monster-ice-' + Phaser.Math.Between(1,3))
+        this.sndmgr.play('monster-ice-' + Phaser.Math.Between(1,3))
         super.hit()
     }
 

@@ -1,6 +1,7 @@
 import Phaser from 'phaser'
-import Item from '../items/Item'
 import Enemy from '../enemies/Enemy'
+import Item from '../items/Item'
+import SoundManager from '../managers/SoundManager'
 import Weapon from '../weapons/Weapon'
 import { sceneEvents } from '../events/EventCenter'
 
@@ -18,6 +19,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     private damageTime = 0
     private healthState = HealthState.IDLE
+
+    protected sndmgr: SoundManager
     
     public customOffset = new Phaser.Math.Vector2(0, 0)
     public damageTimeMax: number = 250
@@ -29,6 +32,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
         scene.add.existing(this)
+        this.sndmgr = new SoundManager(scene)
         this.setup()
     }
 

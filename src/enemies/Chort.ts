@@ -31,7 +31,7 @@ export default class Chort extends Enemy {
     }
 
     hit() {
-		this.scene.sound.play('monster-1')
+		this.sndmgr.play('monster-1')
         super.hit()
     }
 

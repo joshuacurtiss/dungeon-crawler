@@ -5149,6 +5149,6 @@
 </data>
  </layer>
  <objectgroup id="5" name="Characters">
-  <object id="17" name="faune" type="player" gid="41" x="240.447" y="53.8153" width="16" height="16"/>
+  <object id="17" type="player" gid="41" x="240.447" y="53.8153" width="16" height="16"/>
  </objectgroup>
 </map>

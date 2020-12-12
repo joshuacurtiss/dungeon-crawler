@@ -33,11 +33,11 @@ export default class BigZombie extends Enemy {
 
     hit() {
         super.hit()
-		if( !this.dead ) this.scene.sound.play('monster-zombie-' + Phaser.Math.Between(1,2))
+		if( !this.dead ) this.sndmgr.play('monster-zombie-' + Phaser.Math.Between(1,2))
     }
 
     die() {
-		this.scene.sound.play('monster-zombie-3')
+		this.sndmgr.play('monster-zombie-3')
         super.die()
     }
 

@@ -31,7 +31,7 @@ export default class LizardF extends Enemy {
     }
 
     hit() {
-        this.scene.sound.play('monster-' + Phaser.Math.Between(1,5))
+        this.sndmgr.play('monster-' + Phaser.Math.Between(1,5))
         super.hit()
     }
 

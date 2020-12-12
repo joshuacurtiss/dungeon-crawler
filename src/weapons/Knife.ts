@@ -9,12 +9,12 @@ export default class Knife extends Weapon {
     }
 
     shoot(direction:Phaser.Math.Vector2) {
-        this.scene.sound.play('melee-' + (Phaser.Math.Between(1,2)))
+        this.sndmgr.play('melee-' + (Phaser.Math.Between(1,2)))
         super.shoot(direction)
     }
 
     miss() {
-        this.scene.sound.play('melee-hit')
+        this.sndmgr.play('melee-hit')
         super.miss()
     }
 

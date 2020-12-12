@@ -38,7 +38,6 @@ export default class GameUI extends Phaser.Scene {
 
     handleCoinsChanged(coins: number) {
         this.coinsLabel.text = coins.toLocaleString()
-        this.sound.play('coin')
     }
 
     handlePlayerHealthChanged(health: number) {

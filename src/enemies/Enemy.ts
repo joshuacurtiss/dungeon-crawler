@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import SoundManager from '../managers/SoundManager'
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
@@ -9,9 +10,11 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     public speed: number = 50
     public customOffset = new Phaser.Math.Vector2(0, 0)
     protected moveEvent?: Phaser.Time.TimerEvent
+    protected sndmgr:SoundManager
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
+        this.sndmgr = new SoundManager(scene)
         scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
     }
 

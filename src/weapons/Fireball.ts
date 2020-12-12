@@ -9,12 +9,12 @@ export default class Fireball extends Weapon {
     }
 
     shoot(direction:Phaser.Math.Vector2) {
-        this.scene.sound.play('fireball')
+        this.sndmgr.play('fireball')
         super.shoot(direction)
     }
 
     miss() {
-        this.scene.sound.play('fireball-hit')
+        this.sndmgr.play('fireball-hit')
         super.miss()
     }
 

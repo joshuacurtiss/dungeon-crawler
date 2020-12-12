@@ -4,21 +4,15 @@ import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
-import {BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet} from '../enemies'
-import {Faune, Fighter, Mage, Player, Ranger} from '../characters'
-import {Chest, Flask, Item, Spikes} from '../items'
-import {Fireball, Knife, KnightSword, RegularSword, Weapon} from '../weapons'
+import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
+import { characters, Player } from '../characters'
+import { Chest, Flask, Item, Spikes } from '../items'
+import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
+import SoundManager from '../managers/SoundManager'
 
 const CAMCHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
-
-const CHARACTERS = {
-	faune: Faune, 
-	fighter: Fighter,
-	mage: Mage,
-	ranger: Ranger
-}
 
 export default class Game extends Phaser.Scene {
 
@@ -30,6 +24,7 @@ export default class Game extends Phaser.Scene {
 	private weapons!: WeaponList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
+	private sndmgr = new SoundManager(this)
 	public selectedCharacter: string = 'faune'
 
 	constructor() {
@@ -118,7 +113,7 @@ export default class Game extends Phaser.Scene {
 		const playerTiles = this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject[]
 		playerTiles.forEach(playerTile=>{
 			const {x, y, name} = playerTile
-			if( name===this.selectedCharacter ) this.player = new CHARACTERS[name](this, x, y, this.weapons)
+			if( name===this.selectedCharacter ) this.player = new characters[name](this, x, y, this.weapons)
 		})
 		// Colliders
 		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
@@ -133,9 +128,7 @@ export default class Game extends Phaser.Scene {
 		// Initial state
 		this.cameras.main.startFollow(this.player, true)
 		setTimeout(()=>{ this.checkCamera() }, 0) // After next tick so camera view is defined
-		this.sound.play('music-game', {
-			loop: true
-		})
+		this.sndmgr.play('music-game', { loop: true })
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
 	}
 

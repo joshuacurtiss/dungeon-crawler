@@ -33,11 +33,11 @@ export default class BigDemon extends Enemy {
 
     hit() {
         super.hit()
-		if( !this.dead ) this.scene.sound.play('monster-demon-' + Phaser.Math.Between(1,2))
+		if( !this.dead ) this.sndmgr.play('monster-demon-' + Phaser.Math.Between(1,2))
     }
 
     die() {
-		this.scene.sound.play('monster-demon-3')
+		this.sndmgr.play('monster-demon-3')
         super.die()
     }
 

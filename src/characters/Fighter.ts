@@ -22,9 +22,9 @@ export default class Fighter extends Player {
         if( prev<=0 ) return
         if( newval<=0 ) {
             this.anims.play('fighter-idle-down')
-            this.scene.sound.play('die-m')
+            this.sndmgr.play('die-m')
         } else if( newval<prev ) {
-            this.scene.sound.play('hit-m-' + Phaser.Math.Between(1,3))
+            this.sndmgr.play('hit-m-' + Phaser.Math.Between(1,3))
         }
     }
 

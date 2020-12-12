@@ -80,6 +80,8 @@ const images = {
     'ui-heart-empty': 'ui/heart_empty.png',
     'ui-heart-full': 'ui/heart_full.png',
     'ui-heart-half': 'ui/heart_half.png',
+    'ui-menu-left': 'ui/menu-left-lit.png',
+    'ui-menu-right': 'ui/menu-right-lit.png',
 }
 
 export default class Preloader extends Phaser.Scene {

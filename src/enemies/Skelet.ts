@@ -31,7 +31,7 @@ export default class Skelet extends Enemy {
     }
 
     hit() {
-        this.scene.sound.play('monster-bug-' + Phaser.Math.Between(1,3))
+        this.sndmgr.play('monster-bug-' + Phaser.Math.Between(1,3))
         super.hit()
     }
 
