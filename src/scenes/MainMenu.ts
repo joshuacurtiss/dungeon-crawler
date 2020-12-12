@@ -5,7 +5,7 @@ import { Faune, Player } from '../characters'
 import MenuItem from '../ui/MenuItem'
 import SoundManager from '../managers/SoundManager'
 
-export default class Start extends Phaser.Scene {
+export default class MainMenu extends Phaser.Scene {
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private player!: Player
@@ -15,7 +15,7 @@ export default class Start extends Phaser.Scene {
     private _menuIndex: number = 0
 
     constructor() {
-        super({key: 'start'})
+        super({key: 'mainmenu'})
     }
 
     get menuSelection() {

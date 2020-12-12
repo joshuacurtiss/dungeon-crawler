@@ -50,7 +50,7 @@ export default class Options extends Phaser.Scene {
                 menuIndicators,
             }),
             new MenuItem(this, centerX, 160, 'Back to Main Menu', textConfig, {
-                nextScene: 'start',
+                nextScene: 'mainmenu',
                 menuIndicators
             }),
         ]
