@@ -1,21 +1,20 @@
 import Phaser from 'phaser'
 
-import { createCharacterAnims } from '../anims/CharacterAnims'
-import { Faune, Player } from '../characters'
 import MenuItem from '../ui/MenuItem'
 import SoundManager from '../managers/SoundManager'
 
-export default class MainMenu extends Phaser.Scene {
+export default class Start extends Phaser.Scene {
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-    private player!: Player
     private sndmgr = new SoundManager(this)
-    private speed: number = 50
     private menu: MenuItem[] = []
     private _menuIndex: number = 0
+    private players: Phaser.GameObjects.Image[] = []
+    private playerBox?: Phaser.GameObjects.Rectangle
+    private _playerIndex: number = 0
 
     constructor() {
-        super({key: 'mainmenu'})
+        super({key: 'start'})
     }
 
     get menuSelection() {
@@ -30,6 +29,20 @@ export default class MainMenu extends Phaser.Scene {
         this.menu[this.menuIndex].selected=true
     }
 
+    get playerSelection() {
+        return this.players[this.playerIndex]
+    }
+    get playerSelectionName() {
+        return this.playerSelection.texture.key.slice(5)
+    }
+    get playerIndex() {
+        return this._playerIndex
+    }
+    set playerIndex(index: number) {
+        this._playerIndex=index<0 ? 0 : index+1>this.players.length ? this.players.length-1 : index
+        this.playerBox?.setPosition(this.playerSelection.x, this.playerSelection.y)
+    }
+
     preload() {
         const centerX = this.cameras.main.worldView.x + this.cameras.main.width / 2
         const titleConfig: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -39,59 +52,49 @@ export default class MainMenu extends Phaser.Scene {
             fontSize: '14px',
         }
         this.add.text(centerX, 45, 'Dungeon Crawler', titleConfig).setOrigin(0.5).setScrollFactor(0, 0)
+        this.playerBox = this.add.rectangle(centerX - 140 + 30, 105, 60, 70, 0x1a1a1a)
+        this.players = [
+            this.add.image(centerX - 140 + 30, 105, 'face_faune'),
+            this.add.image(centerX -  70 + 30, 105, 'face_fighter'),
+            this.add.image(centerX +  66 - 30, 105, 'face_mage'),
+            this.add.image(centerX + 140 - 30, 105, 'face_ranger'),
+        ]
+        this.players.forEach((item, index)=>{
+            item.setInteractive()
+            item.on('pointerover', ()=>this.playerIndex=index)
+            item.on('pointerup', ()=>this.select())
+        })
         const menuIndicators: Phaser.GameObjects.Image[] = [
-            this.add.image(centerX - 60, 190, 'ui-menu-left').setScale(0.5).setScrollFactor(0, 0),
-            this.add.image(centerX + 60, 190, 'ui-menu-right').setScale(0.5).setScrollFactor(0, 0),
+            this.add.image(centerX - 100, 190, 'ui-menu-left').setScale(0.5).setScrollFactor(0, 0),
+            this.add.image(centerX + 100, 190, 'ui-menu-right').setScale(0.5).setScrollFactor(0, 0),
         ]
         this.menu = [
-            new MenuItem(this, centerX, 190, 'Start', textConfig, {nextScene: 'start', menuIndicators}),
-            new MenuItem(this, centerX, 215, 'Options', textConfig, {nextScene: 'options', menuIndicators}),
+            new MenuItem(this, centerX, 175, 'Start Your Quest!', textConfig, {nextScene: 'game', menuIndicators}),
+            new MenuItem(this, centerX, 200, 'Back to Main Menu', textConfig, {nextScene: 'mainmenu', menuIndicators}),
         ]
         this.menu.forEach((item, index)=>{
             item.on('pointerover', ()=>this.menuIndex=index)
             item.on('pointerup', ()=>this.select())
         })
         this.menuIndex=0
-        createCharacterAnims(this.anims)
-		const map = this.make.tilemap({key: 'dungeon-start'})
-		const tileset = map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
-		map.createStaticLayer('Ground', tileset)
-		const wallsLayer = map.createStaticLayer('Walls', tileset)
-        wallsLayer.setCollisionByProperty({collides: true})
-        const playerTile = map.getObjectLayer('Characters').objects.find(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject
-        this.player = new Faune(this, playerTile.x!, playerTile.y!)
-        this.cameras.main.startFollow(this.player, true)
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
     }
 
     create() {
         this.cameras.main.fadeIn(550, 0, 0, 0)
-        this.sndmgr.play('music-menu', {loop: true})
-        this.walk()
-        this.time.addEvent({
-            delay: 90000,
-            callback: ()=>{
-                this.walk(-this.speed)
-            },
-            loop: true
-        })
     }
 
     private select() {
         this.input.keyboard.removeAllKeys()
         this.menu.forEach(item=>item.removeAllListeners())
+        if( this.menuSelection.nextScene==='game' ) this.sndmgr.fade('music-menu')
         this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
-            this.scene.start(this.menuSelection.nextScene)
+            this.scene.start(this.menuSelection.nextScene, {
+                character: this.playerSelectionName
+            })
         })
-    }
-
-    walk(speed:number = this.speed) {
-        this.player.setDirection(speed, 0)
-        this.player.setVelocityX(speed)
-        this.player.play(this.player.directionAnim, true)
-        this.speed=speed
     }
 
     update(t:number, dt:number) {
@@ -104,9 +107,9 @@ export default class MainMenu extends Phaser.Scene {
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.down!) ) {
             this.menuIndex++
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.left!) ) {
-            console.log("Left")
+            this.playerIndex--
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.right!) ) {
-            console.log("Right")
+            this.playerIndex++
         }
     }
 

@@ -35,6 +35,10 @@ export default class Game extends Phaser.Scene {
 		return this.enemies ? Object.keys(this.enemies).map(key=>this.enemies![key]) : []
 	}
 
+	init(data) {
+		this.selectedCharacter = data.character ? data.character : 'faune'
+	}
+
 	preload() {
 		// Cursors
 		this.cursors = this.input.keyboard.createCursorKeys()

@@ -5,6 +5,7 @@ import Game from './scenes/Game'
 import GameUI from './scenes/GameUI'
 import Options from './scenes/Options'
 import MainMenu from './scenes/MainMenu'
+import Start from './scenes/Start'
 
 const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
 const DEFAULT_HEIGHT = 250
@@ -26,7 +27,7 @@ export default new Phaser.Game({
 	render: {
 		pixelArt: true
 	},
-	scene: [Preloader, MainMenu, Options, Game, GameUI],
+	scene: [Preloader, MainMenu, Options, Start, Game, GameUI],
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,

@@ -65,6 +65,10 @@ const atlases = {
 }
 
 const images = {
+    'face_faune': 'characters/faune-face.png',
+    'face_fighter': 'characters/fighter-face.png',
+    'face_mage': 'characters/mage-face.png',
+    'face_ranger': 'characters/ranger-face.png',
     'flask_big_blue': 'items/flask_big_blue.png',
     'flask_big_green': 'items/flask_big_green.png',
     'flask_big_red': 'items/flask_big_red.png',
