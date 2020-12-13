@@ -42,6 +42,8 @@ export default class Game extends Phaser.Scene {
 	preload() {
 		// Cursors
 		this.cursors = this.input.keyboard.createCursorKeys()
+		// Misc keys
+		this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).on('up', ()=>this.pauseMenu())
 		// Key Combos
 		const comboConfig= {
 			maxKeyDelay: 5000,
@@ -217,6 +219,11 @@ export default class Game extends Phaser.Scene {
 		} else {
 			console.log('Unknown combo ' + code)
 		}
+	}
+
+	pauseMenu() {
+		this.scene.pause()
+		this.scene.launch('pause')
 	}
 	
 	update(t: number, dt: number) {
