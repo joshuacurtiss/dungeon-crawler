@@ -25,6 +25,13 @@ export default class Pause extends Phaser.Scene {
         this.menu[this.menuIndex].selected=true
     }
 
+    init() {
+		this.events.once('shutdown', ()=>{
+            this.input.keyboard.removeAllKeys()
+            this.menu.forEach(item=>item.removeAllListeners())
+		})
+    }
+
     preload() {
         const centerX = this.cameras.main.x + this.cameras.main.width / 2
         const centerY = this.cameras.main.y + this.cameras.main.height / 2
@@ -59,8 +66,6 @@ export default class Pause extends Phaser.Scene {
     private select() {
         const item=this.menuSelection
         if( item.nextScene ) {
-            this.input.keyboard.removeAllKeys()
-            this.menu.forEach(item=>item.removeAllListeners())
             if( item.nextScene==='game' ) this.continueGame(item.nextScene)
             else this.abortGame(item.nextScene)
         }
@@ -77,7 +82,7 @@ export default class Pause extends Phaser.Scene {
         this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
             this.scene.stop('game')
-            this.scene.stop('pause')
+            this.scene.stop()
             this.scene.start(nextScene)
         })
     }

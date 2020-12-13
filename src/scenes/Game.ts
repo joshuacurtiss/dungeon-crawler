@@ -37,6 +37,9 @@ export default class Game extends Phaser.Scene {
 
 	init(data) {
 		this.selectedCharacter = data.character ? data.character : 'faune'
+		this.events.once('shutdown', ()=>{
+			this.input.keyboard.removeAllKeys()
+		})
 	}
 
 	preload() {
