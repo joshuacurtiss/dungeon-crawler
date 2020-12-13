@@ -100,6 +100,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Apply the change, emit the event
         if( this._health!==newval ) sceneEvents.emit('player-health-changed', newval)
         this._health=newval
+        if( this.dead ) sceneEvents.emit('player-dead')
     }
 
     get moving() {

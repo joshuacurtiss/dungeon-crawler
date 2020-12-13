@@ -8,6 +8,7 @@ import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, Ma
 import { characters, Player } from '../characters'
 import { Chest, Flask, Item, Spikes } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
+import { sceneEvents } from '../events/EventCenter'
 import SoundManager from '../managers/SoundManager'
 
 const CAMCHECKINTERVAL = 1000
@@ -24,8 +25,10 @@ export default class Game extends Phaser.Scene {
 	private weapons!: WeaponList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
+	private selectedCharacter: string = 'faune'
+	private coins!: number
+	private lives!: number
 	private sndmgr = new SoundManager(this)
-	public selectedCharacter: string = 'faune'
 
 	constructor() {
 		super('game')
@@ -36,7 +39,9 @@ export default class Game extends Phaser.Scene {
 	}
 
 	init(data) {
-		this.selectedCharacter = data.character ? data.character : 'faune'
+		this.selectedCharacter = data.character ?? this.selectedCharacter
+		this.coins = data.coins ?? 0
+		this.lives = data.lives ?? 3
 		this.events.once('shutdown', ()=>{
 			this.input.keyboard.removeAllKeys()
 		})
@@ -64,9 +69,6 @@ export default class Game extends Phaser.Scene {
     }
 
 	create() {
-		// Set up UI
-		this.cameras.main.fadeIn(1000, 0, 0, 0)
-		this.scene.run('game-ui')
 		// Set up map/layers
 		this.map = this.make.tilemap({key: 'dungeon-01'})
 		const tileset = this.map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
@@ -124,6 +126,7 @@ export default class Game extends Phaser.Scene {
 			const {x, y, name} = playerTile
 			if( name===this.selectedCharacter ) this.player = new characters[name](this, x, y, this.weapons)
 		})
+		this.player.coins=this.coins
 		// Colliders
 		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
 		this.physics.add.overlap(this.player, [flasks, spikes], this.handlePlayerOverItem, undefined, this)
@@ -134,7 +137,20 @@ export default class Game extends Phaser.Scene {
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
-		// Initial state
+		// Player death handler
+        sceneEvents.on('player-dead', this.handlePlayerDead, this)
+        this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
+            sceneEvents.off('player-dead', this.handlePlayerDead, this)
+        })
+		// Set up UI
+		this.cameras.main.fadeIn(1000, 0, 0, 0)
+		this.scene.run('game-ui', {
+			character: this.selectedCharacter,
+			coins: this.player.coins,
+			lives: this.lives,
+			hearts: this.player.healthMax,
+			health: this.player.health,
+		})
 		this.cameras.main.startFollow(this.player, true)
 		setTimeout(()=>{ this.checkCamera() }, 0) // After next tick so camera view is defined
 		this.sndmgr.play('music-game', { loop: true })
@@ -199,6 +215,22 @@ export default class Game extends Phaser.Scene {
 		const enemy = obj2 as Enemy
 		player.hit(enemy)
 		if( player.dead ) this.playerEnemiesCollider?.destroy()
+	}
+
+	private handlePlayerDead() {
+		this.lives--
+		this.scene.stop('pause')
+		this.scene.stop('game-ui')
+		this.sndmgr.fade('music-game', 500)
+		this.cameras.main.fadeOut(1000, 0, 0, 0)
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
+			this.scene.stop()
+			this.scene.start('loselife', {
+				character: this.selectedCharacter,
+				coins: this.player.coins,
+				lives: this.lives,
+			})
+        })
 	}
 
 	private handleKeyCombo(combo:Phaser.Input.Keyboard.KeyCombo) {

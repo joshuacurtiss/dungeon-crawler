@@ -31,6 +31,7 @@ const audio = {
     'monster-zombie-2': 'audio/monster-zombie-2.mp3',
     'monster-zombie-3': 'audio/monster-zombie-3.mp3',
     'music-game': 'audio/music-game.mp3',
+    'music-lose': 'audio/music-lose.mp3',
     'music-menu': 'audio/music-menu.mp3',
     'hit-f-1': 'audio/hit-f-1.mp3',
     'hit-f-2': 'audio/hit-f-2.mp3',

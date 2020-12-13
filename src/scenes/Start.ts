@@ -14,7 +14,7 @@ export default class Start extends Phaser.Scene {
     private _playerIndex: number = 0
 
     constructor() {
-        super({key: 'start'})
+        super('start')
     }
 
     get menuSelection() {
@@ -77,6 +77,7 @@ export default class Start extends Phaser.Scene {
             item.on('pointerup', ()=>this.select())
         })
         this.menuIndex=0
+        this.playerIndex=0
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
     }

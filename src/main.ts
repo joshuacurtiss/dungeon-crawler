@@ -3,6 +3,7 @@ import Phaser from 'phaser'
 import Preloader from './scenes/Preloader'
 import Game from './scenes/Game'
 import GameUI from './scenes/GameUI'
+import LoseLife from './scenes/LoseLife'
 import MainMenu from './scenes/MainMenu'
 import Options from './scenes/Options'
 import Pause from './scenes/Pause'
@@ -28,7 +29,7 @@ export default new Phaser.Game({
 	render: {
 		pixelArt: true
 	},
-	scene: [Preloader, MainMenu, Options, Start, Game, Pause, GameUI],
+	scene: [Preloader, MainMenu, Options, Start, Game, Pause, LoseLife, GameUI],
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,
