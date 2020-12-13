@@ -19,7 +19,7 @@ export default class MenuItem extends Phaser.GameObjects.Text {
         this.key=opts.key
         this.nextScene=opts.nextScene
         this.menuIndicators=opts.menuIndicators
-        this.setOrigin(0.5).setScrollFactor(0, 0)
+        this.setOrigin(0.5).setScrollFactor(0, 0).setInteractive()
     }
 
     get chk() {

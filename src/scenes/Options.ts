@@ -54,6 +54,10 @@ export default class Options extends Phaser.Scene {
                 menuIndicators
             }),
         ]
+        this.menu.forEach((item, index)=>{
+            item.on('pointerover', ()=>this.menuIndex=index)
+            item.on('pointerup', ()=>this.select())
+        })
         this.menuIndex=0
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
@@ -77,6 +81,7 @@ export default class Options extends Phaser.Scene {
         }
         if( item.nextScene ) {
             this.input.keyboard.removeAllKeys()
+            this.menu.forEach(item=>item.removeAllListeners())
             this.cameras.main.fadeOut(1000, 0, 0, 0)
             this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
                 this.scene.start(item.nextScene)

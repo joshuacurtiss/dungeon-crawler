@@ -47,6 +47,10 @@ export default class MainMenu extends Phaser.Scene {
             new MenuItem(this, centerX, 190, 'Start', textConfig, {nextScene: 'game', menuIndicators}),
             new MenuItem(this, centerX, 215, 'Options', textConfig, {nextScene: 'options', menuIndicators}),
         ]
+        this.menu.forEach((item, index)=>{
+            item.on('pointerover', ()=>this.menuIndex=index)
+            item.on('pointerup', ()=>this.select())
+        })
         this.menuIndex=0
         createCharacterAnims(this.anims)
 		const map = this.make.tilemap({key: 'dungeon-start'})
@@ -76,6 +80,7 @@ export default class MainMenu extends Phaser.Scene {
 
     private select() {
         this.input.keyboard.removeAllKeys()
+        this.menu.forEach(item=>item.removeAllListeners())
         if( this.menuSelection.nextScene==='game' ) this.sndmgr.fade('music-menu')
         this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
