@@ -1,13 +1,24 @@
 # Writing a crawler game with Phaser 3
 
-I'm going through the tutorial on [Making a Dungeon Crawler with Phaser 3](https://www.youtube.com/watch?v=_fK6MVLPrMA)
+I went through the tutorial on [Making a Dungeon Crawler with Phaser 3](https://www.youtube.com/watch?v=_fK6MVLPrMA)
 to learn how to use [Phaser 3, Parcel, and TypeScript](https://github.com/ourcade/phaser3-parcel-template) to make a
-Zelda-type top-down perspective game. 
+Zelda-type top-down perspective game. After finishing the tutorial, I continued applying my knowledge to just add
+some creative features to the game. This is currently a work in progress.
 
 ## Progress
 
-So far, I've completed parts 1 to 6. We have a map with enemies and a character that can walk around and get hurt by the
-enemies and throw knives to destroy them.
+I've completed the tutorial, and in the end, I had a map with enemies and a character that can walk around and get hurt by the
+enemies and throw knives to destroy them. There were chests to collect coins and potion to hurt/help player health. Since then some features I've added have been:
+
+  * More levels 
+  * More enemies
+  * More characters the player can choose
+  * Different weapons for each character 
+  * Spikes as another item that hurts the player
+  * Sound effects and music
+  * Menu, Options, and Start screens, as well as a Pause screen
+  * Cheat codes 😁
+  * Refactored the code to have general classes for enemies, players, items, and weapons. 
 
 ## To Build This Game
 
@@ -28,28 +39,18 @@ cd dungeon-crawler
 npm install
 ```
 
-Start development server:
+## Start a development server
 
 ```
 npm run start
 ```
 
-To create a production build:
+The game will be hosted on port 4000, like: http://localhost:4000
+
+## To create a production build
 
 ```
 npm run build
 ```
 
 Production files will be placed in the `dist` folder. Then upload those files to a web server. 🎉
-
-## Dev Server Port
-
-You can change the dev server's port number by modifying the `start` script in `package.json`. We use Parcel's `-p` option to specify the port number.
-
-The script looks like this:
-
-```
-parcel src/index.html -p 8000
-```
-
-Change 8000 to whatever you want.
