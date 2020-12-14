@@ -11,6 +11,7 @@ export default class MainMenu extends Phaser.Scene {
     private player!: Player
     private sndmgr = new SoundManager(this)
     private speed: number = 50
+    private map!: Phaser.Tilemaps.Tilemap
     private menu: MenuItem[] = []
     private _menuIndex: number = 0
 
@@ -53,27 +54,26 @@ export default class MainMenu extends Phaser.Scene {
         })
         this.menuIndex=0
         createCharacterAnims(this.anims)
-		const map = this.make.tilemap({key: 'dungeon-start'})
-		const tileset = map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
-		map.createStaticLayer('Ground', tileset)
-		const wallsLayer = map.createStaticLayer('Walls', tileset)
+		this.map = this.make.tilemap({key: 'dungeon-start'})
+		const tileset = this.map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
+		this.map.createStaticLayer('Ground', tileset)
+		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
         wallsLayer.setCollisionByProperty({collides: true})
-        const playerTile = map.getObjectLayer('Characters').objects.find(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject
-        this.player = new Faune(this, playerTile.x!, playerTile.y!)
+        this.player = new Faune(this, 0, 0)
         this.cameras.main.startFollow(this.player, true)
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
     }
 
     create() {
+        const playerTile = this.map.getObjectLayer('Characters').objects.find(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject
+        this.player.setPosition(playerTile.x!, playerTile.y!)
         this.cameras.main.fadeIn(550, 0, 0, 0)
         this.sndmgr.play('music-menu', {loop: true})
         this.walk()
         this.time.addEvent({
             delay: 90000,
-            callback: ()=>{
-                this.walk(-this.speed)
-            },
+            callback: ()=>this.walk(-this.speed),
             loop: true
         })
     }
@@ -83,6 +83,7 @@ export default class MainMenu extends Phaser.Scene {
         this.menu.forEach(item=>item.removeAllListeners())
         this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
+            this.player.setVelocity(0).play(this.player.directionAnim, true)
             this.scene.start(this.menuSelection.nextScene)
         })
     }
