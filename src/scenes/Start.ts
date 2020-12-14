@@ -7,6 +7,7 @@ export default class Start extends Phaser.Scene {
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private sndmgr = new SoundManager(this)
+    private level: number = 1
     private menu: MenuItem[] = []
     private _menuIndex: number = 0
     private players: Phaser.GameObjects.Image[] = []
@@ -76,26 +77,50 @@ export default class Start extends Phaser.Scene {
             item.on('pointerover', ()=>this.menuIndex=index)
             item.on('pointerup', ()=>this.select())
         })
-        this.menuIndex=0
-        this.playerIndex=0
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
+        // Cheat code
+		const comboConfig= {
+			maxKeyDelay: 5000,
+			resetOnMatch: true, 
+			resetOnWrongKey: true
+		}
+        const COMBOS = ['CHEAT', 'LEVEL']
+        COMBOS.forEach(combo=>this.input.keyboard.createCombo(combo, comboConfig))
+        this.input.keyboard.on('keycombomatch', ()=>{
+            const lastItem = this.menu.pop()
+            const newItem = new MenuItem(this, centerX, 200, 'Jump to Level:', textConfig, {key: 'level', menuIndicators})
+            newItem.num = this.level
+            lastItem!.setY(225)
+            this.menu.push(newItem, lastItem!)
+        }, this)
     }
 
     create() {
+        this.menuIndex=0
+        this.playerIndex=0
+        this.level=1
         this.cameras.main.fadeIn(550, 0, 0, 0)
     }
 
     private select() {
-        this.input.keyboard.removeAllKeys()
-        this.menu.forEach(item=>item.removeAllListeners())
-        if( this.menuSelection.nextScene==='game' ) this.sndmgr.fade('music-menu')
-        this.cameras.main.fadeOut(1000, 0, 0, 0)
-        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
-            this.scene.start(this.menuSelection.nextScene, {
-                character: this.playerSelectionName
+        const item = this.menuSelection
+        if( item.key ) {
+            this.level = this.level==5 ? 1 : (this.level+1)
+            item.num = this.level
+        }
+        if( item.nextScene ) {
+            this.input.keyboard.removeAllKeys()
+            this.menu.forEach(item=>item.removeAllListeners())
+            if( item.nextScene==='game' ) this.sndmgr.fade('music-menu')
+            this.cameras.main.fadeOut(1000, 0, 0, 0)
+            this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
+                this.scene.start(item.nextScene, {
+                    character: this.playerSelectionName,
+                    level: this.level
+                })
             })
-        })
+        }
     }
 
     update(t:number, dt:number) {

@@ -27,6 +27,7 @@ export default class Game extends Phaser.Scene {
 	private map!: Phaser.Tilemaps.Tilemap
 	private selectedCharacter: string = 'faune'
 	private coins!: number
+	private level!: number
 	private lives!: number
 	private sndmgr = new SoundManager(this)
 
@@ -38,9 +39,14 @@ export default class Game extends Phaser.Scene {
 		return this.enemies ? Object.keys(this.enemies).map(key=>this.enemies![key]) : []
 	}
 
+	get levelKey() {
+		return 'dungeon-' + (this.level<10 ? '0' : '') + this.level
+	}
+
 	init(data) {
 		this.selectedCharacter = data.character ?? this.selectedCharacter
 		this.coins = data.coins ?? 0
+		this.level = data.level ?? 1
 		this.lives = data.lives ?? 3
 		this.events.once('shutdown', ()=>{
 			this.input.keyboard.removeAllKeys()
@@ -66,11 +72,13 @@ export default class Game extends Phaser.Scene {
 		createCharacterAnims(this.anims)
 		createEnemyAnims(this.anims)
 		createItemAnims(this.anims)
+		// Tilemap
+        this.load.tilemapTiledJSON(this.levelKey, `tiles/${this.levelKey}.json`)
     }
 
 	create() {
 		// Set up map/layers
-		this.map = this.make.tilemap({key: 'dungeon-01'})
+		this.map = this.make.tilemap({key: this.levelKey})
 		const tileset = this.map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
 		this.map.createStaticLayer('Ground', tileset)
 		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
@@ -228,6 +236,7 @@ export default class Game extends Phaser.Scene {
 			this.scene.start('loselife', {
 				character: this.selectedCharacter,
 				coins: this.player.coins,
+				level: this.level,
 				lives: this.lives,
 			})
         })

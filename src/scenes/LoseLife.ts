@@ -4,6 +4,7 @@ import SoundManager from '../managers/SoundManager'
 export default class LoseLife extends Phaser.Scene {
 
     private character: string = 'faune'
+    private level!: number
     private lives!: number
     private coins!: number
     private sndmgr = new SoundManager(this)
@@ -14,6 +15,7 @@ export default class LoseLife extends Phaser.Scene {
 
     init(data) {
 		this.character = data.character ?? this.character
+        this.level = data.level ?? 1
         this.lives = data.lives ?? 0
         this.coins = data.coins ?? 0
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).once('up', ()=>this.restartLevel())
@@ -53,6 +55,7 @@ export default class LoseLife extends Phaser.Scene {
         this.scene.start(this.nextScene, {
             character: this.character,
             coins: this.coins,
+            level: this.level,
             lives: this.lives,
         })
     }

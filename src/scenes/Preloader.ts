@@ -137,7 +137,6 @@ export default class Preloader extends Phaser.Scene {
         })
         // Tiles
         this.load.image('tiles', 'tiles/dungeon_tiles_extruded.png')
-        this.load.tilemapTiledJSON('dungeon-01', 'tiles/dungeon-01.json')
         this.load.tilemapTiledJSON('dungeon-start', 'tiles/start.json')
         // Atlases
         Object.keys(atlases).forEach(key=>{
