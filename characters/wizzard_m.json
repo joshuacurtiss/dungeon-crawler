@@ -1,0 +1,231 @@
+{
+  "frames": {
+    "wizzard_m_run_anim_f2.png": {
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 15,
+        "h": 21
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 7,
+        "w": 15,
+        "h": 21
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_run_anim_f3.png": {
+      "frame": {
+        "x": 15,
+        "y": 0,
+        "w": 16,
+        "h": 19
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 9,
+        "w": 16,
+        "h": 19
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_hit_anim_f0.png": {
+      "frame": {
+        "x": 15,
+        "y": 19,
+        "w": 14,
+        "h": 21
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 4,
+        "w": 14,
+        "h": 21
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_idle_anim_f1.png": {
+      "frame": {
+        "x": 0,
+        "y": 21,
+        "w": 14,
+        "h": 20
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 8,
+        "w": 14,
+        "h": 20
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_run_anim_f1.png": {
+      "frame": {
+        "x": 29,
+        "y": 19,
+        "w": 14,
+        "h": 20
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 8,
+        "w": 14,
+        "h": 20
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_idle_anim_f2.png": {
+      "frame": {
+        "x": 29,
+        "y": 39,
+        "w": 15,
+        "h": 18
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 10,
+        "w": 15,
+        "h": 18
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_run_anim_f0.png": {
+      "frame": {
+        "x": 14,
+        "y": 40,
+        "w": 15,
+        "h": 18
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 1,
+        "y": 10,
+        "w": 15,
+        "h": 18
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_idle_anim_f0.png": {
+      "frame": {
+        "x": 31,
+        "y": 0,
+        "w": 14,
+        "h": 19
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 9,
+        "w": 14,
+        "h": 19
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    "wizzard_m_idle_anim_f3.png": {
+      "frame": {
+        "x": 0,
+        "y": 41,
+        "w": 14,
+        "h": 18
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 2,
+        "y": 10,
+        "w": 14,
+        "h": 18
+      },
+      "sourceSize": {
+        "w": 16,
+        "h": 28
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  },
+  "meta": {
+    "app": "http://free-tex-packer.com",
+    "version": "0.6.6",
+    "image": "wizzard_m.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 45,
+      "h": 59
+    },
+    "scale": 1
+  }
+}
