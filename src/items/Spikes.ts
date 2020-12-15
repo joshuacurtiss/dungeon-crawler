@@ -6,8 +6,8 @@ export default class Spikes extends Item {
 
     public damageInflicted: number = 10
 
-    constructor(scene:Phaser.Scene, x:number, y:number, texture:string, frame:string|number) {
-        super(scene, x, y, texture, frame)
+    constructor(scene:Phaser.Scene, x:number, y:number) {
+        super(scene, x, y, 'floor_spikes', 0)
         this.play('spikes-spring')
     }
 

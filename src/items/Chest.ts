@@ -4,8 +4,8 @@ import Item from './Item'
 
 export default class Chest extends Item {
 
-    constructor(scene:Phaser.Scene, x:number, y:number, texture:string, frame:string|number) {
-        super(scene, x, y, texture, frame)
+    constructor(scene:Phaser.Scene, x:number, y:number) {
+        super(scene, x, y, 'chest', 0)
         this.play('chest-closed')
     }
 

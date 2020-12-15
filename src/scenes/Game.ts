@@ -88,7 +88,7 @@ export default class Game extends Phaser.Scene {
 		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='chest')
 			.forEach(chestObj=>{
-				chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y, 'treasure')
+				chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y)
 			})
 		// Flasks
 		const flasks = this.physics.add.staticGroup({ classType: Flask })
@@ -105,7 +105,7 @@ export default class Game extends Phaser.Scene {
 		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='floor_spikes')
 			.forEach(obj=>{
-				spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.type)
+				spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
 			})
 		// Add enemies and characters
 		const enemyCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Enemy).setup()
