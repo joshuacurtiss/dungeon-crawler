@@ -90,13 +90,6 @@ export default class Game extends Phaser.Scene {
 			.forEach(chestObj=>{
 				chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y)
 			})
-		// Doors
-		const doors = this.physics.add.staticGroup({ classType: Door })
-		this.map.getObjectLayer('Items')?.objects
-			.filter(obj=>obj.type==='door')
-			.forEach(obj=>{
-				doors.get(obj.x!+16, obj.y!)
-			})
 		// Flasks
 		const flasks = this.physics.add.staticGroup({ classType: Flask })
 		this.map.getObjectLayer('Items')?.objects
@@ -142,13 +135,23 @@ export default class Game extends Phaser.Scene {
 			if( name===this.selectedCharacter ) this.player = new characters[name](this, x, y, this.weapons)
 		})
 		this.player.coins=this.coins
+		// Doors
+		const doorCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Door).setup(this.player)
+		const doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
+		this.map.getObjectLayer('Items')?.objects
+			.filter(obj=>obj.type==='door')
+			.forEach(obj=>{
+				doors.get(obj.x!+16, obj.y!)
+			})
 		// Colliders
 		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
 		this.physics.add.overlap(this.player, [doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
 		this.physics.add.collider(this.player, wallsLayer)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
+		this.physics.add.collider(this.allEnemies, doors)
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
 		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
+			this.physics.add.collider(weaponGroup, doors, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
