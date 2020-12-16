@@ -33,6 +33,7 @@ const audio = {
     'music-game': 'audio/music-game.mp3',
     'music-lose': 'audio/music-lose.mp3',
     'music-menu': 'audio/music-menu.mp3',
+    'music-victory': 'audio/music-victory.mp3',
     'hit-f-1': 'audio/hit-f-1.mp3',
     'hit-f-2': 'audio/hit-f-2.mp3',
     'hit-f-3': 'audio/hit-f-3.mp3',
@@ -66,6 +67,11 @@ const atlases = {
 }
 
 const images = {
+    'button_down': 'items/button_down.png',
+    'button_up': 'items/button_up.png',
+    'crate': 'items/crate.png',
+    'door_closed': 'items/door_closed.png',
+    'door_open': 'items/door_open.png',
     'face_faune': 'characters/faune-face.png',
     'face_fighter': 'characters/fighter-face.png',
     'face_mage': 'characters/mage-face.png',
@@ -74,6 +80,7 @@ const images = {
     'flask_big_green': 'items/flask_big_green.png',
     'flask_big_red': 'items/flask_big_red.png',
     'flask_big_yellow': 'items/flask_big_yellow.png',
+    'lever': 'items/lever.png',
     // 'weapon_anime_sword': 'items/weapon_anime_sword.png',
     'weapon_fireball': 'items/weapon_fireball.png',
     // 'weapon_golden_sword': 'items/weapon_golden_sword.png',

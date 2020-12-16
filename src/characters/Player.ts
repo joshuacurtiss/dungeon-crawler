@@ -123,6 +123,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         weapon?.shoot(this.direction)
     }
 
+    walk(x:number, y:number) {
+        // Animate and set velocity accordingly
+        this.setDirection(x, y)
+        this.setVelocity(x, y)
+        if( this.directionAnim ) this.play(this.directionAnim, true)
+        // If you're moving, you're not touching an item
+        if( x || y ) this.touching = undefined
+    }
+
+    stop() {
+        this.walk(0, 0)
+    }
+
     preUpdate(t:number, dt:number) {
         super.preUpdate(t, dt)
         if( this.damage ) {
@@ -143,19 +156,14 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             else this.shoot()
             return
         }
-        // Calculate velocity based on cursor
+        // Walk
         let x = 0
         let y = 0
         if( cursors.up?.isDown ) y = -this.speed
         else if( cursors.down?.isDown ) y = this.speed
         if( cursors.left?.isDown ) x = -this.speed
         else if( cursors.right?.isDown ) x = this.speed
-        // Animate and set velocity accordingly
-        this.setDirection(x, y)
-        this.setVelocity(x, y)
-        if( this.directionAnim ) this.play(this.directionAnim, true)
-        // If you're moving, you're not touching an item
-        if( x || y ) this.touching = undefined
+        this.walk(x, y)
     }
 
 }

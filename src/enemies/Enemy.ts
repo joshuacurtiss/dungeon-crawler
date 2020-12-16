@@ -32,10 +32,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     set direction(vec: Phaser.Math.Vector2) {
-        if( ! this.onCamera ) return
-        this.scaleX = vec.x<0 ? -1 : vec.x>0 ? 1 : this.scaleX
-        this.body.setOffset(this.scaleX<0 ? this.body.width + this.customOffset.x : this.customOffset.x, this.customOffset.y)
-        this._direction = vec
+        this.setDirection(vec.x, vec.y)
     }
 
     get health(): number {
@@ -64,6 +61,23 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
             this._direction?.setTo(0, 0)
             this.setVelocity(0, 0)
         }
+    }
+
+    public setDirection(x:number, y:number) {
+        if( ! this.onCamera ) return
+        this.scaleX = x<0 ? -1 : x>0 ? 1 : this.scaleX
+        this.body.setOffset(this.scaleX<0 ? this.body.width + this.customOffset.x : this.customOffset.x, this.customOffset.y)
+        if( this._direction ) this._direction.setTo(x, y)
+        else this._direction = new Phaser.Math.Vector2(x, y)
+    }
+
+    public walk(x:number, y:number) {
+        this.setDirection(x, y)
+        this.setVelocity(x, y)
+    }
+
+    public stop() {
+        this.walk(0, 0)
     }
 
     public hit() {

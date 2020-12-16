@@ -89,9 +89,7 @@ export default class MainMenu extends Phaser.Scene {
     }
 
     walk(speed:number = this.speed) {
-        this.player.setDirection(speed, 0)
-        this.player.setVelocityX(speed)
-        this.player.play(this.player.directionAnim, true)
+        this.player.walk(speed, 0)
         this.speed=speed
     }
 

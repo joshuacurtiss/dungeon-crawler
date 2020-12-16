@@ -6,9 +6,10 @@ import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
 import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
-import { Chest, Flask, Item, Spikes } from '../items'
+import { Chest, Door, Flask, Item, Spikes } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
 import { sceneEvents } from '../events/EventCenter'
+import LevelManager from '../managers/LevelManager'
 import SoundManager from '../managers/SoundManager'
 
 const CAMCHECKINTERVAL = 1000
@@ -30,6 +31,8 @@ export default class Game extends Phaser.Scene {
 	private level!: number
 	private lives!: number
 	private sndmgr = new SoundManager(this)
+	private lvlmgr = new LevelManager()
+	private win!: boolean
 
 	constructor() {
 		super('game')
@@ -39,15 +42,12 @@ export default class Game extends Phaser.Scene {
 		return this.enemies ? Object.keys(this.enemies).map(key=>this.enemies![key]) : []
 	}
 
-	get levelKey() {
-		return 'dungeon-' + (this.level<10 ? '0' : '') + this.level
-	}
-
 	init(data) {
 		this.selectedCharacter = data.character ?? this.selectedCharacter
 		this.coins = data.coins ?? 0
 		this.level = data.level ?? 1
 		this.lives = data.lives ?? 3
+		this.win = false
 		this.events.once('shutdown', ()=>{
 			this.input.keyboard.removeAllKeys()
 		})
@@ -73,12 +73,12 @@ export default class Game extends Phaser.Scene {
 		createEnemyAnims(this.anims)
 		createItemAnims(this.anims)
 		// Tilemap
-        this.load.tilemapTiledJSON(this.levelKey, `tiles/${this.levelKey}.json`)
+        this.load.tilemapTiledJSON(this.lvlmgr.levelKey(this.level), `tiles/${this.lvlmgr.levelKey(this.level)}.json`)
     }
 
 	create() {
 		// Set up map/layers
-		this.map = this.make.tilemap({key: this.levelKey})
+		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(this.level)})
 		const tileset = this.map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
 		this.map.createStaticLayer('Ground', tileset)
 		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
@@ -89,6 +89,13 @@ export default class Game extends Phaser.Scene {
 			.filter(obj=>obj.type==='chest')
 			.forEach(chestObj=>{
 				chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y)
+			})
+		// Doors
+		const doors = this.physics.add.staticGroup({ classType: Door })
+		this.map.getObjectLayer('Items')?.objects
+			.filter(obj=>obj.type==='door')
+			.forEach(obj=>{
+				doors.get(obj.x!+16, obj.y!)
 			})
 		// Flasks
 		const flasks = this.physics.add.staticGroup({ classType: Flask })
@@ -137,7 +144,7 @@ export default class Game extends Phaser.Scene {
 		this.player.coins=this.coins
 		// Colliders
 		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.player, [flasks, spikes], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.player, [doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
 		this.physics.add.collider(this.player, wallsLayer)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
@@ -147,8 +154,10 @@ export default class Game extends Phaser.Scene {
 		})
 		// Player death handler
         sceneEvents.on('player-dead', this.handlePlayerDead, this)
+        sceneEvents.on('player-exit', this.handlePlayerExit, this)
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
             sceneEvents.off('player-dead', this.handlePlayerDead, this)
+            sceneEvents.off('player-exit', this.handlePlayerExit, this)
         })
 		// Set up UI
 		this.cameras.main.fadeIn(1000, 0, 0, 0)
@@ -242,6 +251,25 @@ export default class Game extends Phaser.Scene {
         })
 	}
 
+	private handlePlayerExit() {
+		if( this.win ) return
+		this.win = true
+		this.scene.stop('pause')
+		this.scene.stop('game-ui')
+		this.sndmgr.fade('music-game')
+		this.player.stop()
+		this.cameras.main.fadeOut(1000, 0, 0, 0)
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
+			this.scene.stop()
+			this.scene.start(this.level===this.lvlmgr.levelCount ? 'wingame' : 'winlevel', {
+				character: this.selectedCharacter,
+				coins: this.player.coins,
+				level: this.level,
+				lives: this.lives,
+			})
+        })
+	}
+
 	private handleKeyCombo(combo:Phaser.Input.Keyboard.KeyCombo) {
 		const code = combo.keyCodes.map(charcode=>String.fromCharCode(charcode)).join('')
 		if (code==='GONE') {
@@ -272,6 +300,13 @@ export default class Game extends Phaser.Scene {
 	
 	update(t: number, dt: number) {
 		super.update(t, dt)
+		if( this.win ) {
+			// Stop all the characters from walking if the player has won
+			this.allEnemies.forEach((group:Phaser.Physics.Arcade.Group)=>{
+				group.children.iterate(enemy=>(enemy as Enemy).stop())
+			})
+			return
+		}
 		if( t > this.lastCamCheck + CAMCHECKINTERVAL ) this.checkCamera(t)
 		this.player.update(this.cursors)
 	}

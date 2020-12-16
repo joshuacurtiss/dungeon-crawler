@@ -8,6 +8,8 @@ import MainMenu from './scenes/MainMenu'
 import Options from './scenes/Options'
 import Pause from './scenes/Pause'
 import Start from './scenes/Start'
+import WinLevel from './scenes/WinLevel'
+import WinGame from './scenes/WinGame'
 
 const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
 const DEFAULT_HEIGHT = 250
@@ -29,7 +31,7 @@ export default new Phaser.Game({
 	render: {
 		pixelArt: true
 	},
-	scene: [Preloader, MainMenu, Options, Start, Game, Pause, LoseLife, GameUI],
+	scene: [Preloader, MainMenu, Options, Start, Game, Pause, LoseLife, GameUI, WinLevel, WinGame],
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,

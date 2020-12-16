@@ -1,11 +1,13 @@
 import Phaser from 'phaser'
 
 import MenuItem from '../ui/MenuItem'
+import LevelManager from '../managers/LevelManager'
 import SoundManager from '../managers/SoundManager'
 
 export default class Start extends Phaser.Scene {
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
+    private lvlmgr = new LevelManager()
     private sndmgr = new SoundManager(this)
     private level: number = 1
     private menu: MenuItem[] = []
@@ -106,7 +108,7 @@ export default class Start extends Phaser.Scene {
     private select() {
         const item = this.menuSelection
         if( item.key ) {
-            this.level = this.level==5 ? 1 : (this.level+1)
+            this.level = this.level==this.lvlmgr.levelCount ? 1 : (this.level+1)
             item.num = this.level
         }
         if( item.nextScene ) {
