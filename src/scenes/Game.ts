@@ -6,7 +6,7 @@ import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
 import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
-import { Chest, Door, Flask, Item, Lever, Spikes } from '../items'
+import { Chest, Crate, Door, Flask, Item, Lever, Spikes } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
 import { sceneEvents } from '../events/EventCenter'
 import LevelManager from '../managers/LevelManager'
@@ -84,39 +84,38 @@ export default class Game extends Phaser.Scene {
 		this.map.createStaticLayer('Ground', tileset)
 		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
+		const itemObjects = this.map.getObjectLayer('Items')?.objects
 		// Chests
 		const chests = this.physics.add.staticGroup({ classType: Chest })
-		this.map.getObjectLayer('Items')?.objects
-			.filter(obj=>obj.type==='chest')
-			.forEach(chestObj=>{
-				chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y)
-			})
+		itemObjects.filter(obj=>obj.type==='chest').forEach(chestObj=>{
+			chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y)
+		})
+		// Crates
+		const crateCreateCallback = go=>(go as Crate).setup()
+		const crates = this.physics.add.group({ classType: Crate, createCallback: crateCreateCallback })
+		itemObjects.filter(obj=>obj.type==='crate').forEach(obj=>{
+			crates.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+		})
 		// Flasks
 		const flasks = this.physics.add.staticGroup({ classType: Flask })
-		this.map.getObjectLayer('Items')?.objects
-			.filter(obj=>obj.type==='poison' || obj.type==='potion' || obj.type.indexOf('flask_')===0)
-			.forEach(obj=>{
-				const type = obj.type==='poison' ? 'flask_big_red' : obj.type==='potion' ? 'flask_big_blue' : obj.type
-				const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, type) as Flask
-				if( obj.type==='poison' ) flask.power=-1
-				if( obj.name.length && ! isNaN(Number(obj.name)) ) flask.power=Number(obj.name)
-			})
+		itemObjects.filter(obj=>obj.type==='poison' || obj.type==='potion' || obj.type.indexOf('flask_')===0).forEach(obj=>{
+			const type = obj.type==='poison' ? 'flask_big_red' : obj.type==='potion' ? 'flask_big_blue' : obj.type
+			const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, type) as Flask
+			if( obj.type==='poison' ) flask.power=-1
+			if( obj.name.length && ! isNaN(Number(obj.name)) ) flask.power=Number(obj.name)
+		})
 		// Levers
 		const levers = this.physics.add.staticGroup({ classType: Lever })
-		this.map.getObjectLayer('Items')?.objects
-			.filter(obj=>obj.type==='lever')
-			.forEach(obj=>{
-				levers.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
-			})
+		itemObjects.filter(obj=>obj.type==='lever').forEach(obj=>{
+			levers.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+		})
 		// Spikes
 		const spikes = this.physics.add.staticGroup({ classType: Spikes })
-		this.map.getObjectLayer('Items')?.objects
-			.filter(obj=>obj.type==='floor_spikes')
-			.forEach(obj=>{
-				spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
-			})
+		itemObjects.filter(obj=>obj.type==='floor_spikes').forEach(obj=>{
+			spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
+		})
 		// Add enemies and characters
-		const enemyCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Enemy).setup()
+		const enemyCreateCallback = go=>(go as Enemy).setup()
 		this.enemies = {
 			'chort': this.physics.add.group({classType: Chort, createCallback: enemyCreateCallback}),
 			'ice_zombie': this.physics.add.group({classType: IceZombie, createCallback: enemyCreateCallback}),
@@ -144,20 +143,24 @@ export default class Game extends Phaser.Scene {
 		})
 		this.player.coins=this.coins
 		// Doors
-		const doorCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Door).setup(this.player)
+		const doorCreateCallback = go=>(go as Door).setup(this.player)
 		this.doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
-		this.map.getObjectLayer('Items')?.objects
-			.filter(obj=>obj.type==='door')
-			.forEach(obj=>this.doors.get(obj.x!+16, obj.y!, obj.name))
+		itemObjects.filter(obj=>obj.type==='door').forEach(obj=>{
+			this.doors.get(obj.x!+16, obj.y!, obj.name)
+		})
 		// Colliders
 		this.physics.add.overlap(this.player, [chests, levers], this.handlePlayerTouchItem, undefined, this)
 		this.physics.add.overlap(this.player, [this.doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.collider(this.player, crates)
 		this.physics.add.collider(this.player, wallsLayer)
+		this.physics.add.collider(crates, wallsLayer)
+		this.physics.add.collider(crates, crates)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
-		this.physics.add.collider(this.allEnemies, this.doors)
+		this.physics.add.collider(this.allEnemies, crates, this.handleEnemyWallCollision, undefined, this)
+		this.physics.add.collider(this.allEnemies, [crates, this.doors])
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
 		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
-			this.physics.add.collider(weaponGroup, this.doors, this.handleWeaponWallCollision, undefined, this)
+			this.physics.add.collider(weaponGroup, [crates, this.doors], this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
