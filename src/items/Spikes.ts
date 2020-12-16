@@ -16,7 +16,10 @@ export default class Spikes extends Item {
     }
 
     use(player:Player) {
-        if( this.sprung ) player.health -= this.damageInflicted
+        if( this.used ) return
+        const diff = player.y - this.y
+        if( this.sprung && diff < -3 && diff > -20 ) player.health -= this.damageInflicted
+        else return
         super.use(player)
     }
 
