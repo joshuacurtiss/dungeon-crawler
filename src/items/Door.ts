@@ -8,8 +8,9 @@ export default class Door extends Item {
     public _open:boolean = false
     private collider?:Phaser.Physics.Arcade.Collider
 
-    constructor(scene:Phaser.Scene, x:number, y:number) {
+    constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
         super(scene, x, y, 'door_closed', 0)
+        this.name=name
     }
 
     setup(player:Player) {

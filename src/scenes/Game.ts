@@ -6,7 +6,7 @@ import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
 import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
-import { Chest, Door, Flask, Item, Spikes } from '../items'
+import { Chest, Door, Flask, Item, Lever, Spikes } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
 import { sceneEvents } from '../events/EventCenter'
 import LevelManager from '../managers/LevelManager'
@@ -22,6 +22,7 @@ export default class Game extends Phaser.Scene {
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private player!: Player
+	private doors!: Phaser.Physics.Arcade.StaticGroup
 	private enemies!: EnemyList
 	private weapons!: WeaponList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
@@ -100,6 +101,13 @@ export default class Game extends Phaser.Scene {
 				if( obj.type==='poison' ) flask.power=-1
 				if( obj.name.length && ! isNaN(Number(obj.name)) ) flask.power=Number(obj.name)
 			})
+		// Levers
+		const levers = this.physics.add.staticGroup({ classType: Lever })
+		this.map.getObjectLayer('Items')?.objects
+			.filter(obj=>obj.type==='lever')
+			.forEach(obj=>{
+				levers.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+			})
 		// Spikes
 		const spikes = this.physics.add.staticGroup({ classType: Spikes })
 		this.map.getObjectLayer('Items')?.objects
@@ -137,28 +145,28 @@ export default class Game extends Phaser.Scene {
 		this.player.coins=this.coins
 		// Doors
 		const doorCreateCallback = (go:Phaser.GameObjects.GameObject) => (go as Door).setup(this.player)
-		const doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
+		this.doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
 		this.map.getObjectLayer('Items')?.objects
 			.filter(obj=>obj.type==='door')
-			.forEach(obj=>{
-				doors.get(obj.x!+16, obj.y!)
-			})
+			.forEach(obj=>this.doors.get(obj.x!+16, obj.y!, obj.name))
 		// Colliders
-		this.physics.add.overlap(this.player, chests, this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.player, [doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.player, [chests, levers], this.handlePlayerTouchItem, undefined, this)
+		this.physics.add.overlap(this.player, [this.doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
 		this.physics.add.collider(this.player, wallsLayer)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
-		this.physics.add.collider(this.allEnemies, doors)
+		this.physics.add.collider(this.allEnemies, this.doors)
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
 		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
-			this.physics.add.collider(weaponGroup, doors, this.handleWeaponWallCollision, undefined, this)
+			this.physics.add.collider(weaponGroup, this.doors, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
-		// Player death handler
+		// Event Handlers
+        sceneEvents.on('lever', this.handleLever, this)
         sceneEvents.on('player-dead', this.handlePlayerDead, this)
         sceneEvents.on('player-exit', this.handlePlayerExit, this)
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
+			sceneEvents.off('lever', this.handleLever, this)
             sceneEvents.off('player-dead', this.handlePlayerDead, this)
             sceneEvents.off('player-exit', this.handlePlayerExit, this)
         })
@@ -271,6 +279,11 @@ export default class Game extends Phaser.Scene {
 				lives: this.lives,
 			})
         })
+	}
+
+	private handleLever(name:string) {
+		const door = this.doors.getChildren().find(door=>door.name===name) as Door
+		if( door ) door.open=true
 	}
 
 	private handleKeyCombo(combo:Phaser.Input.Keyboard.KeyCombo) {

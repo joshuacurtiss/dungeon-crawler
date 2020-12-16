@@ -5387,7 +5387,7 @@
   <object id="73" gid="452" x="912" y="1152" width="16" height="16"/>
   <object id="74" gid="483" x="896" y="1168" width="16" height="16"/>
   <object id="75" gid="484" x="912" y="1168" width="16" height="16"/>
-  <object id="76" name="exit" type="level" gid="390" x="529" y="1136.64" width="16" height="16"/>
+  <object id="76" name="exit" type="lever" gid="390" x="529" y="1136.64" width="16" height="16"/>
   <object id="77" type="floor_spikes" gid="354" x="721" y="560" width="16" height="16"/>
   <object id="78" type="floor_spikes" gid="354" x="737" y="560" width="16" height="16"/>
   <object id="79" type="crate" gid="627" x="928" y="976" width="16" height="16">

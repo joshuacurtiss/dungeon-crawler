@@ -656,7 +656,7 @@
                  "id":76,
                  "name":"exit",
                  "rotation":0,
-                 "type":"level",
+                 "type":"lever",
                  "visible":true,
                  "width":16,
                  "x":529,
