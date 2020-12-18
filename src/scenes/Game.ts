@@ -83,6 +83,7 @@ export default class Game extends Phaser.Scene {
 		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(this.level)})
 		const tilesets = [
 			this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2),
+			this.map.addTilesetImage('dungeon_tiles', undefined, 16, 16, 1, 2),
 			this.map.addTilesetImage('roguelike_transparent', undefined, 16, 16, 1, 3),
 		]
 		this.map.createStaticLayer('Subground', tilesets)
