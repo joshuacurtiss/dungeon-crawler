@@ -1,4 +1,6 @@
+import Button from './Button'
 import Chest from './Chest'
+import Coin from './Coin'
 import Crate from './Crate'
 import Door from './Door'
 import Flask from './Flask'
@@ -7,8 +9,10 @@ import Lever from './Lever'
 import Spikes from './Spikes'
 
 export {
-    Crate,
+    Button,
     Chest,
+    Coin,
+    Crate,
     Door,
     Flask,
     Item,

@@ -7,6 +7,7 @@ export default class Door extends Item {
 
     public _open:boolean = false
     private collider?:Phaser.Physics.Arcade.Collider
+    private player?:Player
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
         super(scene, x, y, 'door_closed', 0)
@@ -14,16 +15,21 @@ export default class Door extends Item {
     }
 
     setup(player:Player) {
-        this.collider = this.scene.physics.add.collider(player, this)
+        this.player = player
+        this.setCollider()
     }
 
     get open() {
         return this._open
     }
     set open(bool:boolean) {
+        if( this._open===bool ) return
         if( bool ) {
             this.collider?.destroy()
-            this.sndmgr.play('door')
+            this.sndmgr.play('door-open')
+        } else {
+            this.setCollider()
+            this.sndmgr.play('door-closed')
         }
         this.setTexture('door_' + (bool ? 'open' : 'closed'))
         this._open = bool
@@ -34,6 +40,10 @@ export default class Door extends Item {
         if( Math.abs(player.y - this.y) <= 5 ) sceneEvents.emit('player-exit')
         else return
         super.use(player)
+    }
+
+    private setCollider() {
+        if( this.player ) this.collider = this.scene.physics.add.collider(this.player, this)
     }
 
 }

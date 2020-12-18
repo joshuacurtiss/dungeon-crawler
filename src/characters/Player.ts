@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 import Enemy from '../enemies/Enemy'
-import Item from '../items/Item'
+import {Crate, Item} from '../items'
 import SoundManager from '../managers/SoundManager'
 import Weapon from '../weapons/Weapon'
 import { sceneEvents } from '../events/EventCenter'
@@ -10,6 +10,8 @@ enum HealthState {
     DAMAGE,
     DEAD
 }
+
+const pushSpeed = 50
 
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
@@ -107,6 +109,21 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         return this.body.velocity.x || this.body.velocity.y
     }
 
+    get pushing() {
+        const touch = this.body.touching
+        if( touch.none ) return false
+        // Check if there's a crate in the direction they are touching something
+        const dist = 5 // distance to look for
+        const body = this.body
+        const x = touch.left ? body.x-dist : touch.right ? body.x+body.width : body.x
+        const y = touch.up ? body.y-dist : touch.down ? body.y+body.height : body.y
+        const width = touch.up || touch.down ? body.width : dist
+        const height = touch.left || touch.right ? body.height : dist
+        const bodies=this.scene.physics.overlapRect(x, y, width, height) as any[]
+        const crates = bodies.filter(b=>b.gameObject ! instanceof Crate)
+        return crates.length>0
+    }
+
     hit(obj: Weapon | Enemy) {
         if( this.damage || this.dead ) return
 		const dir = new Phaser.Math.Vector2(this.x-obj.x, this.y-obj.y).normalize().scale(200)
@@ -159,10 +176,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Walk
         let x = 0
         let y = 0
-        if( cursors.up?.isDown ) y = -this.speed
-        else if( cursors.down?.isDown ) y = this.speed
-        if( cursors.left?.isDown ) x = -this.speed
-        else if( cursors.right?.isDown ) x = this.speed
+        const speed = this.pushing ? pushSpeed : this.speed
+        if( cursors.up?.isDown ) y = -speed
+        else if( cursors.down?.isDown ) y = speed
+        if( cursors.left?.isDown ) x = -speed
+        else if( cursors.right?.isDown ) x = speed
         this.walk(x, y)
     }
 

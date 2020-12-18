@@ -9,9 +9,10 @@ export default class Crate extends Item {
     }
 
     setup() {
+        this.body.setSize(this.width*0.8, this.height*0.9)
         this.setDamping(true)
-        this.setDrag(0.80)
-        this.setBounce(0.5)
+        this.setBounce(0)
+        this.setDrag(0.1)
     }
 
 }

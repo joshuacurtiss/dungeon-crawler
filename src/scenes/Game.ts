@@ -6,22 +6,23 @@ import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
 import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
-import { Chest, Crate, Door, Flask, Item, Lever, Spikes } from '../items'
+import { Button, Chest, Coin, Crate, Door, Flask, Item, Lever, Spikes } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
 import { sceneEvents } from '../events/EventCenter'
 import LevelManager from '../managers/LevelManager'
 import SoundManager from '../managers/SoundManager'
 
-const CAMCHECKINTERVAL = 1000
+const CHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
 
-	private lastCamCheck: number = 0
+	private lastCheck: number = 0
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private player!: Player
+	private buttons!: Phaser.Physics.Arcade.StaticGroup
 	private doors!: Phaser.Physics.Arcade.StaticGroup
 	private enemies!: EnemyList
 	private weapons!: WeaponList
@@ -85,14 +86,24 @@ export default class Game extends Phaser.Scene {
 		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
 		wallsLayer.setCollisionByProperty({collides: true})
 		const itemObjects = this.map.getObjectLayer('Items')?.objects
+		const createcb = go=>(go as Button|Crate|Enemy).setup()
+		// Buttons
+		this.buttons = this.physics.add.staticGroup({ classType: Button, createCallback: createcb })
+		itemObjects.filter(obj=>obj.type==='button').forEach(obj=>{
+			this.buttons.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+		})
 		// Chests
 		const chests = this.physics.add.staticGroup({ classType: Chest })
 		itemObjects.filter(obj=>obj.type==='chest').forEach(chestObj=>{
 			chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y)
 		})
+		// Coins
+		const coins = this.physics.add.group({ classType: Coin })
+		itemObjects.filter(obj=>obj.type==='coin').forEach(obj=>{
+			coins.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
+		})
 		// Crates
-		const crateCreateCallback = go=>(go as Crate).setup()
-		const crates = this.physics.add.group({ classType: Crate, createCallback: crateCreateCallback })
+		const crates = this.physics.add.group({ classType: Crate, createCallback: createcb })
 		itemObjects.filter(obj=>obj.type==='crate').forEach(obj=>{
 			crates.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
 		})
@@ -115,19 +126,18 @@ export default class Game extends Phaser.Scene {
 			spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
 		})
 		// Add enemies and characters
-		const enemyCreateCallback = go=>(go as Enemy).setup()
 		this.enemies = {
-			'chort': this.physics.add.group({classType: Chort, createCallback: enemyCreateCallback}),
-			'ice_zombie': this.physics.add.group({classType: IceZombie, createCallback: enemyCreateCallback}),
-			'imp': this.physics.add.group({classType: Imp, createCallback: enemyCreateCallback}),
-			'lizard_m': this.physics.add.group({classType: LizardM, createCallback: enemyCreateCallback}),
-			'lizard_f': this.physics.add.group({classType: LizardF, createCallback: enemyCreateCallback}),
-			'masked_orc': this.physics.add.group({classType: MaskedOrc, createCallback: enemyCreateCallback}),
-			'mushroom': this.physics.add.group({classType: Mushroom, createCallback: enemyCreateCallback}),
-			'necromancer': this.physics.add.group({classType: Necromancer, createCallback: enemyCreateCallback}),
-			'skelet': this.physics.add.group({classType: Skelet, createCallback: enemyCreateCallback}),
-			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: enemyCreateCallback}),
-			'big_zombie': this.physics.add.group({classType: BigZombie, createCallback: enemyCreateCallback})
+			'chort': this.physics.add.group({classType: Chort, createCallback: createcb}),
+			'ice_zombie': this.physics.add.group({classType: IceZombie, createCallback: createcb}),
+			'imp': this.physics.add.group({classType: Imp, createCallback: createcb}),
+			'lizard_m': this.physics.add.group({classType: LizardM, createCallback: createcb}),
+			'lizard_f': this.physics.add.group({classType: LizardF, createCallback: createcb}),
+			'masked_orc': this.physics.add.group({classType: MaskedOrc, createCallback: createcb}),
+			'mushroom': this.physics.add.group({classType: Mushroom, createCallback: createcb}),
+			'necromancer': this.physics.add.group({classType: Necromancer, createCallback: createcb}),
+			'skelet': this.physics.add.group({classType: Skelet, createCallback: createcb}),
+			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: createcb}),
+			'big_zombie': this.physics.add.group({classType: BigZombie, createCallback: createcb})
 		}
 		this.spawnEnemies()
 		this.weapons = {
@@ -150,7 +160,8 @@ export default class Game extends Phaser.Scene {
 		})
 		// Colliders
 		this.physics.add.overlap(this.player, [chests, levers], this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.player, [this.doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.player, [coins, this.doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.buttons, crates, this.handleButtonOverlap, undefined, this)
 		this.physics.add.collider(this.player, crates)
 		this.physics.add.collider(this.player, wallsLayer)
 		this.physics.add.collider(crates, wallsLayer)
@@ -165,10 +176,12 @@ export default class Game extends Phaser.Scene {
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
 		// Event Handlers
+        sceneEvents.on('button', this.handleButton, this)
         sceneEvents.on('lever', this.handleLever, this)
         sceneEvents.on('player-dead', this.handlePlayerDead, this)
         sceneEvents.on('player-exit', this.handlePlayerExit, this)
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
+			sceneEvents.off('button', this.handleButton, this)
 			sceneEvents.off('lever', this.handleLever, this)
             sceneEvents.off('player-dead', this.handlePlayerDead, this)
             sceneEvents.off('player-exit', this.handlePlayerExit, this)
@@ -183,12 +196,16 @@ export default class Game extends Phaser.Scene {
 			health: this.player.health,
 		})
 		this.cameras.main.startFollow(this.player, true)
-		setTimeout(()=>{ this.checkCamera() }, 0) // After next tick so camera view is defined
+		setTimeout(()=>{ this.check() }, 0) // After next tick so camera view is defined
 		this.sndmgr.play('music-game', { loop: true })
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
 	}
 
-	private checkCamera(t:number=CAMCHECKINTERVAL+1) {
+	private check(t:number=CHECKINTERVAL+1) {
+		this.lastCheck = t
+		//
+		// Camera Check
+		//
 		const cam = this.cameras.main.worldView
 		const rect = this.extendedCameraView
 		// Adjust extended view with current camera
@@ -202,7 +219,13 @@ export default class Game extends Phaser.Scene {
 				enemy.onCamera = rect.contains(enemy.x, enemy.y)
 			})
 		})
-		this.lastCamCheck = t
+		//
+		// Button Check 
+		//
+		this.buttons.children.iterate(go=>{
+			const button = go as Button
+			if( ! button.hasCrate ) button.pressed=false
+		})
 	}
 
 	private spawnEnemies() {
@@ -211,6 +234,11 @@ export default class Game extends Phaser.Scene {
 			.forEach(obj=>{
 				if( this.enemies[obj.name] ) this.enemies[obj.name].get(obj.x, obj.y, obj.name)
 			})
+	}
+
+	private handleButtonOverlap(obj1: Phaser.GameObjects.GameObject) {
+		const button = obj1 as Button
+		button.pressed = true
 	}
 
 	private handleEnemyWallCollision(obj1: Phaser.GameObjects.GameObject) {
@@ -284,6 +312,13 @@ export default class Game extends Phaser.Scene {
         })
 	}
 
+	private handleButton() {
+		const allButtons = this.buttons.children.getArray()
+		const solved = allButtons.every(go=>(go as Button).pressed)
+		const door = this.doors.getChildren().find(obj=>obj.name==='buttons')
+		if( door ) (door as Door).open=solved
+	}
+
 	private handleLever(name:string) {
 		const door = this.doors.getChildren().find(door=>door.name===name) as Door
 		if( door ) door.open=true
@@ -326,7 +361,7 @@ export default class Game extends Phaser.Scene {
 			})
 			return
 		}
-		if( t > this.lastCamCheck + CAMCHECKINTERVAL ) this.checkCamera(t)
+		if( t > this.lastCheck + CHECKINTERVAL ) this.check(t)
 		this.player.update(this.cursors)
 	}
 }
