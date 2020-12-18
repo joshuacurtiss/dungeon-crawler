@@ -15,8 +15,9 @@ export default class SoundManager {
         const isMusic = key.indexOf('music')>=0
         if( isMusic && !this.config.music ) return
         if( !isMusic && !this.config.sfx ) return
-        if( this.scene.sound.get(key) ) return
-        this.scene.sound.play(key, extra)
+        const snd = this.scene.sound.get(key)
+        if( snd && snd.isPlaying ) snd.play()
+        else this.scene.sound.play(key, extra)
     }
 
     public fade(key: string, duration: number = 800) {
