@@ -1,4 +1,4 @@
-const LEVELCOUNT = 5
+const LEVELCOUNT = 6
 
 export default class LevelManager {
 
