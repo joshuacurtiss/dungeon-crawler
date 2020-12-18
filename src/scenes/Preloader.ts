@@ -144,7 +144,8 @@ export default class Preloader extends Phaser.Scene {
             progressBox.destroy()
         })
         // Tiles
-        this.load.image('tiles', 'tiles/dungeon_tiles_extruded.png')
+        this.load.image('dungeon', 'tiles/dungeon_tiles_extruded.png')
+        this.load.image('roguelike_transparent', 'tiles/roguelike_transparent_extruded.png')
         this.load.tilemapTiledJSON('dungeon-start', 'tiles/start.json')
         // Atlases
         Object.keys(atlases).forEach(key=>{
@@ -161,7 +162,7 @@ export default class Preloader extends Phaser.Scene {
     }
 
     create() {
-        this.scene.start('mainmenu')
+        this.scene.start('game')
     }
     
 }

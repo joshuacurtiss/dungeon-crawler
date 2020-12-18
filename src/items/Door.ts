@@ -37,7 +37,7 @@ export default class Door extends Item {
 
     use(player:Player) {
         if( ! this.open || this.used ) return
-        if( Math.abs(player.y - this.y) <= 5 ) sceneEvents.emit('player-exit')
+        if( Math.abs(player.y - this.y) <= 5 && this.name==='exit' ) sceneEvents.emit('player-exit')
         else return
         super.use(player)
     }

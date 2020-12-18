@@ -81,9 +81,13 @@ export default class Game extends Phaser.Scene {
 	create() {
 		// Set up map/layers
 		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(this.level)})
-		const tileset = this.map.addTilesetImage('dungeon', 'tiles', 16, 16, 1, 2)
-		this.map.createStaticLayer('Ground', tileset)
-		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
+		const tilesets = [
+			this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2),
+			this.map.addTilesetImage('roguelike_transparent', undefined, 16, 16, 1, 3),
+		]
+		this.map.createStaticLayer('Subground', tilesets)
+		this.map.createStaticLayer('Ground', tilesets)
+		const wallsLayer = this.map.createStaticLayer('Walls', tilesets)
 		wallsLayer.setCollisionByProperty({collides: true})
 		const itemObjects = this.map.getObjectLayer('Items')?.objects
 		const createcb = go=>(go as Button|Crate|Enemy).setup()
