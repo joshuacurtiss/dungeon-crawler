@@ -176,7 +176,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.allEnemies, [crates, this.doors])
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
 		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
-			this.physics.add.collider(weaponGroup, [crates, this.doors], this.handleWeaponWallCollision, undefined, this)
+			this.physics.add.collider(weaponGroup, crates, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})

@@ -1,12 +1,14 @@
 import Phaser from 'phaser'
 import Player from '../characters/Player'
 import Item from './Item'
+import Weapon from '../weapons/Weapon'
 import { sceneEvents } from '../events/EventCenter'
 
 export default class Door extends Item {
 
     public _open:boolean = false
-    private collider?:Phaser.Physics.Arcade.Collider
+    private playerCollider?:Phaser.Physics.Arcade.Collider
+    private weaponCollider?:Phaser.Physics.Arcade.Collider
     private player?:Player
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
@@ -16,7 +18,7 @@ export default class Door extends Item {
 
     setup(player:Player) {
         this.player = player
-        this.setCollider()
+        this.setColliders()
     }
 
     get open() {
@@ -25,10 +27,11 @@ export default class Door extends Item {
     set open(bool:boolean) {
         if( this._open===bool ) return
         if( bool ) {
-            this.collider?.destroy()
+            if( this.playerCollider ) this.playerCollider.destroy()
+            if( this.weaponCollider ) this.weaponCollider.destroy()
             this.sndmgr.play('door-open')
         } else {
-            this.setCollider()
+            this.setColliders()
             this.sndmgr.play('door-closed')
         }
         this.setTexture('door_' + (bool ? 'open' : 'closed'))
@@ -42,8 +45,16 @@ export default class Door extends Item {
         super.use(player)
     }
 
-    private setCollider() {
-        if( this.player ) this.collider = this.scene.physics.add.collider(this.player, this)
+    private setColliders() {
+        if( this.player ) {
+            this.playerCollider = this.scene.physics.add.collider(this.player, this)
+            if( this.player.weapon ) this.weaponCollider = this.scene.physics.add.collider(this.player.weapon, this, this.handleWeaponCollide)
+        }
     }
+
+    private handleWeaponCollide(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const weapon = obj2 as Weapon
+		weapon.miss()
+	}
 
 }
