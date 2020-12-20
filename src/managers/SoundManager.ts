@@ -13,8 +13,8 @@ export default class SoundManager {
 
     public play(key: string, extra?: Phaser.Types.Sound.SoundConfig | Phaser.Types.Sound.SoundMarker | undefined) {
         const isMusic = key.indexOf('music')>=0
-        if( isMusic && !this.config.music ) return
-        if( !isMusic && !this.config.sfx ) return
+        if( isMusic && !this.config.getBoolean('music') ) return
+        if( !isMusic && !this.config.getBoolean('sfx') ) return
         const snd = this.scene.sound.get(key)
         if( snd && snd.isPlaying ) snd.play()
         else this.scene.sound.play(key, extra)

@@ -4,30 +4,24 @@ export default class ConfigManager {
         return this
     }
 
-    get music():boolean {
-        return this.getBool('music') || this.notExist('music')
-    }
-    set music(bool:boolean) {
-        this.setBool('music', bool)
-    }
-
-    get sfx():boolean {
-        return this.getBool('sfx') || this.notExist('sfx')
-    }
-    set sfx(bool:boolean) {
-        this.setBool('sfx', bool)
+    public getNumber(key:string, defaultVal=0):number {
+        const val=localStorage.getItem(key)
+        if( val===null ) return defaultVal
+        return Number(val)
     }
 
-    private getBool(key:string):boolean {
-        return localStorage.getItem(key)==='1'
+    public setNumber(key:string, val:number) {
+        localStorage.setItem(key, val.toString())
     }
 
-    private setBool(key:string, bool:boolean) {
-        return localStorage.setItem(key, bool ? '1' : '0')
+    public getBoolean(key:string, defaultVal=true):boolean {
+        const bool=localStorage.getItem(key)
+        if( bool===null ) return defaultVal
+        return bool==='1'
     }
 
-    private notExist(key:string):boolean {
-        return localStorage.getItem(key)===null
+    public setBoolean(key:string, bool:boolean) {
+        localStorage.setItem(key, bool ? '1' : '0')
     }
 
 }

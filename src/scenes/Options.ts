@@ -64,8 +64,8 @@ export default class Options extends Phaser.Scene {
     }
 
     create() {
-        this.menu[0].chk = this.config.music
-        this.menu[1].chk = this.config.sfx
+        this.menu[0].chk = this.config.getBoolean('music')
+        this.menu[1].chk = this.config.getBoolean('sfx')
         this.cameras.main.fadeIn(1000, 0, 0, 0)
     }
 
@@ -73,7 +73,7 @@ export default class Options extends Phaser.Scene {
         const item=this.menuSelection
         if( item.key ) {
             item.chk = ! item.chk
-            this.config[item.key] = item.chk
+            this.config.setBoolean(item.key, item.chk)
             if( item.key==='music' ) {
                 if( item.chk ) this.sndmgr.play('music-menu', {loop: true})
                 else this.sndmgr.remove('music-menu')
