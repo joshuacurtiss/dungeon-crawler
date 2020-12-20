@@ -11,8 +11,6 @@ enum HealthState {
     DEAD
 }
 
-const pushSpeed = 50
-
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     private _coins = 0
@@ -109,19 +107,46 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         return this.body.velocity.x || this.body.velocity.y
     }
 
-    get pushing() {
-        const touch = this.body.touching
-        if( touch.none ) return false
+    /**
+     * Detects whether player is pushing one or more crates, and returns the multiplier to change the speed.
+     * @param dirX The horizontal direction.
+     * @param dirY The vertical direction.
+     */
+    adjustSpeed(dirX:number, dirY:number):number {
+        let response = 1
+        if( !dirX && !dirY ) return 0
         // Check if there's a crate in the direction they are touching something
-        const dist = 5 // distance to look for
+        const dist = 3 // distance to look for
         const body = this.body
-        const x = touch.left ? body.x-dist : touch.right ? body.x+body.width : body.x
-        const y = touch.up ? body.y-dist : touch.down ? body.y+body.height : body.y
-        const width = touch.up || touch.down ? body.width : dist
-        const height = touch.left || touch.right ? body.height : dist
+        const x = dirX<0 ? body.x-dist : body.x
+        const y = dirY<0 ? body.y-dist : body.y
+        const width = body.width + (dirX ? dist : 0)
+        const height = body.height + (dirY ? dist : 0)
         const bodies=this.scene.physics.overlapRect(x, y, width, height) as any[]
-        const crates = bodies.filter(b=>b.gameObject ! instanceof Crate)
-        return crates.length>0
+        const crates = bodies.filter(b=>b.gameObject ! instanceof Crate).map(b=>b.gameObject)
+        if( crates.length ) {
+            response = 0.66
+            // Block check
+            let x1=99999, x2=0, y1=99999, y2=0
+            crates.forEach(crate=>{
+                const { halfWidth, halfHeight } = crate.body
+                if( x1>crate.x-halfWidth ) x1=crate.x-halfWidth
+                if( x2<crate.x+halfWidth ) x2=crate.x+halfWidth
+                if( y1>crate.y-halfHeight ) y1=crate.y-halfHeight
+                if( y2<crate.y+halfHeight ) y2=crate.y+halfHeight
+            })
+            if( dirX<0 ) x1-=dist
+            if( dirX>0 ) x2+=dist
+            if( dirY<0 ) y1-=dist
+            if( dirY>0 ) y2+=dist
+            const bbodies=this.scene.physics.overlapRect(x1, y1, x2-x1, y2-y1) as any[]
+            const bcrates = bbodies.map(b=>b.gameObject).filter(go=>{
+                if( go instanceof Crate ) return crates.some(c=>go.x!==c.x || go.y!==c.y)
+                return false
+            })
+            if( bcrates.length ) response = 0
+        }
+        return response
     }
 
     hit(obj: Weapon | Enemy) {
@@ -176,11 +201,13 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         // Walk
         let x = 0
         let y = 0
-        const speed = this.pushing ? pushSpeed : this.speed
-        if( cursors.up?.isDown ) y = -speed
-        else if( cursors.down?.isDown ) y = speed
-        if( cursors.left?.isDown ) x = -speed
-        else if( cursors.right?.isDown ) x = speed
+        if( cursors.up?.isDown ) y = -this.speed
+        else if( cursors.down?.isDown ) y = this.speed
+        if( cursors.left?.isDown ) x = -this.speed
+        else if( cursors.right?.isDown ) x = this.speed
+        const multiplier = this.adjustSpeed(x, y)
+        x*=multiplier
+        y*=multiplier
         this.walk(x, y)
     }
 
