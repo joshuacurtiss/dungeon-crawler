@@ -12,7 +12,7 @@ export default class Options extends Phaser.Scene {
     private _menuIndex: number = 0
 
     constructor() {
-        super({key: 'options'})
+        super('options')
     }
 
     get menuSelection() {

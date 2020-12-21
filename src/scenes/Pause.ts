@@ -96,10 +96,6 @@ export default class Pause extends Phaser.Scene {
             this.menuIndex--
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.down!) ) {
             this.menuIndex++
-        } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.left!) ) {
-            console.log("Left")
-        } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.right!) ) {
-            console.log("Right")
         }
     }
 
