@@ -44,14 +44,9 @@ export default class Pause extends Phaser.Scene {
             this.add.image(centerX + 65, 0, 'ui-menu-right').setScale(0.5),
         ]
         this.menu = [
-            new MenuItem(this, centerX, centerY*0.7-15, 'Continue', textConfig, {
-                nextScene: 'game',
-                menuIndicators,
-            }),
-            new MenuItem(this, centerX, centerY*0.7+15, 'Abort Game', textConfig, {
-                nextScene: 'mainmenu',
-                menuIndicators
-            }),
+            new MenuItem(this, centerX, centerY*0.7-20, 'Continue', textConfig, { menuIndicators }),
+            new MenuItem(this, centerX, centerY*0.7, 'Restart', textConfig, { menuIndicators }),
+            new MenuItem(this, centerX, centerY*0.7+20, 'Quit Game', textConfig, { menuIndicators }),
         ]
         this.menu.forEach((item, index)=>{
             item.on('pointerover', ()=>this.menuIndex=index)
@@ -64,19 +59,28 @@ export default class Pause extends Phaser.Scene {
     }
 
     private select() {
-        const item=this.menuSelection
-        if( item.nextScene ) {
-            if( item.nextScene==='game' ) this.continueGame(item.nextScene)
-            else this.abortGame(item.nextScene)
-        }
+        const text=this.menuSelection.text.toLowerCase()
+        if( text==='continue' ) this.continueGame()
+        else if( text==='restart' ) this.restartGame()
+        else if( text.indexOf('quit')>=0 ) this.abortGame()
     }
 
-    private continueGame(nextScene:string='game') {
+    private continueGame(nextScene:string = 'game') {
         this.scene.resume(nextScene)
         this.scene.stop()
     }
 
-    private abortGame(nextScene:string) {
+    private restartGame(nextScene:string = 'game') {
+        this.sndmgr.fade('music-game', 500)
+        this.scene.stop('game-ui')
+        this.cameras.main.fadeOut(1000, 0, 0, 0)
+        this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
+            this.scene.stop()
+            this.scene.start(nextScene)
+        })
+    }
+
+    private abortGame(nextScene:string = 'mainmenu') {
         this.sndmgr.fade('music-game', 500)
         this.scene.stop('game-ui')
         this.cameras.main.fadeOut(1000, 0, 0, 0)
