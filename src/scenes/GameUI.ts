@@ -1,40 +1,34 @@
 import Phaser from 'phaser'
 import { sceneEvents } from '../events/EventCenter'
+import ConfigManager from '../managers/ConfigManager'
 
 export default class GameUI extends Phaser.Scene {
 
+    private config = new ConfigManager()
     private face!: Phaser.GameObjects.Image
     private heartsGroup?: Phaser.GameObjects.Group
     private coinsLabel!: Phaser.GameObjects.Text
     private livesLabel!: Phaser.GameObjects.Text
 
-    private _character: string = 'faune'
-    private _coins!: number
-    private _hearts!: number
     private _health!: number
-    private _lives!: number
 
     constructor() {
         super('game-ui')
     }
 
-    init(data) {
-        this._character = data.character ?? this._character
-        this._coins = data.coins ?? 0
-        this._hearts = data.hearts ?? 3
-        this._health = data.health ?? 3
-        this._lives = data.lives ?? 3
+    init() {
+        this._health = this.hearts
     }
 
-    get character() {return this._character}
+    get character() {return this.config.getString('character', 'faune')}
     set character(name: string) {this.setCharacter(name)}
-    get coins() {return this._coins}
+    get coins() {return this.config.getNumber('coins')}
     set coins(quantity: number) {this.setCoins(quantity)}
-    get hearts() {return this._hearts}
+    get hearts() {return this.config.getNumber('hearts')}
     set hearts(quantity: number) {this.setHearts(quantity)}
     get health() {return this._health}
     set health(health: number) {this.setHealth(health)}
-    get lives() {return this._lives}
+    get lives() {return this.config.getNumber('lives')}
     set lives(quantity: number) {this.setLives(quantity)}
 
     create() {
@@ -62,16 +56,16 @@ export default class GameUI extends Phaser.Scene {
         })
     }
 
-    setCharacter(name: string = this.character) {
-        this._character = name
+    setCharacter(name: string = this.config.getString('character', 'faune')) {
+        this.config.setString('character', name)
         this.face?.destroy()
         this.face = this.add.image(2, 1, 'face_' + name)
             .setOrigin(0, 0)
             .setScale(0.5)
     }
 
-    setHearts(quantity: number = this.hearts) {
-        this._hearts = quantity
+    setHearts(quantity: number = this.config.getNumber('hearts')) {
+        this.config.setNumber('hearts', quantity)
         this.heartsGroup?.destroy()
         this.heartsGroup = this.add.group({
             classType: Phaser.GameObjects.Image
@@ -97,12 +91,13 @@ export default class GameUI extends Phaser.Scene {
         })
     }
 
-    setLives(quantity: number = this.lives) {
-        this._lives = quantity
+    setLives(quantity: number = this.config.getNumber('lives')) {
+        this.config.setNumber('lives', quantity)
         this.livesLabel.text = 'x' + quantity
     }
 
-    setCoins(coins: number = this.coins) {
+    setCoins(coins: number = this.config.getNumber('coins')) {
+        this.config.setNumber('coins', coins)
         this.coinsLabel.text = coins.toLocaleString()
     }
 

@@ -9,6 +9,7 @@ import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, Lever, Spikes } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
 import { sceneEvents } from '../events/EventCenter'
+import ConfigManager from '../managers/ConfigManager'
 import LevelManager from '../managers/LevelManager'
 import SoundManager from '../managers/SoundManager'
 
@@ -18,6 +19,7 @@ const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
 
+	private config = new ConfigManager()
 	private lastCheck: number = 0
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
@@ -28,10 +30,6 @@ export default class Game extends Phaser.Scene {
 	private weapons!: WeaponList
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
-	private selectedCharacter: string = 'faune'
-	private coins!: number
-	private level!: number
-	private lives!: number
 	private sndmgr = new SoundManager(this)
 	private lvlmgr = new LevelManager()
 	private win!: boolean
@@ -44,11 +42,7 @@ export default class Game extends Phaser.Scene {
 		return this.enemies ? Object.keys(this.enemies).map(key=>this.enemies![key]) : []
 	}
 
-	init(data) {
-		this.selectedCharacter = data.character ?? this.selectedCharacter
-		this.coins = data.coins ?? 0
-		this.level = data.level ?? 1
-		this.lives = data.lives ?? 3
+	init() {
 		this.win = false
 		this.events.once('shutdown', ()=>{
 			this.input.keyboard.removeAllKeys()
@@ -75,12 +69,13 @@ export default class Game extends Phaser.Scene {
 		createEnemyAnims(this.anims)
 		createItemAnims(this.anims)
 		// Tilemap
-        this.load.tilemapTiledJSON(this.lvlmgr.levelKey(this.level), `tiles/${this.lvlmgr.levelKey(this.level)}.json`)
+		const level = this.lvlmgr.levelKey(this.config.getNumber('level'))
+        this.load.tilemapTiledJSON(level, `tiles/${level}.json`)
     }
 
 	create() {
 		// Set up map/layers
-		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(this.level)})
+		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(this.config.getNumber('level'))})
 		const tilesets = [
 			this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2),
 			this.map.addTilesetImage('dungeon_tiles', undefined, 16, 16, 1, 2),
@@ -154,9 +149,14 @@ export default class Game extends Phaser.Scene {
 		const playerTiles = this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject[]
 		playerTiles.forEach(playerTile=>{
 			const {x, y, name} = playerTile
-			if( name===this.selectedCharacter ) this.player = new characters[name](this, x, y, this.weapons)
+			if( name===this.config.getString('character', 'faune') ) this.player = new characters[name](this, x, y, this.weapons)
 		})
-		this.player.coins=this.coins
+		// "Start" sets 'hearts' to 0. So in beginning, use play healthMax default.
+		// Otherwise, the config holds current number of hearts. After we get it, set it.
+		const hearts = this.config.getNumber('hearts') || this.player.healthMax
+		this.config.setNumber('hearts', hearts)
+		this.player.healthMax = hearts
+		this.player.coins=this.config.getNumber('coins')
 		// Doors
 		const doorCreateCallback = go=>(go as Door).setup(this.player)
 		this.doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
@@ -193,13 +193,7 @@ export default class Game extends Phaser.Scene {
         })
 		// Set up UI
 		this.cameras.main.fadeIn(1000, 0, 0, 0)
-		this.scene.run('game-ui', {
-			character: this.selectedCharacter,
-			coins: this.player.coins,
-			lives: this.lives,
-			hearts: this.player.healthMax,
-			health: this.player.health,
-		})
+		this.scene.run('game-ui')
 		this.cameras.main.startFollow(this.player, true)
 		setTimeout(()=>{ this.check() }, 0) // After next tick so camera view is defined
 		this.sndmgr.play('music-game', { loop: true })
@@ -282,19 +276,14 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handlePlayerDead() {
-		this.lives--
+		this.config.dec('lives')
 		this.scene.stop('pause')
 		this.scene.stop('game-ui')
 		this.sndmgr.fade('music-game', 500)
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
 			this.scene.stop()
-			this.scene.start('loselife', {
-				character: this.selectedCharacter,
-				coins: this.player.coins,
-				level: this.level,
-				lives: this.lives,
-			})
+			this.scene.start('loselife')
         })
 	}
 
@@ -308,12 +297,7 @@ export default class Game extends Phaser.Scene {
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
 			this.scene.stop()
-			this.scene.start(this.level===this.lvlmgr.levelCount ? 'wingame' : 'winlevel', {
-				character: this.selectedCharacter,
-				coins: this.player.coins,
-				level: this.level,
-				lives: this.lives,
-			})
+			this.scene.start(this.config.getNumber('level')===this.lvlmgr.levelCount ? 'wingame' : 'winlevel')
         })
 	}
 

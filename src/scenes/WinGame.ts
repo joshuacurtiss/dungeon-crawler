@@ -1,17 +1,17 @@
 import Phaser from 'phaser'
+import ConfigManager from '../managers/ConfigManager'
 import SoundManager from '../managers/SoundManager'
 
 export default class WinGame extends Phaser.Scene {
 
-    private character: string = 'faune'
+    private config = new ConfigManager()
     private sndmgr = new SoundManager(this)
 
     constructor() {
         super('wingame')
     }
 
-    init(data) {
-		this.character = data.character ?? this.character
+    init() {
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).once('up', ()=>this.nextLevel())
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).once('up', ()=>this.nextLevel())
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE).once('up', ()=>this.nextLevel())
@@ -25,7 +25,7 @@ export default class WinGame extends Phaser.Scene {
         const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {
             fontSize: '14px',
         }
-        const face = this.add.image(centerX/2 + 35, centerY*0.7, 'face_'+this.character)
+        const face = this.add.image(centerX/2 + 35, centerY*0.7, 'face_'+this.config.getString('character', 'faune'))
         this.add.rectangle(centerX, centerY*0.7, centerX, face.height + 2, 0x111111, 0.9).setDepth(-1)
         const textCoord = face.getRightCenter()
         this.add.text(textCoord.x+10, textCoord.y-20, 'You Win!', textConfig)

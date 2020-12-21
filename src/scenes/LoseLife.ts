@@ -1,23 +1,17 @@
 import Phaser from 'phaser'
+import ConfigManager from '../managers/ConfigManager'
 import SoundManager from '../managers/SoundManager'
 
 export default class LoseLife extends Phaser.Scene {
 
-    private character: string = 'faune'
-    private level!: number
-    private lives!: number
-    private coins!: number
+    private config = new ConfigManager()
     private sndmgr = new SoundManager(this)
 
     constructor() {
         super('loselife')
     }
 
-    init(data) {
-		this.character = data.character ?? this.character
-        this.level = data.level ?? 1
-        this.lives = data.lives ?? 0
-        this.coins = data.coins ?? 0
+    init() {
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).once('up', ()=>this.restartLevel())
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).once('up', ()=>this.restartLevel())
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE).once('up', ()=>this.restartLevel())
@@ -30,11 +24,11 @@ export default class LoseLife extends Phaser.Scene {
         const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {
             fontSize: '14px',
         }
-        const face = this.add.image(centerX/2 + 35, centerY*0.7, 'face_'+this.character)
+        const face = this.add.image(centerX/2 + 35, centerY*0.7, 'face_'+this.config.getString('character','faune'))
         this.add.rectangle(centerX, centerY*0.7, centerX, face.height + 2, 0x111111, 0.9).setDepth(-1)
         const textCoord = face.getRightCenter()
         this.add.text(textCoord.x+10, textCoord.y-20, this.message, textConfig)
-        this.add.text(textCoord.x+10, textCoord.y+5, 'x ' + this.lives, textConfig)
+        this.add.text(textCoord.x+10, textCoord.y+5, 'x ' + this.config.getNumber('lives'), textConfig)
     }
 
     create() {
@@ -42,22 +36,17 @@ export default class LoseLife extends Phaser.Scene {
     }
 
     get message() {
-        return this.lives>0 ? 'Try again!' : 'Defeated!'
+        return this.config.getNumber('lives')>0 ? 'Try again!' : 'Defeated!'
     }
 
     get nextScene() {
-        return this.lives>0 ? 'game' : 'mainmenu'
+        return this.config.getNumber('lives')>0 ? 'game' : 'mainmenu'
     }
 
     private restartLevel() {
         this.sndmgr.remove('music-lose')
         this.scene.stop()
-        this.scene.start(this.nextScene, {
-            character: this.character,
-            coins: this.coins,
-            level: this.level,
-            lives: this.lives,
-        })
+        this.scene.start(this.nextScene)
     }
 
 }
