@@ -84,6 +84,7 @@ export default class Game extends Phaser.Scene {
 		this.map.createStaticLayer('Subground', tilesets)
 		this.map.createStaticLayer('Ground', tilesets)
 		const wallsLayer = this.map.createStaticLayer('Walls', tilesets)
+		this.map.createStaticLayer('Above', tilesets)?.setDepth(10)
 		wallsLayer.setCollisionByProperty({collides: true})
 		const itemObjects = this.map.getObjectLayer('Items')?.objects
 		const createcb = go=>(go as Button|Crate|Enemy).setup()
