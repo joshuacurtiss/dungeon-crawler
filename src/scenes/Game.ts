@@ -106,7 +106,7 @@ export default class Game extends Phaser.Scene {
 		// Crates
 		const crates = this.physics.add.group({ classType: Crate, createCallback: createcb })
 		itemObjects.filter(obj=>obj.type==='crate').forEach(obj=>{
-			crates.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+			crates.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name).setDepth(5)
 		})
 		// Flasks
 		const flasks = this.physics.add.staticGroup({ classType: Flask })
