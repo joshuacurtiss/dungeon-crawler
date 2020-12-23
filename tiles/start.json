@@ -43,12 +43,13 @@
                  "gid":41,
                  "height":16,
                  "id":17,
+                 "name":"",
                  "rotation":0,
                  "type":"player",
                  "visible":true,
                  "width":16,
-                 "x":240.44652203444,
-                 "y":53.81529425866
+                 "x":240.447,
+                 "y":53.8153
                 }],
          "opacity":1,
          "type":"objectgroup",
