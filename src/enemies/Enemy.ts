@@ -65,8 +65,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     public setDirection(x:number, y:number) {
         if( ! this.onCamera ) return
-        this.scaleX = x<0 ? -1 : x>0 ? 1 : this.scaleX
-        this.body.setOffset(this.scaleX<0 ? this.body.width + this.customOffset.x : this.customOffset.x, this.customOffset.y)
+        if( x ) this.scaleX = Math.abs(this.scaleX) * (x<0 ? -1 : 1)
+        this.body.setOffset(this.scaleX<0 ? this.body.width/Math.abs(this.scaleX) + this.customOffset.x : this.customOffset.x, this.customOffset.y)
         if( this._direction ) this._direction.setTo(x, y)
         else this._direction = new Phaser.Math.Vector2(x, y)
     }
@@ -91,6 +91,21 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     destroy(fromScene?: boolean) {
         this.moveEvent?.destroy()
         super.destroy(fromScene)
+    }
+
+    public becomeGiant() {
+        const scale=Math.abs(this.scaleX) * 3
+        this.setScale(scale)
+        this.damageInflicted*=2
+        this.health*=4
+        this.speed*=0.8
+    }
+
+    public becomeTiny() {
+        const scale=Math.abs(this.scaleX) / 2
+        this.setScale(scale)
+        this.damageInflicted*=0.5
+        this.speed*=1.2
     }
 
     public changeDirection() {

@@ -14,7 +14,7 @@ import LevelManager from '../managers/LevelManager'
 import SoundManager from '../managers/SoundManager'
 
 const CHECKINTERVAL = 1000
-const COMBOS = ['GONE', 'SPAWN', 'HEART']
+const COMBOS = ['GONE', 'SPAWN', 'HEART', 'TINY', 'GIANT']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
@@ -232,7 +232,15 @@ export default class Game extends Phaser.Scene {
 		this.map.getObjectLayer('Characters').objects
 			.filter(obj=>obj.type==='enemy')
 			.forEach(obj=>{
-				if( this.enemies[obj.name] ) this.enemies[obj.name].get(obj.x, obj.y, obj.name)
+				let name = obj.name.toLowerCase()
+				const boss = name.substr(0,5)==='boss_'
+				const tiny = name.substr(0,5)==='tiny_'
+				if( boss || tiny ) name=name.substring(5)
+				if( this.enemies[name] ) {
+					const enemy = this.enemies[name].get(obj.x, obj.y, name) as Enemy
+					if( boss ) enemy.becomeGiant()
+					if( tiny ) enemy.becomeTiny()
+				}
 			})
 	}
 
@@ -322,6 +330,16 @@ export default class Game extends Phaser.Scene {
 			this.allEnemies.forEach((group: Phaser.Physics.Arcade.Group)=>{
 				group.children.entries.forEach((enemy, i)=>{
 					setTimeout(()=>{enemy.destroy()}, i * 200)
+				})
+			})
+		} else if (code==='GIANT' || code==='TINY') {
+			// GIANT and TINY: Change the size of enemies
+			console.log(`Baddies be ${code}!`)
+			this.allEnemies.forEach((group: Phaser.Physics.Arcade.Group)=>{
+				group.children.entries.forEach((obj, i)=>{
+					const enemy = obj as Enemy
+					if( code==='TINY' ) enemy.becomeTiny()
+					else enemy.becomeGiant()
 				})
 			})
 		} else if (code==='SPAWN') {
