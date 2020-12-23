@@ -7,7 +7,7 @@ export default class Mushroom extends Enemy {
         super(scene, x, y, texture, frame)
         this.health = 2
         this.speed = Phaser.Math.Between(20, 40)
-        this.customOffset.set(8, 16)
+        this.customOffset.set(7, 16)
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(3000, 5000),
             callback: ()=>this.changeDirection(),
