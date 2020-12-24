@@ -51,9 +51,11 @@ export default class Start extends Phaser.Scene {
     preload() {
         const centerX = this.cameras.main.worldView.x + this.cameras.main.width / 2
         const titleConfig: Phaser.Types.GameObjects.Text.TextStyle = {
-            fontSize: '20px',
+            fontFamily: 'Nova Script',
+            fontSize: '24px',
         }
         const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {
+            fontFamily: 'Nova Script',
             fontSize: '14px',
         }
         this.add.text(centerX, 45, 'Dungeon Crawler', titleConfig).setOrigin(0.5).setScrollFactor(0, 0)

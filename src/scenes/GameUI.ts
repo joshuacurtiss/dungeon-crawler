@@ -34,10 +34,12 @@ export default class GameUI extends Phaser.Scene {
     create() {
         const coinSprite = this.add.sprite(57, 27, 'treasure')
         coinSprite.play('coin-spin')
-        this.coinsLabel = this.add.text(64, 21, '0', {
+        this.coinsLabel = this.add.text(64, 20, '0', {
+            fontFamily: 'Nova Script',
             fontSize: 12
         })
-        this.livesLabel = this.add.text(33, 21, 'x3', {
+        this.livesLabel = this.add.text(33, 20, 'x3', {
+            fontFamily: 'Nova Script',
             fontSize: 12
         })
         this.add.rectangle(0, 0, 220, 73, 0x000000, 0.5).setDepth(-1)

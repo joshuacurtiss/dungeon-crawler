@@ -22,7 +22,8 @@ export default class LoseLife extends Phaser.Scene {
         const centerX = this.cameras.main.x + this.cameras.main.width / 2
         const centerY = this.cameras.main.y + this.cameras.main.height / 2
         const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {
-            fontSize: '14px',
+            fontFamily: 'Nova Script',
+            fontSize: '16px',
         }
         const face = this.add.image(centerX/2 + 35, centerY*0.7, 'face_'+this.config.getString('character','faune'))
         this.add.rectangle(centerX, centerY*0.7, centerX, face.height + 2, 0x111111, 0.9).setDepth(-1)

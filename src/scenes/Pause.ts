@@ -36,6 +36,7 @@ export default class Pause extends Phaser.Scene {
         const centerX = this.cameras.main.x + this.cameras.main.width / 2
         const centerY = this.cameras.main.y + this.cameras.main.height / 2
         const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {
+            fontFamily: 'Nova Script',
             fontSize: '14px',
         }
         this.add.rectangle(centerX, centerY*0.7, centerX, centerY*.6, 0x111111, 0.9)

@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import WebFont from 'webfontloader'
 
 const audio = {
     'coin': 'audio/coin.mp3',
@@ -163,7 +164,14 @@ export default class Preloader extends Phaser.Scene {
     }
 
     create() {
-        this.scene.start('mainmenu')
+        WebFont.load({
+            google: {
+                families: [ 'Nova Script' ]
+            },
+            active: ()=>{
+                this.scene.start('mainmenu')
+            }
+        })
     }
     
 }
