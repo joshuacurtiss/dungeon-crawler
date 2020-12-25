@@ -96,8 +96,10 @@ export default class Game extends Phaser.Scene {
 		const createcb = go=>(go as Button|Crate|Enemy).setup()
 		// Buttons
 		this.buttons = this.physics.add.staticGroup({ classType: Button, createCallback: createcb })
-		itemObjects.filter(obj=>obj.type==='button').forEach(obj=>{
-			this.buttons.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+		itemObjects.filter(obj=>obj.type.substr(0,6)==='button').forEach(obj=>{
+			const button = this.buttons.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+			const split = obj.type.split('_')
+			button.color = split.length>1 ? split[1] : 'blue'
 		})
 		// Chests
 		const chests = this.physics.add.staticGroup({ classType: Chest })
@@ -360,9 +362,17 @@ export default class Game extends Phaser.Scene {
 
 	private handleButton() {
 		const allButtons = this.buttons.children.getArray()
-		const solved = allButtons.every(go=>(go as Button).pressed)
-		const door = this.doors.getChildren().find(obj=>obj.name==='buttons')
-		if( door ) (door as Door).open=solved
+		const buttonGroups = {}
+		allButtons.forEach(obj=>{
+			const button = obj as Button
+			if( ! (button.color in buttonGroups) ) buttonGroups[button.color]=[]
+			buttonGroups[button.color].push(button)
+		})
+		Object.keys(buttonGroups).forEach(color=>{
+			const solved = buttonGroups[color].every(go=>(go as Button).pressed)
+			const door = this.doors.getChildren().find(obj=>obj.name==='buttons_'+color)
+			if( door ) (door as Door).open=solved
+		})
 	}
 
 	private handleLever(name:string) {

@@ -6,14 +6,27 @@ import { sceneEvents } from '../events/EventCenter'
 export default class Button extends Item {
 
     private _pressed:boolean = false
+    private _color:string = 'blue'
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
-        super(scene, x, y, 'button_up', 0)
+        super(scene, x, y, 'button_blue_up', 0)
         this.name=name
     }
 
     setup() {
         this.body.setSize(this.width*0.7, this.height*0.7)
+    }
+
+    private updateTexture() {
+        this.setTexture('button_' + this.color + '_' + (this.pressed ? 'down' : 'up'))
+    }
+
+    get color() {
+        return this._color
+    }
+    set color(color:string) {
+        this._color=color
+        this.updateTexture()
     }
 
     /**
@@ -32,7 +45,7 @@ export default class Button extends Item {
     set pressed(bool:boolean) {
         if( this.pressed===bool ) return
         this._pressed = bool
-        this.setTexture('button_' + (bool ? 'down' : 'up'))
+        this.updateTexture()
         sceneEvents.emit('button')
     }
 

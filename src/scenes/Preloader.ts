@@ -71,8 +71,10 @@ const atlases = {
 }
 
 const images = {
-    'button_down': 'items/button_down.png',
-    'button_up': 'items/button_up.png',
+    'button_blue_down': 'items/button_blue_down.png',
+    'button_blue_up': 'items/button_blue_up.png',
+    'button_red_down': 'items/button_red_down.png',
+    'button_red_up': 'items/button_red_up.png',
     'crate': 'items/crate.png',
     'door_closed': 'items/door_closed.png',
     'door_open': 'items/door_open.png',
