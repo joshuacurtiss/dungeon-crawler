@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-const debugDraw = (layer: Phaser.Tilemaps.StaticTilemapLayer, scene: Phaser.Scene) => {
+const debugDraw = (layer: Phaser.Tilemaps.DynamicTilemapLayer | Phaser.Tilemaps.StaticTilemapLayer, scene: Phaser.Scene) => {
     const debugGraphics = scene.add.graphics().setAlpha(0.7)
     layer.renderDebug(debugGraphics, {
         tileColor: null,

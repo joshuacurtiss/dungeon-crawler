@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 
+import { AnimatedTile, createAnimatedTiles, updateAnimatedTiles } from './AnimatedTile'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { Faune, Player } from '../characters'
 import MenuItem from '../ui/MenuItem'
@@ -7,6 +8,7 @@ import SoundManager from '../managers/SoundManager'
 
 export default class MainMenu extends Phaser.Scene {
 
+    private animatedTiles!: AnimatedTile[]
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private player!: Player
     private sndmgr = new SoundManager(this)
@@ -17,6 +19,10 @@ export default class MainMenu extends Phaser.Scene {
 
     constructor() {
         super('mainmenu')
+    }
+
+    init() {
+        this.animatedTiles = []
     }
 
     get menuSelection() {
@@ -56,10 +62,10 @@ export default class MainMenu extends Phaser.Scene {
         })
         this.menuIndex=0
         createCharacterAnims(this.anims)
-		this.map = this.make.tilemap({key: 'dungeon-start'})
-		const tileset = this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2)
+        this.map = this.make.tilemap({key: 'dungeon-start'})
+        const tileset = this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2)
 		this.map.createStaticLayer('Ground', tileset)
-		const wallsLayer = this.map.createStaticLayer('Walls', tileset)
+		const wallsLayer = this.map.createDynamicLayer('Walls', tileset)
         wallsLayer.setCollisionByProperty({collides: true})
         this.player = new Faune(this, 0, 0)
         this.cameras.main.startFollow(this.player, true)
@@ -68,6 +74,9 @@ export default class MainMenu extends Phaser.Scene {
     }
 
     create() {
+        // Collect tile animation details
+        this.animatedTiles = createAnimatedTiles(this.map)
+        // Init player, camera, sound
         const playerTile = this.map.getObjectLayer('Characters').objects.find(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject
         this.player.setPosition(playerTile.x!, playerTile.y!)
         this.cameras.main.fadeIn(550, 0, 0, 0)
@@ -96,7 +105,8 @@ export default class MainMenu extends Phaser.Scene {
     }
 
     update(t:number, dt:number) {
-		super.update(t, dt)
+        super.update(t, dt)
+        updateAnimatedTiles(this.animatedTiles, dt)
         if( !this.cursors ) return;
         if ( Phaser.Input.Keyboard.JustDown(this.cursors.space!) ) {
             this.select()
