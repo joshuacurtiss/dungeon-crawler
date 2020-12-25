@@ -21,6 +21,7 @@ export default class Game extends Phaser.Scene {
 
 	private config = new ConfigManager()
 	private lastCheck: number = 0
+	private innerCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private player!: Player
@@ -28,6 +29,7 @@ export default class Game extends Phaser.Scene {
 	private doors!: Phaser.Physics.Arcade.StaticGroup
 	private enemies!: EnemyList
 	private weapons!: WeaponList
+	private nearBoss: boolean = false
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
 	private sndmgr = new SoundManager(this)
@@ -44,6 +46,7 @@ export default class Game extends Phaser.Scene {
 
 	init() {
 		this.win = false
+		this.nearBoss = false
 		this.events.once('shutdown', ()=>{
 			this.input.keyboard.removeAllKeys()
 		})
@@ -161,8 +164,9 @@ export default class Game extends Phaser.Scene {
 		// Doors
 		const doorCreateCallback = go=>(go as Door).setup(this.player)
 		this.doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
-		itemObjects.filter(obj=>obj.type==='door').forEach(obj=>{
-			this.doors.get(obj.x!+16, obj.y!, obj.name)
+		itemObjects.filter(obj=>obj.type.substr(0,4)==='door').forEach(obj=>{
+			const door=this.doors.get(obj.x!+16, obj.y!, obj.name) as Door
+			if( obj.type.indexOf('open')>=0 ) door.open=true
 		})
 		// Colliders
 		this.physics.add.overlap(this.player, [chests, levers], this.handlePlayerTouchItem, undefined, this)
@@ -182,11 +186,13 @@ export default class Game extends Phaser.Scene {
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
 		// Event Handlers
+        sceneEvents.on('boss-dead', this.handleBossDead, this)
         sceneEvents.on('button', this.handleButton, this)
         sceneEvents.on('lever', this.handleLever, this)
         sceneEvents.on('player-dead', this.handlePlayerDead, this)
         sceneEvents.on('player-exit', this.handlePlayerExit, this)
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
+			sceneEvents.off('boss-dead', this.handleBossDead, this)
 			sceneEvents.off('button', this.handleButton, this)
 			sceneEvents.off('lever', this.handleLever, this)
             sceneEvents.off('player-dead', this.handlePlayerDead, this)
@@ -204,21 +210,35 @@ export default class Game extends Phaser.Scene {
 	private check(t:number=CHECKINTERVAL+1) {
 		this.lastCheck = t
 		//
-		// Camera Check
+		// Camera Check for Enemy Movement
 		//
 		const cam = this.cameras.main.worldView
-		const rect = this.extendedCameraView
+		const extRect = this.extendedCameraView
 		// Adjust extended view with current camera
-		rect.setPosition(cam.x - cam.width * 0.3, cam.y - cam.height * 0.3)
+		extRect.setPosition(cam.x - cam.width * 0.3, cam.y - cam.height * 0.3)
 		// If the width/height were never set, set them now
-		if( rect.isEmpty() ) rect.setSize(cam.width *= 1.6, cam.height *= 1.6)
+		if( extRect.isEmpty() ) extRect.setSize(cam.width * 1.6, cam.height * 1.6)
 		// Check each enemy if he's in the extended view.
 		Object.keys(this.enemies).forEach(key=>{
 			(this.enemies[key] as Phaser.Physics.Arcade.Group).children.each(go=>{
 				const enemy=go as Enemy
-				enemy.onCamera = rect.contains(enemy.x, enemy.y)
+				enemy.onCamera = extRect.contains(enemy.x, enemy.y)
 			})
 		})
+		//
+		// Camera Check for Boss
+		//
+		const inRect = this.innerCameraView
+		// Adjust inner view with current camera
+		inRect.setPosition(cam.x + cam.width * 0.22, cam.y + cam.height * 0.1)
+		// If the width/height were never set, set them now
+		if( inRect.isEmpty() ) inRect.setSize(cam.width * 0.56, cam.height * 0.8)
+        const bodies = this.physics.overlapRect(inRect.x, inRect.y, inRect.width, inRect.height) as any[]
+		const nearBoss = bodies.some(b=>{
+			if ( !(b.gameObject instanceof Enemy) ) return false
+			return (b.gameObject as Enemy).isBoss
+		})
+		if( nearBoss && nearBoss !== this.nearBoss ) this.handleBossNear()
 		//
 		// Button Check 
 		//
@@ -238,7 +258,7 @@ export default class Game extends Phaser.Scene {
 				if( boss || tiny ) name=name.substring(5)
 				if( this.enemies[name] ) {
 					const enemy = this.enemies[name].get(obj.x, obj.y, name) as Enemy
-					if( boss ) enemy.becomeGiant()
+					enemy.isBoss = boss
 					if( tiny ) enemy.becomeTiny()
 				}
 			})
@@ -284,11 +304,33 @@ export default class Game extends Phaser.Scene {
 		if( player.dead ) this.playerEnemiesCollider?.destroy()
 	}
 
+	private handleBossNear() {
+		this.nearBoss=true
+		this.sndmgr.play('music-exciting', { loop: true })
+		this.sndmgr.stop('music-game')
+		this.cameras.main.zoomTo(1.25, 250)
+		const door = this.doors.getChildren().find(obj=>obj.name==='boss') as Door
+		if( door ) door.open=false
+	}
+
+	private handleBossDead() {
+		this.nearBoss=false
+		this.sndmgr.play('exciting-end')
+		this.sndmgr.stop('music-exciting')
+		this.cameras.main.zoomTo(1, 3300)
+		setTimeout(()=>{
+			const door = this.doors.getChildren().find(obj=>obj.name==='boss') as Door
+			if( door ) door.open=true
+			this.sndmgr.play('music-game', { loop: true })
+		}, 4500)
+	}
+
 	private handlePlayerDead() {
 		this.config.dec('lives')
 		this.scene.stop('pause')
 		this.scene.stop('game-ui')
 		this.sndmgr.fade('music-game', 500)
+		this.sndmgr.fade('music-exciting', 500)
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
 			this.scene.stop()
@@ -302,6 +344,7 @@ export default class Game extends Phaser.Scene {
 		this.scene.stop('pause')
 		this.scene.stop('game-ui')
 		this.sndmgr.fade('music-game')
+		this.sndmgr.fade('music-exciting')
 		this.player.stop()
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
@@ -336,7 +379,7 @@ export default class Game extends Phaser.Scene {
 			// GIANT and TINY: Change the size of enemies
 			console.log(`Baddies be ${code}!`)
 			this.allEnemies.forEach((group: Phaser.Physics.Arcade.Group)=>{
-				group.children.entries.forEach((obj, i)=>{
+				group.children.entries.forEach(obj=>{
 					const enemy = obj as Enemy
 					if( code==='TINY' ) enemy.becomeTiny()
 					else enemy.becomeGiant()

@@ -1,10 +1,12 @@
 import Phaser from 'phaser'
 import SoundManager from '../managers/SoundManager'
+import { sceneEvents } from '../events/EventCenter'
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     private _direction?: Phaser.Math.Vector2
     private _health: number = 1
+    private _isBoss: boolean = false
     private _onCamera: boolean = false
     public damageInflicted: number = 1
     public speed: number = 50
@@ -43,6 +45,15 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         const prev = this._health
         this._health = newval
         if( newval<prev ) this.hit()
+    }
+
+    get isBoss(): boolean {
+        return this._isBoss
+    }
+
+    set isBoss(bool:boolean) {
+        if( bool ) this.becomeGiant()
+        this._isBoss = bool
     }
 
     get onCamera(): boolean {
@@ -85,6 +96,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     public die() {
+        if( this.isBoss ) sceneEvents.emit('boss-dead') 
         this.destroy()
     }
 
@@ -97,8 +109,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
         const scale=Math.abs(this.scaleX) * 3
         this.setScale(scale)
         this.damageInflicted*=2
-        this.health*=4
-        this.speed*=0.8
+        this.health*=20
     }
 
     public becomeTiny() {
