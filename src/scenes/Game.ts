@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-import { AnimatedTile, createAnimatedTiles, updateAnimatedTiles } from './AnimatedTile'
+import AnimatedTile from './AnimatedTile'
 import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createEnemyAnims } from '../anims/EnemyAnims'
@@ -20,7 +20,6 @@ const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
 
-    private animatedTiles!: AnimatedTile[]
 	private config = new ConfigManager()
 	private lastCheck: number = 0
 	private innerCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
@@ -47,7 +46,6 @@ export default class Game extends Phaser.Scene {
 	}
 
 	init() {
-		this.animatedTiles = []
 		this.win = false
 		this.nearBoss = false
 		this.events.once('shutdown', ()=>{
@@ -85,10 +83,12 @@ export default class Game extends Phaser.Scene {
 		const tilesets = [
 			this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2),
 			this.map.addTilesetImage('dungeon_tiles', undefined, 16, 16, 1, 2),
+			this.map.addTilesetImage('forest', undefined, 16, 16, 0, 0),
+			this.map.addTilesetImage('lava', undefined, 16, 16, 0, 0),
 			this.map.addTilesetImage('roguelike_transparent', undefined, 16, 16, 1, 3),
 		]
-		this.map.createStaticLayer('Subground', tilesets)
-		this.map.createStaticLayer('Ground', tilesets)
+		this.map.createDynamicLayer('Subground', tilesets)
+		this.map.createDynamicLayer('Ground', tilesets)
 		const wallsLayer = this.map.createDynamicLayer('Walls', tilesets)
 		this.map.createStaticLayer('Above', tilesets)?.setDepth(10)
 		wallsLayer.setCollisionByProperty({collides: true})
@@ -204,7 +204,7 @@ export default class Game extends Phaser.Scene {
             sceneEvents.off('player-exit', this.handlePlayerExit, this)
         })
         // Collect tile animation details
-        this.animatedTiles = createAnimatedTiles(this.map)
+        AnimatedTile.detect(this.map)
 		// Set up UI
 		this.cameras.main.fadeIn(1000, 0, 0, 0)
 		this.scene.run('game-ui')
@@ -420,15 +420,25 @@ export default class Game extends Phaser.Scene {
 	
 	update(t: number, dt: number) {
 		super.update(t, dt)
-        updateAnimatedTiles(this.animatedTiles, dt)
+		// Tile animations
+        AnimatedTile.update(dt)
+		// Stop all the characters from walking if the player has won
 		if( this.win ) {
-			// Stop all the characters from walking if the player has won
 			this.allEnemies.forEach((group:Phaser.Physics.Arcade.Group)=>{
 				group.children.iterate(enemy=>(enemy as Enemy).stop())
 			})
 			return
 		}
+		// If player steps on ground that kills you, take their health away so they die
+		if( 
+			this.map.getTileAtWorldXY(this.player.x, this.player.y+this.player.height/2, true, this.cameras.default, 'Ground').properties.kills ||
+			this.map.getTileAtWorldXY(this.player.x, this.player.y+this.player.height/2, true, this.cameras.default, 'Subground').properties.kills 
+		) {
+			this.player.health-=10
+		}
+		// Checks that run less often, only on CHECKINTERVAL periods
 		if( t > this.lastCheck + CHECKINTERVAL ) this.check(t)
+		// Player update
 		this.player.update(this.cursors)
 	}
 }

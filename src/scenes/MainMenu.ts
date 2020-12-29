@@ -1,6 +1,6 @@
 import Phaser from 'phaser'
 
-import { AnimatedTile, createAnimatedTiles, updateAnimatedTiles } from './AnimatedTile'
+import AnimatedTile from './AnimatedTile'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { Faune, Player } from '../characters'
 import MenuItem from '../ui/MenuItem'
@@ -8,7 +8,6 @@ import SoundManager from '../managers/SoundManager'
 
 export default class MainMenu extends Phaser.Scene {
 
-    private animatedTiles!: AnimatedTile[]
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private player!: Player
     private sndmgr = new SoundManager(this)
@@ -19,10 +18,6 @@ export default class MainMenu extends Phaser.Scene {
 
     constructor() {
         super('mainmenu')
-    }
-
-    init() {
-        this.animatedTiles = []
     }
 
     get menuSelection() {
@@ -75,7 +70,7 @@ export default class MainMenu extends Phaser.Scene {
 
     create() {
         // Collect tile animation details
-        this.animatedTiles = createAnimatedTiles(this.map)
+        AnimatedTile.detect(this.map)
         // Init player, camera, sound
         const playerTile = this.map.getObjectLayer('Characters').objects.find(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject
         this.player.setPosition(playerTile.x!, playerTile.y!)
@@ -106,7 +101,7 @@ export default class MainMenu extends Phaser.Scene {
 
     update(t:number, dt:number) {
         super.update(t, dt)
-        updateAnimatedTiles(this.animatedTiles, dt)
+        AnimatedTile.update(dt)
         if( !this.cursors ) return;
         if ( Phaser.Input.Keyboard.JustDown(this.cursors.space!) ) {
             this.select()

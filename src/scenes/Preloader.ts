@@ -151,6 +151,8 @@ export default class Preloader extends Phaser.Scene {
         // Tiles
         this.load.image('dungeon', 'tiles/dungeon_tiles_extruded.png')
         this.load.image('dungeon_tiles', 'tiles/dungeon_tiles_extruded.png')
+        this.load.image('forest', 'tiles/forest.png')
+        this.load.image('lava', 'tiles/lava.png')
         this.load.image('roguelike_transparent', 'tiles/roguelike_transparent_extruded.png')
         this.load.tilemapTiledJSON('dungeon-start', 'tiles/start.json')
         // Atlases
