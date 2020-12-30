@@ -67,6 +67,7 @@ const atlases = {
     'skelet': 'enemies/skelet',
     // Items
     'floor_spikes': 'items/floor_spikes',
+    'smoke': 'items/smoke',
     'treasure': 'items/treasure',
 }
 

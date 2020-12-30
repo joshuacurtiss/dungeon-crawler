@@ -18,6 +18,16 @@ const createItemAnims = (anims: Phaser.Animations.AnimationManager) => {
         repeat: -1
     })
     anims.create({
+        key: 'fire-fade',
+        frames: anims.generateFrameNames('smoke', {start: 0, end: 7, prefix: 'fire-0', suffix: '.png'}),
+        frameRate: 16,
+    })
+    anims.create({
+        key: 'smoke-fade',
+        frames: anims.generateFrameNames('smoke', {start: 0, end: 7, prefix: 'smoke-0', suffix: '.png'}),
+        frameRate: 16,
+    })
+    anims.create({
         key: 'spikes-spring',
         frames: anims.generateFrameNames('floor_spikes', {start: 0, end: 3, prefix: 'floor_spikes_anim_f', suffix: '.png'}),
         yoyo: true,

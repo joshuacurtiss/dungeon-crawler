@@ -97,6 +97,10 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     public die() {
         if( this.isBoss ) sceneEvents.emit('boss-dead') 
+        const smoke = this.scene.add.sprite(this.x, this.y, 'smoke', 'smoke-00.png')
+        smoke.setScale(this.width/smoke.width, this.height/smoke.height)
+        smoke.anims.play('smoke-fade')
+        smoke.once(Phaser.Animations.Events.SPRITE_ANIMATION_COMPLETE, ()=>smoke.destroy())
         this.destroy()
     }
 
