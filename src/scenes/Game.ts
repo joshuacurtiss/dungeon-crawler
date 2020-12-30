@@ -431,8 +431,8 @@ export default class Game extends Phaser.Scene {
 		}
 		// If player steps on ground that kills you, take their health away so they die
 		if( 
-			this.map.getTileAtWorldXY(this.player.x, this.player.y+this.player.height/2, true, this.cameras.default, 'Ground').properties.kills ||
-			this.map.getTileAtWorldXY(this.player.x, this.player.y+this.player.height/2, true, this.cameras.default, 'Subground').properties.kills 
+			this.map.getTileAtWorldXY(this.player.x, this.player.y+this.player.height*0.33, true, this.cameras.default, 'Ground').properties.kills ||
+			this.map.getTileAtWorldXY(this.player.x, this.player.y+this.player.height*0.33, true, this.cameras.default, 'Subground').properties.kills 
 		) {
 			this.player.health-=10
 		}
