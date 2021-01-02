@@ -7,6 +7,7 @@ import Flask from './Flask'
 import Item from './Item'
 import Lever from './Lever'
 import Spikes from './Spikes'
+import Turkey from './Turkey'
 
 export {
     Button,
@@ -18,4 +19,5 @@ export {
     Item,
     Lever,
     Spikes,
+    Turkey,
 }

@@ -7,7 +7,7 @@ import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
 import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
-import { Button, Chest, Coin, Crate, Door, Flask, Item, Lever, Spikes } from '../items'
+import { Button, Chest, Coin, Crate, Door, Flask, Item, Lever, Spikes, Turkey } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
 import { sceneEvents } from '../events/EventCenter'
 import ConfigManager from '../managers/ConfigManager'
@@ -134,6 +134,11 @@ export default class Game extends Phaser.Scene {
 		itemObjects.filter(obj=>obj.type==='floor_spikes').forEach(obj=>{
 			spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
 		})
+		// Turkeys
+		const turkeys = this.physics.add.staticGroup({ classType: Turkey })
+		itemObjects.filter(obj=>obj.type==='turkey').forEach(obj=>{
+			turkeys.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y) as Turkey
+		})
 		// Add enemies and characters
 		this.enemies = {
 			'chort': this.physics.add.group({classType: Chort, createCallback: createcb}),
@@ -160,11 +165,11 @@ export default class Game extends Phaser.Scene {
 			const {x, y, name} = playerTile
 			if( name===this.config.getString('character', 'faune') ) this.player = new characters[name](this, x, y, this.weapons)
 		})
-		// "Start" sets 'hearts' to 0. So in beginning, use play healthMax default.
+		// "Start" sets 'hearts' to 0. So in beginning, use player hearts default.
 		// Otherwise, the config holds current number of hearts. After we get it, set it.
-		const hearts = this.config.getNumber('hearts') || this.player.healthMax
+		const hearts = this.config.getNumber('hearts') || this.player.hearts
 		this.config.setNumber('hearts', hearts)
-		this.player.healthMax = hearts
+		this.player.hearts = hearts
 		this.player.coins=this.config.getNumber('coins')
 		// Doors
 		const doorCreateCallback = go=>(go as Door).setup(this.player)
@@ -175,7 +180,7 @@ export default class Game extends Phaser.Scene {
 		})
 		// Colliders
 		this.physics.add.overlap(this.player, [chests, levers], this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.player, [coins, this.doors, flasks, spikes], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.player, [coins, this.doors, flasks, spikes, turkeys], this.handlePlayerOverItem, undefined, this)
 		this.physics.add.overlap(this.buttons, crates, this.handleButtonOverlap, undefined, this)
 		this.physics.add.collider(this.player, crates)
 		this.physics.add.collider(this.player, wallsLayer)

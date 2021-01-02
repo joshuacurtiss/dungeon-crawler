@@ -50,10 +50,12 @@ export default class GameUI extends Phaser.Scene {
         this.setLives()
         sceneEvents.on('player-coins-changed', this.setCoins, this)
         sceneEvents.on('player-health-changed', this.setHealth, this)
+        sceneEvents.on('player-hearts-changed', this.setHearts, this)
         sceneEvents.on('player-lives-changed', this.setLives, this)
         this.events.once(Phaser.Scenes.Events.SHUTDOWN, ()=>{
             sceneEvents.off('play-coins-changed', this.setCoins, this)
             sceneEvents.off('play-health-changed', this.setHealth, this)
+            sceneEvents.off('play-hearts-changed', this.setHearts, this)
             sceneEvents.off('play-lives-changed', this.setLives, this)
         })
     }

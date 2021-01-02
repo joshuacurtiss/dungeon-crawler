@@ -16,6 +16,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     private _coins = 0
     private _direction = new Phaser.Math.Vector2(0, 100)
     private _health = 3.0
+    private _hearts = 3
 
     private damageTime = 0
     private healthState = HealthState.IDLE
@@ -24,7 +25,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     public customOffset = new Phaser.Math.Vector2(0, 0)
     public damageTimeMax: number = 250
-    public healthMax: number = 3
     public speed: number = 100
     public touching?: Item
     public weapon?: Phaser.Physics.Arcade.Group
@@ -87,10 +87,19 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setHealth(newval)
     }
 
+    get hearts() {
+        return this._hearts
+    }
+
+    set hearts(newval:number) {
+        this._hearts = newval
+        sceneEvents.emit('player-hearts-changed', newval)
+    }
+
     public setHealth(newval:number) {
         if( this.dead ) return
         // Keep in boundaries
-        newval = newval<0 ? 0 : newval>this.healthMax ? this.healthMax : newval
+        newval = newval<0 ? 0 : newval>this.hearts ? this.hearts : newval
         if( newval<=0 ) {
             // Death 
             this.healthState = HealthState.DEAD
