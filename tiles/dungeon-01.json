@@ -1099,6 +1099,18 @@
                  "width":16,
                  "x":976,
                  "y":832
+                }, 
+                {
+                 "gid":2398,
+                 "height":16,
+                 "id":111,
+                 "name":"",
+                 "rotation":0,
+                 "type":"turkey",
+                 "visible":true,
+                 "width":16,
+                 "x":864,
+                 "y":912
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -1119,7 +1131,7 @@
          "y":0
         }],
  "nextlayerid":8,
- "nextobjectid":111,
+ "nextobjectid":112,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
