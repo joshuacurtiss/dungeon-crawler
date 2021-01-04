@@ -13,7 +13,7 @@
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"sourceMap": true,
-		"baseUrl": "./src",
+		"baseUrl": "./src/client",
 		"paths": {
 		  "~/*": ["./*"]
 		},
@@ -27,6 +27,6 @@
 		]
 	},
 	"include": [
-		"src/**/*"
+		"src/client/**/*"
 	]
 }
