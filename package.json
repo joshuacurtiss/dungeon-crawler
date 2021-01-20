@@ -3,6 +3,7 @@
 	"version": "0.2.0",
 	"description": "A test game while learning Phaser 3.",
 	"scripts": {
+		"server": "ts-node --project tsconfig.server.json src/server",
 		"start": "parcel src/client/index.html -p 4000",
 		"build": "parcel build src/client/index.html --out-dir dist",
 		"test": "echo \"Error: no test specified\" && exit 1",
@@ -18,21 +19,22 @@
 	"devDependencies": {
 		"@typescript-eslint/eslint-plugin": "^4",
 		"@typescript-eslint/parser": "^4",
+		"colyseus.js": "^0.14.1",
 		"cssnano": "^4",
 		"eslint": "^7",
-		"minimist": ">=1.2.2",
+		"minimist": "^1",
 		"parcel-plugin-clean-easy": "^1",
 		"parcel-plugin-static-files-copy": "^2",
-		"ts-node": "^9.1.1",
+		"ts-node": "^9",
 		"typescript": "^4"
 	},
 	"dependencies": {
 		"@colyseus/monitor": "^0.14.0",
 		"colyseus": "^0.14.6",
-		"cors": "^2.8.5",
-		"express": "^4.17.1",
+		"cors": "^2",
+		"express": "^4",
 		"phaser": "3.24.1",
-		"webfontloader": "^1.6.28"
+		"webfontloader": "^1"
 	},
 	"parcelCleanPaths": [
 		"dist"
