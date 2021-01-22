@@ -9,6 +9,9 @@ import Lever from './Lever'
 import Spikes from './Spikes'
 import Turkey from './Turkey'
 
+type ItemNames = 'button' | 'chest' | 'coin' | 'crate' | 'door' | 'flask' | 'lever' | 'spikes' | 'turkey'
+type ItemList = Record<ItemNames, Phaser.Physics.Arcade.Group | Phaser.Physics.Arcade.StaticGroup>
+
 export {
     Button,
     Chest,
@@ -17,6 +20,8 @@ export {
     Door,
     Flask,
     Item,
+    ItemList,
+    ItemNames,
     Lever,
     Spikes,
     Turkey,

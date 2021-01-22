@@ -13,20 +13,15 @@
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"sourceMap": true,
-		"baseUrl": "./src/client",
+		"baseUrl": ".",
 		"paths": {
-		  "~/*": ["./*"]
+		  "@/*": ["src/client/*"]
 		},
-		"typeRoots": [
-			"node_modules/@types",
-			"node_module/phaser/types",
-			"./src/types"
-		],
 		"types": [
 			"phaser"
 		]
 	},
 	"include": [
-		"src/client/**/*"
+		"src/client/**/*.ts"
 	]
 }

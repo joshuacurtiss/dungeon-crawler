@@ -25,6 +25,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     
     public customOffset = new Phaser.Math.Vector2(0, 0)
     public damageTimeMax: number = 250
+    public id: string = Math.floor(Math.random() * 10**8).toString()
     public speed: number = 100
     public touching?: Item
     public weapon?: Phaser.Physics.Arcade.Group
@@ -172,6 +173,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         if( !this.weapon ) return
         const weapon = this.weapon.get(this.x, this.y)
         weapon?.shoot(this.direction)
+        sceneEvents.emit('shoot', this)
     }
 
     walk(x:number, y:number) {

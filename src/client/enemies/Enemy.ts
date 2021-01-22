@@ -9,6 +9,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     private _isBoss: boolean = false
     private _onCamera: boolean = false
     public damageInflicted: number = 1
+    public id: string = Math.floor(Math.random() * 10**8).toString()
     public speed: number = 50
     public customOffset = new Phaser.Math.Vector2(0, 0)
     protected moveEvent?: Phaser.Time.TimerEvent

@@ -1,10 +1,12 @@
 import Phaser from 'phaser'
 import Player from './Player'
+import {WeaponList} from '../weapons'
 
 export default class Faune extends Player {
 
     constructor(scene: Phaser.Scene, x: number, y: number, weapons?:WeaponList) {
         super(scene, x, y, 'faune')
+        this.name = 'faune'
         this.customOffset.set(8, 8)
         this.weapon = weapons?.weapon_regular_sword
         this.anims.play('faune-idle-down')

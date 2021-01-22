@@ -1,10 +1,12 @@
 import Phaser from 'phaser'
 import Player from './Player'
+import {WeaponList} from '../weapons'
 
 export default class Ranger extends Player {
 
     constructor(scene: Phaser.Scene, x: number, y: number, weapons?:WeaponList) {
         super(scene, x, y, 'ranger')
+        this.name = 'ranger'
         this.customOffset.set(8, 5)
         this.speed = 100
         this.weapon = weapons?.weapon_knight_sword
