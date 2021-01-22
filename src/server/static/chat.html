@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dungeon Crawler Chat</title>
+    <script type="text/javascript" src="https://unpkg.com/colyseus.js@^0.14.0/dist/colyseus.js"></script>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h2>Dungeon Crawler Chat</h2>
+    <p>This room doesn't use the room's state. It just broadcast messages through "broadcast" method.</p>
+    <strong>Messages</strong><br />
+    <form id="form">
+        <input type="text" id="input" value="" autofocus />
+        <input type="submit" value="send" />
+    </form>
+    <div id="messages"></div>
+    <script>
+        var host = window.document.location.host.replace(/:.*/, '');
+        var client = new Colyseus.Client(location.protocol.replace("http", "ws") + "//" + host + (location.port ? ':'+location.port : ''));
+        client.joinOrCreate("chat").then(room => {
+            room.onStateChange.once(function(state) {
+                console.log("initial room state:", state);
+            });
+            room.onStateChange(function(state) {
+                // this signal is triggered on each patch
+            });
+            room.onMessage("messages", function(message) {
+                var p = document.createElement("p");
+                p.innerText = message;
+                document.querySelector("#messages").appendChild(p);
+            });
+            document.querySelector("#form").onsubmit = function(e) {
+                e.preventDefault();
+                var input = document.querySelector("#input");
+                room.send("message", input.value);
+                input.value = "";
+            }
+        });
+    </script>
+  </body>
+</html>
