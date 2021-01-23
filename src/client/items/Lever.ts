@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import Player from '../characters/Player'
 import Item from './Item'
-import { sceneEvents } from '../events/EventCenter'
+import sceneEvents from '../managers/EventManager'
 
 export default class Lever extends Item {
 

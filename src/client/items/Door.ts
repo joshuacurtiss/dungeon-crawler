@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import Player from '../characters/Player'
 import Item from './Item'
 import Weapon from '../weapons/Weapon'
-import { sceneEvents } from '../events/EventCenter'
+import sceneEvents from '../managers/EventManager'
 
 export default class Door extends Item {
 

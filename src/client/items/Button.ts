@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 import Crate from './Crate'
 import Item from './Item'
-import { sceneEvents } from '../events/EventCenter'
+import sceneEvents from '../managers/EventManager'
 
 export default class Button extends Item {
 

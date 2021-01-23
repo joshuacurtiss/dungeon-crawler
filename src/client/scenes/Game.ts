@@ -9,7 +9,7 @@ import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, Ma
 import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, Lever, Spikes, Turkey } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
-import { sceneEvents } from '../events/EventCenter'
+import sceneEvents from '../managers/EventManager'
 import ConfigManager from '../managers/ConfigManager'
 import LevelManager from '../managers/LevelManager'
 import SoundManager from '../managers/SoundManager'

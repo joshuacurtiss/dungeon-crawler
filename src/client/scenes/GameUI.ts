@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { sceneEvents } from '../events/EventCenter'
+import sceneEvents from '../managers/EventManager'
 import ConfigManager from '../managers/ConfigManager'
 
 export default class GameUI extends Phaser.Scene {

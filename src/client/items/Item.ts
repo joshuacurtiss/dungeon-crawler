@@ -1,5 +1,5 @@
 import Phaser from 'phaser'
-import { sceneEvents } from '../events/EventCenter'
+import sceneEvents from '../managers/EventManager'
 import Player from '../characters/Player'
 import SoundManager from '../managers/SoundManager'
 
