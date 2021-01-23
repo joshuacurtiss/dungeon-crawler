@@ -5,14 +5,11 @@ import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
-import { BigDemon, BigZombie, Chort, Enemy, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
+import { BigDemon, BigZombie, Chort, Enemy, EnemyList, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, Lever, Spikes, Turkey } from '../items'
-import { Fireball, Knife, KnightSword, RegularSword, Weapon } from '../weapons'
-import sceneEvents from '../managers/EventManager'
-import ConfigManager from '../managers/ConfigManager'
-import LevelManager from '../managers/LevelManager'
-import SoundManager from '../managers/SoundManager'
+import { Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList } from '../weapons'
+import {ConfigManager, EventManager as sceneEvents, LevelManager, SoundManager} from '../managers'
 
 const CHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART', 'TINY', 'GIANT']

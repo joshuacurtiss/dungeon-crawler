@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
-import ConfigManager from '../managers/ConfigManager'
 import MenuItem from '../ui/MenuItem'
-import SoundManager from '../managers/SoundManager'
+import {ConfigManager, SoundManager} from '../managers'
 
 export default class Options extends Phaser.Scene {
 

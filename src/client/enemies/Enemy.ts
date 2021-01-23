@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
-import SoundManager from '../managers/SoundManager'
-import sceneEvents from '../managers/EventManager'
+import {EventManager as sceneEvents, SoundManager} from '../managers'
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 

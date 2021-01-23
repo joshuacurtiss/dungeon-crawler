@@ -1,9 +1,7 @@
 import Phaser from 'phaser'
 
 import MenuItem from '../ui/MenuItem'
-import ConfigManager from '../managers/ConfigManager'
-import LevelManager from '../managers/LevelManager'
-import SoundManager from '../managers/SoundManager'
+import {ConfigManager, LevelManager, SoundManager} from '../managers'
 
 export default class Start extends Phaser.Scene {
 

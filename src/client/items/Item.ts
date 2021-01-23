@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
-import sceneEvents from '../managers/EventManager'
 import Player from '../characters/Player'
-import SoundManager from '../managers/SoundManager'
+import {EventManager as sceneEvents, SoundManager} from '../managers'
 
 export default class Item extends Phaser.Physics.Arcade.Sprite {
 

@@ -1,6 +1,5 @@
 import Phaser from 'phaser'
-import ConfigManager from '../managers/ConfigManager'
-import SoundManager from '../managers/SoundManager'
+import {ConfigManager, SoundManager} from '../managers'
 
 export default class WinLevel extends Phaser.Scene {
 

@@ -1,9 +1,8 @@
 import Phaser from 'phaser'
 import Enemy from '../enemies/Enemy'
 import {Crate, Item} from '../items'
-import SoundManager from '../managers/SoundManager'
+import {EventManager as sceneEvents, SoundManager} from '../managers'
 import Weapon from '../weapons/Weapon'
-import sceneEvents from '../managers/EventManager'
 
 enum HealthState {
     IDLE,
