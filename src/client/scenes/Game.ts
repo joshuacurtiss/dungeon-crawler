@@ -7,7 +7,7 @@ import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
 import { BigDemon, BigZombie, Chort, Enemy, EnemyList, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
-import { Button, Chest, Coin, Crate, Door, Flask, Item, Lever, Spikes, Turkey } from '../items'
+import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, Lever, Spikes, Turkey } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList } from '../weapons'
 import {ConfigManager, EventManager as sceneEvents, LevelManager, SoundManager} from '../managers'
 
@@ -23,9 +23,8 @@ export default class Game extends Phaser.Scene {
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private player!: Player
-	private buttons!: Phaser.Physics.Arcade.StaticGroup
-	private doors!: Phaser.Physics.Arcade.StaticGroup
 	private enemies!: EnemyList
+	private items!: ItemList
 	private weapons!: WeaponList
 	private nearBoss: boolean = false
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
@@ -92,9 +91,9 @@ export default class Game extends Phaser.Scene {
 		const itemObjects = this.map.getObjectLayer('Items')?.objects
 		const createcb = go=>(go as Button|Crate|Enemy).setup()
 		// Buttons
-		this.buttons = this.physics.add.staticGroup({ classType: Button, createCallback: createcb })
+		const buttons = this.physics.add.staticGroup({ classType: Button, createCallback: createcb })
 		itemObjects.filter(obj=>obj.type.substr(0,6)==='button').forEach(obj=>{
-			const button = this.buttons.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
+			const button = buttons.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
 			const split = obj.type.split('_')
 			button.color = split.length>1 ? split[1] : 'blue'
 		})
@@ -170,22 +169,34 @@ export default class Game extends Phaser.Scene {
 		this.player.coins=this.config.getNumber('coins')
 		// Doors
 		const doorCreateCallback = go=>(go as Door).setup(this.player)
-		this.doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
+		const doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
 		itemObjects.filter(obj=>obj.type.substr(0,4)==='door').forEach(obj=>{
-			const door=this.doors.get(obj.x!+16, obj.y!, obj.name) as Door
+			const door=doors.get(obj.x!+16, obj.y!, obj.name) as Door
 			if( obj.type.indexOf('open')>=0 ) door.open=true
 		})
+		// Add items
+		this.items = {
+			'button': buttons,
+			'chest': chests,
+			'coin': coins,
+			'crate': crates,
+			'door': doors,
+			'flask': flasks,
+			'lever': levers,
+			'spikes': spikes,
+			'turkey': turkeys,
+		}
 		// Colliders
 		this.physics.add.overlap(this.player, [chests, levers], this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.player, [coins, this.doors, flasks, spikes, turkeys], this.handlePlayerOverItem, undefined, this)
-		this.physics.add.overlap(this.buttons, crates, this.handleButtonOverlap, undefined, this)
+		this.physics.add.overlap(this.player, [coins, this.items.door, flasks, spikes, turkeys], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.items.button, crates, this.handleButtonOverlap, undefined, this)
 		this.physics.add.collider(this.player, crates)
 		this.physics.add.collider(this.player, wallsLayer)
 		this.physics.add.collider(crates, wallsLayer)
 		this.physics.add.collider(crates, crates)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
 		this.physics.add.collider(this.allEnemies, crates, this.handleEnemyWallCollision, undefined, this)
-		this.physics.add.collider(this.allEnemies, [crates, this.doors])
+		this.physics.add.collider(this.allEnemies, [crates, this.items.door])
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
 		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
 			this.physics.add.collider(weaponGroup, crates, this.handleWeaponWallCollision, undefined, this)
@@ -251,7 +262,7 @@ export default class Game extends Phaser.Scene {
 		//
 		// Button Check 
 		//
-		this.buttons.children.iterate(go=>{
+		this.items.button.children.iterate(go=>{
 			const button = go as Button
 			if( ! button.hasCrate ) button.pressed=false
 		})
@@ -318,7 +329,7 @@ export default class Game extends Phaser.Scene {
 		this.sndmgr.play('music-exciting', { loop: true })
 		this.sndmgr.stop('music-game')
 		this.cameras.main.zoomTo(1.25, 250)
-		const door = this.doors.getChildren().find(obj=>obj.name==='boss') as Door
+		const door = this.items.door.getChildren().find(obj=>obj.name==='boss') as Door
 		if( door ) door.open=false
 	}
 
@@ -328,7 +339,7 @@ export default class Game extends Phaser.Scene {
 		this.sndmgr.stop('music-exciting')
 		this.cameras.main.zoomTo(1, 3300)
 		setTimeout(()=>{
-			const door = this.doors.getChildren().find(obj=>obj.name==='boss') as Door
+			const door = this.items.door.getChildren().find(obj=>obj.name==='boss') as Door
 			if( door ) door.open=true
 			this.sndmgr.play('music-game', { loop: true })
 		}, 4500)
@@ -363,7 +374,7 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private handleButton() {
-		const allButtons = this.buttons.children.getArray()
+		const allButtons = this.items.button.children.getArray()
 		const buttonGroups = {}
 		allButtons.forEach(obj=>{
 			const button = obj as Button
@@ -372,13 +383,13 @@ export default class Game extends Phaser.Scene {
 		})
 		Object.keys(buttonGroups).forEach(color=>{
 			const solved = buttonGroups[color].every(go=>(go as Button).pressed)
-			const door = this.doors.getChildren().find(obj=>obj.name==='buttons_'+color)
+			const door = this.items.door.getChildren().find(obj=>obj.name==='buttons_'+color)
 			if( door ) (door as Door).open=solved
 		})
 	}
 
 	private handleLever(name:string) {
-		const door = this.doors.getChildren().find(door=>door.name===name) as Door
+		const door = this.items.door.getChildren().find(door=>door.name===name) as Door
 		if( door ) door.open=true
 	}
 
