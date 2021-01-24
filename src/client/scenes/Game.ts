@@ -1,3 +1,4 @@
+import * as Colyseus from 'colyseus.js'
 import Phaser from 'phaser'
 
 import AnimatedTile from './AnimatedTile'
@@ -9,7 +10,7 @@ import { BigDemon, BigZombie, Chort, Enemy, EnemyList, IceZombie, Imp, LizardF, 
 import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, Lever, Spikes, Turkey } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList } from '../weapons'
-import {ConfigManager, EventManager as sceneEvents, LevelManager, SoundManager} from '../managers'
+import { ConfigManager, EventManager as sceneEvents, LevelManager, MultiplayerManager, SoundManager } from '../managers'
 
 const CHECKINTERVAL = 1000
 const COMBOS = ['GONE', 'SPAWN', 'HEART', 'TINY', 'GIANT']
@@ -29,6 +30,8 @@ export default class Game extends Phaser.Scene {
 	private nearBoss: boolean = false
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
+	private mp!: MultiplayerManager
+	private mpOn: boolean = false
 	private sndmgr = new SoundManager(this)
 	private lvlmgr = new LevelManager()
 	private win!: boolean
@@ -41,10 +44,12 @@ export default class Game extends Phaser.Scene {
 		return this.enemies ? Object.keys(this.enemies).map(key=>this.enemies![key]) : []
 	}
 
-	init() {
+	init(data: any) {
 		this.win = false
 		this.nearBoss = false
+		this.mpOn = data.multiplayer ?? false
 		this.events.once('shutdown', ()=>{
+			if( this.mp ) this.mp.destroy()
 			this.input.keyboard.removeAllKeys()
 		})
 	}
@@ -225,6 +230,13 @@ export default class Game extends Phaser.Scene {
 		setTimeout(()=>{ this.check() }, 0) // After next tick so camera view is defined
 		this.sndmgr.play('music-game', { loop: true })
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
+		// Setup multiplayer
+		if( this.mpOn ) {
+			const host = location.host.replace(/:.*/, '')
+			const endpoint = location.protocol.replace("http", "ws") + "//" + host + ':2567'
+			this.mp = new MultiplayerManager(this as Phaser.Scene, this.items, this.weapons, this.player)
+			this.mp.join(endpoint, 'relay')
+		}
 	}
 
 	private check(t:number=CHECKINTERVAL+1) {
@@ -453,5 +465,6 @@ export default class Game extends Phaser.Scene {
 		if( t > this.lastCheck + CHECKINTERVAL ) this.check(t)
 		// Player update
 		this.player.update(this.cursors)
+		if( this.mp ) this.mp.sendPlayerUpdate(t)
 	}
 }

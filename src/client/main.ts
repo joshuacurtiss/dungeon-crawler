@@ -8,6 +8,7 @@ import MainMenu from './scenes/MainMenu'
 import Options from './scenes/Options'
 import Pause from './scenes/Pause'
 import Start from './scenes/Start'
+import StartMultiplayer from './scenes/StartMultiplayer'
 import WinLevel from './scenes/WinLevel'
 import WinGame from './scenes/WinGame'
 
@@ -31,7 +32,7 @@ export default new Phaser.Game({
 	render: {
 		pixelArt: true
 	},
-	scene: [Preloader, MainMenu, Options, Start, Game, Pause, LoseLife, GameUI, WinLevel, WinGame],
+	scene: [Preloader, MainMenu, Options, Start, StartMultiplayer, Game, Pause, LoseLife, GameUI, WinLevel, WinGame],
 	scale: {
 		mode: Phaser.Scale.FIT,
 		autoCenter: Phaser.Scale.CENTER_BOTH,

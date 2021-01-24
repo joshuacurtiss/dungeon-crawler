@@ -42,14 +42,15 @@ export default class MainMenu extends Phaser.Scene {
             fontFamily: 'Nova Script',
             fontSize: '14px',
         }
-        this.add.text(centerX, 45, 'Dungeon Crawler', titleConfig).setOrigin(0.5).setScrollFactor(0, 0)
+        this.add.text(centerX, 33, 'Dungeon Crawler', titleConfig).setOrigin(0.5).setScrollFactor(0, 0)
         const menuIndicators: Phaser.GameObjects.Image[] = [
-            this.add.image(centerX - 60, 190, 'ui-menu-left').setScale(0.5).setScrollFactor(0, 0),
-            this.add.image(centerX + 60, 190, 'ui-menu-right').setScale(0.5).setScrollFactor(0, 0),
+            this.add.image(centerX - 80, 170, 'ui-menu-left').setScale(0.5).setScrollFactor(0, 0),
+            this.add.image(centerX + 80, 170, 'ui-menu-right').setScale(0.5).setScrollFactor(0, 0),
         ]
         this.menu = [
-            new MenuItem(this, centerX, 190, 'Start', textConfig, {nextScene: 'start', menuIndicators}),
-            new MenuItem(this, centerX, 215, 'Options', textConfig, {nextScene: 'options', menuIndicators}),
+            new MenuItem(this, centerX, 170, 'Start Campaign', textConfig, {nextScene: 'start', menuIndicators}),
+            new MenuItem(this, centerX, 195, 'Multiplayer', textConfig, {nextScene: 'startmultiplayer', menuIndicators}),
+            new MenuItem(this, centerX, 220, 'Options', textConfig, {nextScene: 'options', menuIndicators}),
         ]
         this.menu.forEach((item, index)=>{
             item.on('pointerover', ()=>this.menuIndex=index)
@@ -63,7 +64,7 @@ export default class MainMenu extends Phaser.Scene {
 		const wallsLayer = this.map.createDynamicLayer('Walls', tileset)
         wallsLayer.setCollisionByProperty({collides: true})
         this.player = new Faune(this, 0, 0)
-        this.cameras.main.startFollow(this.player, true)
+        this.cameras.main.startFollow(this.player, true, 0.9, 0.9, 0, -20)
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
     }
