@@ -1,4 +1,3 @@
-import * as Colyseus from 'colyseus.js'
 import Phaser from 'phaser'
 
 import AnimatedTile from './AnimatedTile'
@@ -10,10 +9,9 @@ import { BigDemon, BigZombie, Chort, Enemy, EnemyList, IceZombie, Imp, LizardF, 
 import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, Lever, Spikes, Turkey } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList } from '../weapons'
-import { ConfigManager, EventManager as sceneEvents, LevelManager, MultiplayerManager, SoundManager } from '../managers'
+import { ComboManager, ConfigManager, EventManager as sceneEvents, LevelManager, MultiplayerManager, SoundManager } from '../managers'
 
 const CHECKINTERVAL = 1000
-const COMBOS = ['GONE', 'SPAWN', 'HEART', 'TINY', 'GIANT']
 const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
 
 export default class Game extends Phaser.Scene {
@@ -22,6 +20,7 @@ export default class Game extends Phaser.Scene {
 	private lastCheck: number = 0
 	private innerCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
 	private extendedCameraView = new Phaser.Geom.Rectangle(0, 0, 0, 0)
+	private combos!: ComboManager
 	private cursors!: Phaser.Types.Input.Keyboard.CursorKeys
 	private player!: Player
 	private enemies!: EnemyList
@@ -59,16 +58,6 @@ export default class Game extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys()
 		// Misc keys
 		this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).on('up', ()=>this.pauseMenu())
-		// Key Combos
-		const comboConfig= {
-			maxKeyDelay: 5000,
-			resetOnMatch: true, 
-			resetOnWrongKey: true
-		}
-		COMBOS.forEach(combo=>{
-			this.input.keyboard.createCombo(combo, comboConfig)
-		})
-		this.input.keyboard.on('keycombomatch', this.handleKeyCombo, this)
 		// Anims 
 		createCharacterAnims(this.anims)
 		createEnemyAnims(this.anims)
@@ -237,6 +226,11 @@ export default class Game extends Phaser.Scene {
 			this.mp = new MultiplayerManager(this as Phaser.Scene, this.items, this.weapons, this.player)
 			this.mp.join(endpoint, 'relay')
 		}
+		// Combo Manager (only in single-player mode)
+		if( ! this.mp ) {
+			this.combos = new ComboManager(this.input.keyboard, this.enemies, this.player)
+			this.combos.activate()
+		}
 	}
 
 	private check(t:number=CHECKINTERVAL+1) {
@@ -403,39 +397,6 @@ export default class Game extends Phaser.Scene {
 	private handleLever(name:string) {
 		const door = this.items.door.getChildren().find(door=>door.name===name) as Door
 		if( door ) door.open=true
-	}
-
-	private handleKeyCombo(combo:Phaser.Input.Keyboard.KeyCombo) {
-		const code = combo.keyCodes.map(charcode=>String.fromCharCode(charcode)).join('')
-		if (code==='GONE') {
-			// GONE: Kill all enemies
-			console.log('Baddies be gone!')
-			this.allEnemies.forEach((group: Phaser.Physics.Arcade.Group)=>{
-				group.children.entries.forEach((enemy, i)=>{
-					setTimeout(()=>{enemy.destroy()}, i * 200)
-				})
-			})
-		} else if (code==='GIANT' || code==='TINY') {
-			// GIANT and TINY: Change the size of enemies
-			console.log(`Baddies be ${code}!`)
-			this.allEnemies.forEach((group: Phaser.Physics.Arcade.Group)=>{
-				group.children.entries.forEach(obj=>{
-					const enemy = obj as Enemy
-					if( code==='TINY' ) enemy.becomeTiny()
-					else enemy.becomeGiant()
-				})
-			})
-		} else if (code==='SPAWN') {
-			// SPAWN: Respawn enemeies!
-			console.log("More baddies!")
-			this.spawnEnemies()
-		} else if (code==='HEART') {
-			// HEART: Add a heart to health
-			console.log("Be healed!")
-			this.player.health++
-		} else {
-			console.log('Unknown combo ' + code)
-		}
 	}
 
 	pauseMenu() {
