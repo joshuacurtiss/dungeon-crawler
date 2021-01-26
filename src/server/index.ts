@@ -8,7 +8,7 @@ import { monitor } from '@colyseus/monitor';
 // Import demo room handlers
 import { ChatRoom } from "./rooms/ChatRoom";
 
-const port = Number(process.env.PORT || 2567) + Number(process.env.NODE_APP_INSTANCE || 0);
+const port = Number(process.env.PORT || 4000) + Number(process.env.NODE_APP_INSTANCE || 0);
 const app = express();
 
 app.use(cors());
@@ -33,8 +33,9 @@ gameServer.define("chat", ChatRoom)
     .enableRealtimeListing();
 
 app.use('/', express.static(path.join(__dirname, "static")));
+app.use('/', express.static(path.join(__dirname, '..', '..', 'dist')));
 
-// (optional) attach web monitoring panel
+// Attach web monitoring panel
 app.use('/colyseus', monitor());
 
 gameServer.onShutdown(function(){
