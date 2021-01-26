@@ -5643,7 +5643,7 @@
   <object id="268" name="exit" type="lever" gid="390" x="1232" y="1105.33" width="16" height="16"/>
   <object id="269" type="chest" gid="596" x="1536" y="1584" width="16" height="16"/>
   <object id="270" type="chest" gid="596" x="1568" y="1584" width="16" height="16"/>
-  <object id="280" name="boss" type="door-open" gid="454" x="1232" y="1488" width="16" height="16"/>
+  <object id="280" name="boss" type="door_open" gid="454" x="1232" y="1488" width="16" height="16"/>
   <object id="281" gid="486" x="1232" y="1504" width="16" height="16"/>
   <object id="282" gid="455" x="1248" y="1488" width="16" height="16"/>
   <object id="283" gid="487" x="1248" y="1504" width="16" height="16"/>
