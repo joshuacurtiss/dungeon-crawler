@@ -1004,7 +1004,7 @@
                  "id":280,
                  "name":"boss",
                  "rotation":0,
-                 "type":"door-open",
+                 "type":"door_open",
                  "visible":true,
                  "width":16,
                  "x":1232,
