@@ -14,6 +14,15 @@ import Skelet from './Skelet'
 type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
 
+interface EnemyUpdate {
+	name: EnemyNames;
+	id?: string;
+	x: number;
+	y: number;
+	boss: boolean;
+	tiny: boolean;
+}
+
 export {
     BigDemon,
     BigZombie,
@@ -21,6 +30,7 @@ export {
     Enemy,
     EnemyList,
     EnemyNames,
+    EnemyUpdate,
     IceZombie,
     Imp,
     LizardF,

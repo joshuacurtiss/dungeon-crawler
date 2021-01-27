@@ -1,7 +1,9 @@
 import * as Colyseus from 'colyseus.js'
 import {characters, Player} from '../characters'
+import {EnemyList} from '../enemies'
 import {Item, ItemList} from '../items'
 import {WeaponList} from '../weapons'
+import Game from '../scenes/Game'
 import Phaser from 'phaser'
 import sceneEvents from '../managers/EventManager'
 
@@ -53,7 +55,8 @@ export class MultiplayerManager {
     public updateInterval: number = 10000
 
     constructor(
-        private scene: Phaser.Scene,
+        private scene: Game,
+        private enemies: EnemyList,
         private items: ItemList,
         private weapons: WeaponList,
         private player: Player,

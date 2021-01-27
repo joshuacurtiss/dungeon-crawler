@@ -38,6 +38,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     public setup() {
         this.scene.physics.world.enableBody(this, Phaser.Physics.Arcade.DYNAMIC_BODY)
+        this.setDepth(1)
     }
 
     get coins() {

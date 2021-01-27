@@ -12,6 +12,14 @@ import Turkey from './Turkey'
 type ItemNames = 'button' | 'chest' | 'coin' | 'crate' | 'door' | 'flask' | 'lever' | 'spikes' | 'turkey'
 type ItemList = Record<ItemNames, Phaser.Physics.Arcade.Group | Phaser.Physics.Arcade.StaticGroup>
 
+interface ItemUpdate {
+    name: ItemNames;
+    id?: string;
+    type: string;
+    x: number;
+    y: number;
+}
+
 export {
     Button,
     Chest,
@@ -22,6 +30,7 @@ export {
     Item,
     ItemList,
     ItemNames,
+    ItemUpdate,
     Lever,
     Spikes,
     Turkey,

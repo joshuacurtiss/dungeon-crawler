@@ -12,7 +12,7 @@ export default class Door extends Item {
     private player?:Player
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
-        super(scene, x, y, 'door_closed', 0)
+        super(scene, x+8, y+8, 'door_closed', 0)
         this.name=name
     }
 

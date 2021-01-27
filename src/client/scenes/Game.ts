@@ -5,14 +5,14 @@ import { debugDraw } from '../utils/debug'
 import { createCharacterAnims } from '../anims/CharacterAnims'
 import { createEnemyAnims } from '../anims/EnemyAnims'
 import { createItemAnims } from '../anims/ItemAnims'
-import { BigDemon, BigZombie, Chort, Enemy, EnemyList, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
+import { BigDemon, BigZombie, Chort, Enemy, EnemyList, EnemyNames, EnemyUpdate, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
-import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, Lever, Spikes, Turkey } from '../items'
+import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, ItemUpdate, Lever, Spikes, Turkey } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList } from '../weapons'
 import { ComboManager, ConfigManager, EventManager as sceneEvents, LevelManager, MultiplayerManager, SoundManager } from '../managers'
 
 const CHECKINTERVAL = 1000
-const TILEOFFSET = new Phaser.Math.Vector2(7, 7)
+const createcb = go=>(go as Button|Crate|Enemy).setup()
 
 export default class Game extends Phaser.Scene {
 
@@ -82,68 +82,9 @@ export default class Game extends Phaser.Scene {
 		const wallsLayer = this.map.createDynamicLayer('Walls', tilesets)
 		this.map.createStaticLayer('Above', tilesets)?.setDepth(10)
 		wallsLayer.setCollisionByProperty({collides: true})
-		const itemObjects = this.map.getObjectLayer('Items')?.objects
-		const createcb = go=>(go as Button|Crate|Enemy).setup()
-		// Buttons
-		const buttons = this.physics.add.staticGroup({ classType: Button, createCallback: createcb })
-		itemObjects.filter(obj=>obj.type.substr(0,6)==='button').forEach(obj=>{
-			const button = buttons.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
-			const split = obj.type.split('_')
-			button.color = split.length>1 ? split[1] : 'blue'
-		})
-		// Chests
-		const chests = this.physics.add.staticGroup({ classType: Chest })
-		itemObjects.filter(obj=>obj.type==='chest').forEach(chestObj=>{
-			chests.get(chestObj.x! + TILEOFFSET.x, chestObj.y! - TILEOFFSET.y)
-		})
-		// Coins
-		const coins = this.physics.add.group({ classType: Coin })
-		itemObjects.filter(obj=>obj.type==='coin').forEach(obj=>{
-			coins.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
-		})
-		// Crates
-		const crates = this.physics.add.group({ classType: Crate, createCallback: createcb })
-		itemObjects.filter(obj=>obj.type==='crate').forEach(obj=>{
-			crates.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name).setDepth(5)
-		})
-		// Flasks
-		const flasks = this.physics.add.staticGroup({ classType: Flask })
-		itemObjects.filter(obj=>obj.type==='poison' || obj.type==='potion' || obj.type.indexOf('flask_')===0).forEach(obj=>{
-			const type = obj.type==='poison' ? 'flask_big_red' : obj.type==='potion' ? 'flask_big_blue' : obj.type
-			const flask = flasks.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, type) as Flask
-			if( obj.type==='poison' ) flask.power=-1
-			if( obj.name.length && ! isNaN(Number(obj.name)) ) flask.power=Number(obj.name)
-		})
-		// Levers
-		const levers = this.physics.add.staticGroup({ classType: Lever })
-		itemObjects.filter(obj=>obj.type==='lever').forEach(obj=>{
-			levers.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y, obj.name)
-		})
-		// Spikes
-		const spikes = this.physics.add.staticGroup({ classType: Spikes })
-		itemObjects.filter(obj=>obj.type==='floor_spikes').forEach(obj=>{
-			spikes.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y)
-		})
-		// Turkeys
-		const turkeys = this.physics.add.staticGroup({ classType: Turkey })
-		itemObjects.filter(obj=>obj.type==='turkey').forEach(obj=>{
-			turkeys.get(obj.x! + TILEOFFSET.x, obj.y! - TILEOFFSET.y) as Turkey
-		})
-		// Add enemies and characters
-		this.enemies = {
-			'chort': this.physics.add.group({classType: Chort, createCallback: createcb}),
-			'ice_zombie': this.physics.add.group({classType: IceZombie, createCallback: createcb}),
-			'imp': this.physics.add.group({classType: Imp, createCallback: createcb}),
-			'lizard_m': this.physics.add.group({classType: LizardM, createCallback: createcb}),
-			'lizard_f': this.physics.add.group({classType: LizardF, createCallback: createcb}),
-			'masked_orc': this.physics.add.group({classType: MaskedOrc, createCallback: createcb}),
-			'mushroom': this.physics.add.group({classType: Mushroom, createCallback: createcb}),
-			'necromancer': this.physics.add.group({classType: Necromancer, createCallback: createcb}),
-			'skelet': this.physics.add.group({classType: Skelet, createCallback: createcb}),
-			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: createcb}),
-			'big_zombie': this.physics.add.group({classType: BigZombie, createCallback: createcb})
-		}
-		this.spawnEnemies()
+		// Add enemies
+		this.enemies = this.spawnEnemiesFromMap(this.map)
+		// Add player and their weapons
 		this.weapons = {
 			'weapon_fireball': this.physics.add.group({ classType: Fireball, maxSize: 4 }),
 			'weapon_knife': this.physics.add.group({ classType: Knife, maxSize: 8 }),
@@ -161,39 +102,23 @@ export default class Game extends Phaser.Scene {
 		this.config.setNumber('hearts', hearts)
 		this.player.hearts = hearts
 		this.player.coins=this.config.getNumber('coins')
-		// Doors
-		const doorCreateCallback = go=>(go as Door).setup(this.player)
-		const doors = this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback })
-		itemObjects.filter(obj=>obj.type.substr(0,4)==='door').forEach(obj=>{
-			const door=doors.get(obj.x!+16, obj.y!, obj.name) as Door
-			if( obj.type.indexOf('open')>=0 ) door.open=true
-		})
 		// Add items
-		this.items = {
-			'button': buttons,
-			'chest': chests,
-			'coin': coins,
-			'crate': crates,
-			'door': doors,
-			'flask': flasks,
-			'lever': levers,
-			'spikes': spikes,
-			'turkey': turkeys,
-		}
+		this.items = this.spawnItemsFromMap(this.map)
 		// Colliders
-		this.physics.add.overlap(this.player, [chests, levers], this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.player, [coins, this.items.door, flasks, spikes, turkeys], this.handlePlayerOverItem, undefined, this)
-		this.physics.add.overlap(this.items.button, crates, this.handleButtonOverlap, undefined, this)
-		this.physics.add.collider(this.player, crates)
+		const {chest, coin, crate, flask, lever, spikes, turkey} = this.items
+		this.physics.add.overlap(this.player, [chest, lever], this.handlePlayerTouchItem, undefined, this)
+		this.physics.add.overlap(this.player, [coin, this.items.door, flask, spikes, turkey], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.items.button, crate, this.handleButtonOverlap, undefined, this)
+		this.physics.add.collider(this.player, crate)
 		this.physics.add.collider(this.player, wallsLayer)
-		this.physics.add.collider(crates, wallsLayer)
-		this.physics.add.collider(crates, crates)
+		this.physics.add.collider(crate, wallsLayer)
+		this.physics.add.collider(crate, crate)
 		this.physics.add.collider(this.allEnemies, wallsLayer, this.handleEnemyWallCollision, undefined, this)
-		this.physics.add.collider(this.allEnemies, crates, this.handleEnemyWallCollision, undefined, this)
-		this.physics.add.collider(this.allEnemies, [crates, this.items.door])
+		this.physics.add.collider(this.allEnemies, crate, this.handleEnemyWallCollision, undefined, this)
+		this.physics.add.collider(this.allEnemies, [crate, this.items.door])
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
 		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
-			this.physics.add.collider(weaponGroup, crates, this.handleWeaponWallCollision, undefined, this)
+			this.physics.add.collider(weaponGroup, crate, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
 		})
@@ -222,8 +147,7 @@ export default class Game extends Phaser.Scene {
 		// Setup multiplayer
 		if( this.mpOn ) {
 			const endpoint = location.protocol.replace("http", "ws") + "//" + location.host
-			console.log(endpoint)
-			this.mp = new MultiplayerManager(this as Phaser.Scene, this.items, this.weapons, this.player)
+			this.mp = new MultiplayerManager(this, this.enemies, this.items, this.weapons, this.player)
 			this.mp.join(endpoint, 'relay')
 		}
 		// Combo Manager (only in single-player mode)
@@ -274,20 +198,112 @@ export default class Game extends Phaser.Scene {
 		})
 	}
 
-	private spawnEnemies() {
-		this.map.getObjectLayer('Characters').objects
+	private spawnItem(def: ItemUpdate, group:Phaser.Physics.Arcade.Group | Phaser.Physics.Arcade.StaticGroup): Item | undefined {
+		const {name, id, type, x, y} = def
+		const [specialType, ...descparts] = type.split('_')
+		const specialDesc = descparts.join('_')
+		let item: Item | undefined
+		// Items that are just instantiated
+		if( ['chest', 'coin', 'spikes', 'turkey'].includes(type) ) item = group.get(x, y) as Item
+		// Items that need the *name* passed when instantiated
+		if( ['button', 'crate', 'door', 'lever'].includes(specialType) ) item = group.get(x, y, name) as Item
+		// Items that need the *type* passed when instantiated
+		if( ['flask'].includes(specialType) ) item = group.get(x, y, type) as Item
+		// If nothing matched, just return now
+		if( ! item ) return
+		// Assign id and name, if provided
+		if( id ) item.id = id
+		if( name ) item.name = name
+		// Special cases
+		if( type==='crate' ) item.setDepth(5)
+		if( specialType==='button' ) (item as Button).color = specialDesc.length ? specialDesc : 'blue'
+		if( specialType==='door' && specialDesc==='open' ) (item as Door).open = true
+		if( specialType==='flask' && specialDesc==='big_red' ) (item as Flask).power=-1
+		if( specialType==='flask' && name.length && !isNaN(Number(name)) ) (item as Flask).power = Number(name)
+		return item
+	}
+
+	private spawnItems(defs: ItemUpdate[]): ItemList {
+		const doorCreateCallback = go=>(go as Door).setup(this.player)
+		const items: ItemList = {
+			'button': this.physics.add.staticGroup({ classType: Button, createCallback: createcb }),
+			'chest': this.physics.add.staticGroup({ classType: Chest }),
+			'coin': this.physics.add.group({ classType: Coin }),
+			'crate': this.physics.add.group({ classType: Crate, createCallback: createcb }),
+			'door': this.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback }),
+			'flask': this.physics.add.staticGroup({ classType: Flask }),
+			'lever': this.physics.add.staticGroup({ classType: Lever }),
+			'spikes': this.physics.add.staticGroup({ classType: Spikes }),
+			'turkey': this.physics.add.staticGroup({ classType: Turkey }),
+		}
+		defs.forEach(def=>{
+			const {type} = def
+			const [basetype] = type.split('_')
+			if( items[basetype] ) this.spawnItem(def, items[basetype])
+		})
+		return items
+	}
+
+	private spawnItemsFromMap(map: Phaser.Tilemaps.Tilemap): ItemList {
+		const mapObjects = map.getObjectLayer('Items')?.objects
+		const items: ItemUpdate[] = mapObjects.map((obj: any)=>{
+			// Fix old tile types to match the ItemNames spec
+			obj.type = obj.type.replace('floor_spikes', 'spikes')
+			obj.type = obj.type.replace('poison', 'flask_big_red')
+			obj.type = obj.type.replace('potion', 'flask_big_blue')
+			return obj as ItemUpdate
+		})
+		return this.spawnItems(items)
+	}
+
+	private spawnEnemy(def: EnemyUpdate, group: Phaser.Physics.Arcade.Group): Enemy {
+		const {name, id, x, y, boss, tiny} = def
+		const enemy = group.get(x, y, name) as Enemy
+		if( id ) enemy.id = id
+		enemy.isBoss = boss
+		if( tiny ) enemy.becomeTiny()
+		return enemy
+	}
+
+	private spawnEnemies(defs: EnemyUpdate[]): EnemyList {
+		const enemies: EnemyList = {
+			'chort': this.physics.add.group({classType: Chort, createCallback: createcb}),
+			'ice_zombie': this.physics.add.group({classType: IceZombie, createCallback: createcb}),
+			'imp': this.physics.add.group({classType: Imp, createCallback: createcb}),
+			'lizard_m': this.physics.add.group({classType: LizardM, createCallback: createcb}),
+			'lizard_f': this.physics.add.group({classType: LizardF, createCallback: createcb}),
+			'masked_orc': this.physics.add.group({classType: MaskedOrc, createCallback: createcb}),
+			'mushroom': this.physics.add.group({classType: Mushroom, createCallback: createcb}),
+			'necromancer': this.physics.add.group({classType: Necromancer, createCallback: createcb}),
+			'skelet': this.physics.add.group({classType: Skelet, createCallback: createcb}),
+			'big_demon': this.physics.add.group({classType: BigDemon, createCallback: createcb}),
+			'big_zombie': this.physics.add.group({classType: BigZombie, createCallback: createcb})
+		}
+		defs.forEach(def=>{
+			const {name} = def
+			if( enemies[name] ) this.spawnEnemy(def, enemies[name])
+		})
+		return enemies
+	}
+
+	private spawnEnemiesFromMap(map: Phaser.Tilemaps.Tilemap): EnemyList {
+		const defs: EnemyUpdate[] = []
+		map.getObjectLayer('Characters').objects
 			.filter(obj=>obj.type==='enemy')
 			.forEach(obj=>{
 				let name = obj.name.toLowerCase()
 				const boss = name.substr(0,5)==='boss_'
 				const tiny = name.substr(0,5)==='tiny_'
 				if( boss || tiny ) name=name.substring(5)
-				if( this.enemies[name] ) {
-					const enemy = this.enemies[name].get(obj.x, obj.y, name) as Enemy
-					enemy.isBoss = boss
-					if( tiny ) enemy.becomeTiny()
-				}
+				defs.push({
+					name: name as EnemyNames,
+					x: obj.x as number,
+					y: obj.y as number,
+					boss,
+					tiny,
+				})
 			})
+		return this.spawnEnemies(defs)
 	}
 
 	private handleButtonOverlap(obj1: Phaser.GameObjects.GameObject) {
