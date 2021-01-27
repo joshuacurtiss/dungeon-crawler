@@ -5628,7 +5628,7 @@
   <object id="249" gid="452" x="1568.18" y="1296.18" width="16" height="16"/>
   <object id="250" gid="483" x="1552" y="1312" width="16" height="16"/>
   <object id="251" gid="484" x="1568" y="1312.18" width="16" height="16"/>
-  <object id="253" name="buttons_blue" type="door-closed" gid="451" x="1104.5" y="1488.01" width="16" height="16"/>
+  <object id="253" name="buttons_blue" type="door_closed" gid="451" x="1104.5" y="1488.01" width="16" height="16"/>
   <object id="254" gid="452" x="1120.77" y="1488.01" width="16" height="16"/>
   <object id="255" gid="483" x="1104.5" y="1504" width="16" height="16"/>
   <object id="256" gid="484" x="1120.77" y="1504.14" width="16" height="16"/>
