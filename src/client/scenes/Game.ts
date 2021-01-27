@@ -82,8 +82,6 @@ export default class Game extends Phaser.Scene {
 		const wallsLayer = this.map.createDynamicLayer('Walls', tilesets)
 		this.map.createStaticLayer('Above', tilesets)?.setDepth(10)
 		wallsLayer.setCollisionByProperty({collides: true})
-		// Add enemies
-		this.enemies = this.spawnEnemiesFromMap(this.map)
 		// Add player and their weapons
 		this.weapons = {
 			'weapon_fireball': this.physics.add.group({ classType: Fireball, maxSize: 4 }),
@@ -104,6 +102,8 @@ export default class Game extends Phaser.Scene {
 		this.player.coins=this.config.getNumber('coins')
 		// Add items
 		this.items = this.spawnItemsFromMap(this.map)
+		// Add enemies
+		this.enemies = this.spawnEnemiesFromMap(this.map)
 		// Colliders
 		const {chest, coin, crate, flask, lever, spikes, turkey} = this.items
 		this.physics.add.overlap(this.player, [chest, lever], this.handlePlayerTouchItem, undefined, this)
