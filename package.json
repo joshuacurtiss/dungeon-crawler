@@ -5,8 +5,9 @@
 	"scripts": {
 		"server": "ts-node --project tsconfig.server.json src/server",
 		"serverdev": "ts-node-dev --project tsconfig.server.json --watch src/server src/server",
+		"build": "parcel build src/client/index.html --out-dir dist",
 		"start": "parcel src/client/index.html -p 4000",
-		"build": "parcel build src/client/index.html --out-dir dist"
+		"watch": "parcel watch src/client/index.html --out-dir dist"
 	},
 	"author": "joshuacurtiss",
 	"license": "MIT",

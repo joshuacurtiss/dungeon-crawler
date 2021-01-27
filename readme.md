@@ -18,6 +18,7 @@ I've completed the tutorial, and in the end, I had a map with enemies and a char
   * More enemies
   * More characters the player can choose
   * Different weapons for each character 
+  * Multiplayer *(work in progress)*
   * Spikes as another item that hurts the player
   * Sound effects and music
   * Menu, Options, and Start screens, as well as a Pause screen
@@ -27,7 +28,7 @@ I've completed the tutorial, and in the end, I had a map with enemies and a char
 
 ## To Build This Game
 
-You can build this game yourself with [Node.js](https://nodejs.org/en/) and [Parcel](https://parceljs.org/).
+You can build this game yourself with [Node.js](https://nodejs.org/en/) and [Parcel](https://parceljs.org/). These must be installed.
 
 Clone this repository to your local machine:
 
@@ -44,7 +45,9 @@ cd dungeon-crawler
 npm install
 ```
 
-## Start a development server
+## How to start/run the game
+
+The game has a server component for multiplayer. If you are only using the *single-player* mode, you can start the client:
 
 ```
 npm run start
@@ -52,10 +55,19 @@ npm run start
 
 The game will be hosted on port 4000, like: http://localhost:4000
 
-## To create a production build
+To build the game for production:
 
 ```
 npm run build
 ```
 
-Production files will be placed in the `dist` folder. Then upload those files to a web server. 🎉
+Production files will be placed in the `dist` folder. Then run the server component to server up everything: 
+
+```
+npm run server
+```
+
+To *develop* on multiplayer functionality, you may need to manipulate both the client and server bits of the project. To do that, run two separate processes in different terminals:
+
+`npm run watch`       *(Builds the client while watching for changes)*  
+`npm run serverdev`   *(Runs the server while watching for changes)*
