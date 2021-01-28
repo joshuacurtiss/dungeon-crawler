@@ -81,6 +81,7 @@ export default class Game extends Phaser.Scene {
 		this.map.createDynamicLayer('Ground', tilesets)
 		const wallsLayer = this.map.createDynamicLayer('Walls', tilesets)
 		this.map.createStaticLayer('Above', tilesets)?.setDepth(10)
+		this.map.createStaticLayer('Ceiling', tilesets)?.setDepth(20)
 		wallsLayer.setCollisionByProperty({collides: true})
 		// Add player and their weapons
 		this.weapons = {
