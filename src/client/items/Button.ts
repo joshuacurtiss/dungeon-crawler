@@ -8,9 +8,13 @@ export default class Button extends Item {
     private _pressed:boolean = false
     private _color:string = 'blue'
 
-    constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
+    constructor(scene:Phaser.Scene, x:number, y:number, name:string, type:string) {
         super(scene, x, y, 'button_blue_up', 0)
         this.name=name
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const [specialType, ...descparts] = type.split('_')
+        const specialDesc = descparts.join('_')
+        this.color = specialDesc.length ? specialDesc : 'blue'
     }
 
     setup() {

@@ -11,14 +11,19 @@ export default class Door extends Item {
     private weaponCollider?:Phaser.Physics.Arcade.Collider
     private player?:Player
 
-    constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
+    constructor(scene:Phaser.Scene, x:number, y:number, name:string, type:string) {
         super(scene, x+8, y+8, 'door_closed', 0)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+		const [specialType, ...descparts] = type.split('_')
+		const specialDesc = descparts.join('_')
+        this._open = specialDesc==='open'
         this.name=name
     }
 
     setup(player:Player) {
         this.player = player
-        this.setColliders()
+        if( this.open ) this.setTexture('door_open')
+        else this.setColliders()
     }
 
     get open() {
@@ -26,16 +31,22 @@ export default class Door extends Item {
     }
     set open(bool:boolean) {
         if( this._open===bool ) return
-        if( bool ) {
-            if( this.playerCollider ) this.playerCollider.destroy()
-            if( this.weaponCollider ) this.weaponCollider.destroy()
-            this.sndmgr.play('door-open')
-        } else {
-            this.setColliders()
-            this.sndmgr.play('door-closed')
-        }
-        this.setTexture('door_' + (bool ? 'open' : 'closed'))
+        if( bool ) this.handleOpen()
+        else this.handleClose()
         this._open = bool
+    }
+
+    private handleOpen() {
+        if( this.playerCollider ) this.playerCollider.destroy()
+        if( this.weaponCollider ) this.weaponCollider.destroy()
+        this.sndmgr.play('door-open')
+        this.setTexture('door_open')
+    }
+
+    private handleClose() {
+        this.setColliders()
+        this.sndmgr.play('door-closed')
+        this.setTexture('door_closed')
     }
 
     use(player:Player) {

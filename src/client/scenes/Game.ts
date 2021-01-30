@@ -201,8 +201,6 @@ export default class Game extends Phaser.Scene {
 
 	private spawnItem(def: ItemUpdate, group:Phaser.Physics.Arcade.Group | Phaser.Physics.Arcade.StaticGroup): Item | undefined {
 		const {name, id, type, x, y} = def
-		const [specialType, ...descparts] = type.split('_')
-		const specialDesc = descparts.join('_')
 		// Instantiate items
 		const item = group.get(x, y, name, type) as Item
 		// If nothing matched, just return now
@@ -210,12 +208,6 @@ export default class Game extends Phaser.Scene {
 		// Assign id and name, if provided
 		if( id ) item.id = id
 		if( name ) item.name = name
-		// Special cases
-		if( type==='crate' ) item.setDepth(5)
-		if( specialType==='button' ) (item as Button).color = specialDesc.length ? specialDesc : 'blue'
-		if( specialType==='door' && specialDesc==='open' ) (item as Door).open = true
-		if( specialType==='flask' && specialDesc==='big_red' ) (item as Flask).power=-1
-		if( specialType==='flask' && name.length && !isNaN(Number(name)) ) (item as Flask).power = Number(name)
 		return item
 	}
 
