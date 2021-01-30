@@ -203,13 +203,8 @@ export default class Game extends Phaser.Scene {
 		const {name, id, type, x, y} = def
 		const [specialType, ...descparts] = type.split('_')
 		const specialDesc = descparts.join('_')
-		let item: Item | undefined
-		// Items that are just instantiated
-		if( ['chest', 'coin', 'spikes', 'turkey'].includes(type) ) item = group.get(x, y) as Item
-		// Items that need the *name* passed when instantiated
-		if( ['button', 'crate', 'door', 'lever'].includes(specialType) ) item = group.get(x, y, name) as Item
-		// Items that need the *type* passed when instantiated
-		if( ['flask'].includes(specialType) ) item = group.get(x, y, type) as Item
+		// Instantiate items
+		const item = group.get(x, y, name, type) as Item
 		// If nothing matched, just return now
 		if( ! item ) return
 		// Assign id and name, if provided

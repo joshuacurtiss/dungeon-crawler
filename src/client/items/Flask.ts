@@ -6,8 +6,8 @@ export default class Flask extends Item {
 
     public power:number = 1
 
-    constructor(scene:Phaser.Scene, x:number, y:number, texture:string, frame:string|number) {
-        super(scene, x, y, texture, frame)
+    constructor(scene:Phaser.Scene, x:number, y:number, name:string, texture:string) {
+        super(scene, x, y, texture, 0)
     }
 
     use(player:Player) {
