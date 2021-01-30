@@ -4,8 +4,21 @@ import Item from './Item'
 
 export default class Coin extends Item {
 
-    constructor(scene:Phaser.Scene, x:number, y:number) {
+    public rangeStart: number = 1
+    public rangeEnd: number = 5
+
+    constructor(scene:Phaser.Scene, x:number, y:number, name:string='') {
         super(scene, x, y, 'treasure', 'coin_anim_f0.png')
+        // The name contains the coin value, either a number or a range like "5-10"
+        const [startString, endString] = name.split('-')
+        const start = Number(startString)
+        const end = Number(endString)
+        if( start ) {
+            this.rangeStart = start
+            this.rangeEnd = start
+        }
+        if( end && end>start ) this.rangeEnd = end
+        // Animate the coin
         this.play('coin-spin')
     }
 
@@ -13,7 +26,7 @@ export default class Coin extends Item {
         if( this.used ) return
         super.use(player)
         this.sndmgr.play('coin')
-        player.coins += Phaser.Math.Between(10, 20)
+        player.coins += Phaser.Math.Between(this.rangeStart, this.rangeEnd)
         // Spin coin
         this.setDepth(10)
         this.setVelocityY(-10)
