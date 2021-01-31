@@ -152,10 +152,16 @@ export default class Preloader extends Phaser.Scene {
             progressBox.destroy()
         })
         // Tiles
+        this.load.image('cave', 'tiles/cave/png')
         this.load.image('dungeon', 'tiles/dungeon_tiles_extruded.png')
         this.load.image('dungeon_tiles', 'tiles/dungeon_tiles_extruded.png')
+        this.load.image('ffi', 'tiles/ffi.png')
+        this.load.image('ffi_snow', 'tiles/ffi_snow.png')
         this.load.image('forest', 'tiles/forest.png')
+        this.load.image('legend_of_faune_tiles', 'tiles/legend_of_faune_tiles.png')
+        this.load.image('legend_of_faune_water', 'tiles/legend_of_faune_water.png')
         this.load.image('lava', 'tiles/lava.png')
+        this.load.image('overworld', 'tiles/overworld.png')
         this.load.image('roguelike_transparent', 'tiles/roguelike_transparent_extruded.png')
         this.load.tilemapTiledJSON('dungeon-start', 'tiles/start.json')
         // Atlases
