@@ -66,10 +66,16 @@ export default class Game extends Phaser.Scene {
 		const lvl:Level = {world: this.config.getNumber('world'), level: this.config.getNumber('level')}
 		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(lvl)})
 		const tilesets = [
+			this.map.addTilesetImage('cave', undefined, 16, 16, 0, 0),
 			this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2),
 			this.map.addTilesetImage('dungeon_tiles', undefined, 16, 16, 1, 2),
+			this.map.addTilesetImage('ffi', undefined, 16, 16, 0, 0),
+			this.map.addTilesetImage('ffi_snow', undefined, 16, 16, 0, 0),
 			this.map.addTilesetImage('forest', undefined, 16, 16, 0, 0),
 			this.map.addTilesetImage('lava', undefined, 16, 16, 0, 0),
+			this.map.addTilesetImage('legend_of_faune_tiles', undefined, 16, 16, 0, 0),
+			this.map.addTilesetImage('legend_of_faune_water', undefined, 16, 16, 0, 0),
+			this.map.addTilesetImage('overworld', undefined, 16, 16, 0, 0),
 			this.map.addTilesetImage('roguelike_transparent', undefined, 16, 16, 1, 3),
 		]
 		this.map.createDynamicLayer('Subground', tilesets)
