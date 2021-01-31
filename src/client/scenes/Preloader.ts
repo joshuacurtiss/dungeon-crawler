@@ -152,7 +152,7 @@ export default class Preloader extends Phaser.Scene {
             progressBox.destroy()
         })
         // Tiles
-        this.load.image('cave', 'tiles/cave/png')
+        this.load.image('cave', 'tiles/cave.png')
         this.load.image('dungeon', 'tiles/dungeon_tiles_extruded.png')
         this.load.image('dungeon_tiles', 'tiles/dungeon_tiles_extruded.png')
         this.load.image('ffi', 'tiles/ffi.png')
