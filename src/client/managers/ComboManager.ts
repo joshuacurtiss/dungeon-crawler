@@ -60,7 +60,7 @@ export class ComboManager {
 
     private comboHeart() {
         console.log("Be healed!")
-        this.player.health++
+        this.player.health = this.player.hearts
     }
 
     private comboSesame() {
