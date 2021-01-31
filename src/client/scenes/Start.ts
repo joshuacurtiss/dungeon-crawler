@@ -1,7 +1,7 @@
 import Phaser from 'phaser'
 
 import MenuItem from '../ui/MenuItem'
-import {ConfigManager, LevelManager, SoundManager} from '../managers'
+import {ConfigManager, Level, LevelManager, SoundManager} from '../managers'
 
 export default class Start extends Phaser.Scene {
 
@@ -9,7 +9,7 @@ export default class Start extends Phaser.Scene {
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private lvlmgr = new LevelManager()
     private sndmgr = new SoundManager(this)
-    private level: number = 1
+    private lvl: Level = {world: 1, level: 1}
     private menu: MenuItem[] = []
     private _menuIndex: number = 0
     private players: Phaser.GameObjects.Image[] = []
@@ -94,7 +94,7 @@ export default class Start extends Phaser.Scene {
         this.input.keyboard.on('keycombomatch', ()=>{
             const lastItem = this.menu.pop()
             const newItem = new MenuItem(this, centerX, 200, 'Jump to Level:', textConfig, {key: 'level', menuIndicators})
-            newItem.num = this.level
+            newItem.txt = `${this.lvl.world}-${this.lvl.level}`
             lastItem!.setY(225)
             this.menu.push(newItem, lastItem!)
         }, this)
@@ -103,15 +103,15 @@ export default class Start extends Phaser.Scene {
     create() {
         this.menuIndex=0
         this.playerIndex=0
-        this.level=1
+        this.lvl={world: 1, level: 1}
         this.cameras.main.fadeIn(550, 0, 0, 0)
     }
 
     private select() {
         const item = this.menuSelection
         if( item.key ) {
-            this.level = this.level==this.lvlmgr.levelCount ? 1 : (this.level+1)
-            item.num = this.level
+            this.lvl = this.lvlmgr.inc(this.lvl)
+            item.txt = `${this.lvl.world}-${this.lvl.level}`
         }
         if( item.nextScene ) {
             // Clean up listeners
@@ -121,7 +121,8 @@ export default class Start extends Phaser.Scene {
             this.config.setString('character', this.playerSelectionName)
             this.config.setNumber('coins', 0)
             this.config.setNumber('hearts', 0)
-            this.config.setNumber('level', this.level)
+            this.config.setNumber('world', this.lvl.world)
+            this.config.setNumber('level', this.lvl.level)
             this.config.setNumber('lives', 3)
             // Fade music (if starting game) and camera
             if( item.nextScene==='game' ) this.sndmgr.fade('music-menu')

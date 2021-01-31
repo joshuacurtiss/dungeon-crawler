@@ -99,6 +99,7 @@ export default class StartMultiplayer extends Phaser.Scene {
             this.config.setString('character', this.playerSelectionName)
             this.config.setNumber('coins', 0)
             this.config.setNumber('hearts', 0)
+            this.config.setNumber('world', 1)
             this.config.setNumber('level', 1)
             this.config.setNumber('lives', 3)
             // Fade music (if starting game) and camera

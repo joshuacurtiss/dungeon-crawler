@@ -1,9 +1,10 @@
 import Phaser from 'phaser'
-import {ConfigManager, SoundManager} from '../managers'
+import {ConfigManager, Level, LevelManager, SoundManager} from '../managers'
 
 export default class WinLevel extends Phaser.Scene {
 
     private config = new ConfigManager()
+    private lvlmgr = new LevelManager()
     private sndmgr = new SoundManager(this)
 
     constructor() {
@@ -36,7 +37,10 @@ export default class WinLevel extends Phaser.Scene {
     }
 
     private nextLevel() {
-        this.config.inc('level')
+        const lvl:Level = {world: this.config.getNumber('world'), level: this.config.getNumber('level')}
+        const newlvl:Level = this.lvlmgr.inc(lvl)
+        this.config.setNumber('world', newlvl.world)
+        this.config.setNumber('level', newlvl.level)
         this.sndmgr.remove('music-victory')
         this.scene.stop()
         this.scene.start('game')

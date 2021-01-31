@@ -6,7 +6,7 @@ import { BigDemon, BigZombie, Chort, Enemy, EnemyList, EnemyNames, EnemyUpdate, 
 import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, ItemUpdate, Lever, Spikes, Turkey } from '../items'
 import { Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList } from '../weapons'
-import { ComboManager, ConfigManager, EventManager as sceneEvents, LevelManager, MultiplayerManager, SoundManager } from '../managers'
+import { ComboManager, ConfigManager, EventManager as sceneEvents, Level, LevelManager, MultiplayerManager, SoundManager } from '../managers'
 
 const CHECKINTERVAL = 1000
 const createcb = go=>(go as Button|Crate|Enemy).setup()
@@ -56,13 +56,15 @@ export default class Game extends Phaser.Scene {
 		// Misc keys
 		this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).on('up', ()=>this.pauseMenu())
 		// Tilemap
-		const level = this.lvlmgr.levelKey(this.config.getNumber('level'))
-        this.load.tilemapTiledJSON(level, `tiles/${level}.json`)
+		const lvl:Level = {world: this.config.getNumber('world'), level: this.config.getNumber('level')}
+		const levelKey = this.lvlmgr.levelKey(lvl)
+        this.load.tilemapTiledJSON(levelKey, `tiles/${levelKey}.json`)
     }
 
 	create() {
 		// Set up map/layers
-		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(this.config.getNumber('level'))})
+		const lvl:Level = {world: this.config.getNumber('world'), level: this.config.getNumber('level')}
+		this.map = this.make.tilemap({key: this.lvlmgr.levelKey(lvl)})
 		const tilesets = [
 			this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2),
 			this.map.addTilesetImage('dungeon_tiles', undefined, 16, 16, 1, 2),
@@ -372,7 +374,9 @@ export default class Game extends Phaser.Scene {
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
 			this.scene.stop()
-			this.scene.start(this.config.getNumber('level')===this.lvlmgr.levelCount ? 'wingame' : 'winlevel')
+			const lev:Level = {world: this.config.getNumber('world'), level: this.config.getNumber('level')}
+			const wingame = this.lvlmgr.won(lev)
+			this.scene.start(wingame ? 'wingame' : 'winlevel')
         })
 	}
 

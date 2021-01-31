@@ -12,6 +12,7 @@ export default class MenuItem extends Phaser.GameObjects.Text {
     private menuIndicators: Phaser.GameObjects.Image[]
     private _chk: boolean = false
     private _num: number = 0
+    private _txt: string = ''
     private _selected: boolean = false
     
     constructor(scene:Phaser.Scene, x:number, y:number, text:string | Array<string>, style:Phaser.Types.GameObjects.Text.TextStyle, opts:options) {
@@ -30,6 +31,15 @@ export default class MenuItem extends Phaser.GameObjects.Text {
         this._chk = bool
         const text = this.text.slice(0, this.text.indexOf(':'))
         this.text = `${text}: ${this.chk ? 'On' : 'Off'}`
+    }
+
+    get txt() {
+        return this._txt
+    }
+    set txt(txt:string) {
+        this._txt = txt
+        const text = this.text.slice(0, this.text.indexOf(':'))
+        this.text = `${text}: ${txt}`
     }
 
     get num() {
