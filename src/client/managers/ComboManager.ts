@@ -17,6 +17,7 @@ export class ComboManager {
         {code: 'TINY', function: this.comboTinyGiant, thisArg: this},
         {code: 'HEART', function: this.comboHeart, thisArg: this},
         {code: 'SESAME', function: this.comboSesame, thisArg: this},
+        {code: 'SPEED', function: this.comboSpeed, thisArg: this},
     ]
     public config: Phaser.Types.Input.Keyboard.KeyComboConfig = {
         maxKeyDelay: 5000,
@@ -70,6 +71,11 @@ export class ComboManager {
         this.items.spikes.getChildren().forEach(obj=>{
             (obj as Spikes).anims.stopOnRepeat()
         })
+    }
+
+    private comboSpeed() {
+        console.log('I suddenly feel so swift.')
+        this.player.speed*=2
     }
 
     private comboTinyGiant(code: string) {
