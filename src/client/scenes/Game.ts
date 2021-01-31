@@ -148,7 +148,7 @@ export default class Game extends Phaser.Scene {
 		}
 		// Combo Manager (only in single-player mode)
 		if( ! this.mp ) {
-			this.combos = new ComboManager(this.input.keyboard, this.enemies, this.player)
+			this.combos = new ComboManager(this.input.keyboard, this.enemies, this.items, this.player)
 			this.combos.activate()
 		}
 	}

@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import {Door, Spikes, ItemList} from '../items'
 import {Enemy, EnemyList} from '../enemies'
 import {Player} from '../characters'
 
@@ -15,6 +16,7 @@ export class ComboManager {
         {code: 'GIANT', function: this.comboTinyGiant, thisArg: this},
         {code: 'TINY', function: this.comboTinyGiant, thisArg: this},
         {code: 'HEART', function: this.comboHeart, thisArg: this},
+        {code: 'SESAME', function: this.comboSesame, thisArg: this},
     ]
     public config: Phaser.Types.Input.Keyboard.KeyComboConfig = {
         maxKeyDelay: 5000,
@@ -25,6 +27,7 @@ export class ComboManager {
     constructor(
         private keyboard: Phaser.Input.Keyboard.KeyboardPlugin,
         private enemies: EnemyList,
+        private items: ItemList,
         private player: Player,
     ) { }
 
@@ -57,6 +60,16 @@ export class ComboManager {
     private comboHeart() {
         console.log("Be healed!")
         this.player.health++
+    }
+
+    private comboSesame() {
+        console.log('Open SESAME!')
+        this.items.door.getChildren().forEach(obj=>{
+            (obj as Door).open = true
+        })
+        this.items.spikes.getChildren().forEach(obj=>{
+            (obj as Spikes).anims.stopOnRepeat()
+        })
     }
 
     private comboTinyGiant(code: string) {
