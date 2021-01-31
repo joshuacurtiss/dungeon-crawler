@@ -1,5 +1,5 @@
-const LEVELCOUNT = [6]
-const WORLDCOUNT = 1
+const LEVELCOUNT = [6, 1]
+const WORLDCOUNT = 2
 
 export type Level = {
     world: number
