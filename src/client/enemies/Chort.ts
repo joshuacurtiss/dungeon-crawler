@@ -1,3 +1,4 @@
+import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
@@ -8,6 +9,7 @@ export default class Chort extends Enemy {
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(75, 125)
         this.customOffset.set(2, 8)
+        createStandardAnims(scene, 'chort')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(500, 2500),
             callback: ()=>this.changeDirection(),

@@ -1,3 +1,4 @@
+import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
@@ -8,6 +9,7 @@ export default class Skelet extends Enemy {
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(30, 50)
         this.customOffset.set(3, 2)
+        createStandardAnims(scene, 'skelet')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(1500, 2500),
             callback: ()=>this.changeDirection(),

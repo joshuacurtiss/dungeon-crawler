@@ -1,3 +1,4 @@
+import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
@@ -8,6 +9,7 @@ export default class Necromancer extends Enemy {
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(60, 90)
         this.customOffset.set(3, 4)
+        createStandardAnims(scene, 'necromancer')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(3000, 6000),
             callback: ()=>this.changeDirection(),

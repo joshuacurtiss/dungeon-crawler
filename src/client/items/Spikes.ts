@@ -8,6 +8,14 @@ export default class Spikes extends Item {
 
     constructor(scene:Phaser.Scene, x:number, y:number) {
         super(scene, x, y, 'floor_spikes', 0)
+        if( !scene.anims.exists('spikes-spring') ) scene.anims.create({
+            key: 'spikes-spring',
+            frames: scene.anims.generateFrameNames('floor_spikes', {start: 0, end: 3, prefix: 'floor_spikes_anim_f', suffix: '.png'}),
+            yoyo: true,
+            frameRate: 8,
+            repeat: -1,
+            repeatDelay: 750
+        })
         this.play('spikes-spring')
     }
 

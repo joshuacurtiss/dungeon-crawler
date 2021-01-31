@@ -18,6 +18,13 @@ export default class Coin extends Item {
             this.rangeEnd = start
         }
         if( end && end>start ) this.rangeEnd = end
+        // Animation Definitions
+        if( !scene.anims.exists('coin-spin') ) scene.anims.create({
+            key: 'coin-spin',
+            frames: scene.anims.generateFrameNames('treasure', {start: 0, end: 4, prefix: 'coin_anim_f', suffix: '.png'}),
+            frameRate: 4,
+            repeat: -1
+        })
         // Animate the coin
         this.play('coin-spin')
     }

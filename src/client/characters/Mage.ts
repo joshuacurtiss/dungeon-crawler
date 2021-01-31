@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import Player from './Player'
+import createStandardAnims from './createStandardAnims'
 import {WeaponList} from '../weapons'
 
 export default class Mage extends Player {
@@ -10,6 +11,7 @@ export default class Mage extends Player {
         this.customOffset.set(8, 5)
         this.speed = 60
         this.weapon = weapons?.weapon_fireball
+        createStandardAnims(scene, this.name)
         this.anims.play('mage-idle-down')
     }
 

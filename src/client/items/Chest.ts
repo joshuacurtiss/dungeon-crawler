@@ -18,6 +18,22 @@ export default class Chest extends Item {
             this.rangeEnd = start
         }
         if( end && end>start ) this.rangeEnd = end
+        // Animation Definitions
+        if( !scene.anims.exists('chest-open') ) scene.anims.create({
+            key: 'chest-open',
+            frames: scene.anims.generateFrameNames('treasure', {start: 0, end: 2, prefix: 'chest_empty_open_anim_f', suffix: '.png'}),
+            frameRate: 6
+        })
+        if( !scene.anims.exists('chest-closed') ) scene.anims.create({
+            key: 'chest-closed',
+            frames: [{key: 'treasure', frame: 'chest_empty_open_anim_f0.png'}]
+        })
+        if( !scene.anims.exists('coin-spin') ) scene.anims.create({
+            key: 'coin-spin',
+            frames: scene.anims.generateFrameNames('treasure', {start: 0, end: 4, prefix: 'coin_anim_f', suffix: '.png'}),
+            frameRate: 4,
+            repeat: -1
+        })
         // Animate the coin
         this.play('chest-closed')
     }

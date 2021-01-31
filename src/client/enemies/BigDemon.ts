@@ -1,3 +1,4 @@
+import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
@@ -9,6 +10,7 @@ export default class BigDemon extends Enemy {
         this.health = 2
         this.speed = Phaser.Math.Between(75, 125)
         this.customOffset.set(5, 5)
+        createStandardAnims(scene, 'big_demon')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(1500, 4000),
             callback: ()=>this.changeDirection(),

@@ -9,6 +9,41 @@ export default class Faune extends Player {
         this.name = 'faune'
         this.customOffset.set(8, 8)
         this.weapon = weapons?.weapon_regular_sword
+        scene.anims.create({
+            key: 'faune-idle-up', 
+            frames: [{key: 'faune', frame: 'walk-up-3.png'}]
+        })
+        scene.anims.create({
+            key: 'faune-idle-down', 
+            frames: [{key: 'faune', frame: 'walk-down-3.png'}]
+        })
+        scene.anims.create({
+            key: 'faune-idle-side', 
+            frames: [{key: 'faune', frame: 'walk-side-3.png'}]
+        })
+        scene.anims.create({
+            key: 'faune-walk-up',
+            frames: scene.anims.generateFrameNames('faune', { start: 1, end: 8, prefix: 'walk-up-', suffix: '.png' }),
+            repeat: -1,
+            frameRate: 15
+        })
+        scene.anims.create({
+            key: 'faune-walk-down',
+            frames: scene.anims.generateFrameNames('faune', { start: 1, end: 8, prefix: 'walk-down-', suffix: '.png' }),
+            repeat: -1,
+            frameRate: 15
+        })
+        scene.anims.create({
+            key: 'faune-walk-side',
+            frames: scene.anims.generateFrameNames('faune', { start: 1, end: 8, prefix: 'walk-side-', suffix: '.png' }),
+            repeat: -1,
+            frameRate: 15
+        })
+        scene.anims.create({
+            key: 'faune-faint', 
+            frames: scene.anims.generateFrameNames('faune', { start: 1, end: 4, prefix: 'faint-', suffix: '.png' }),
+            frameRate: 8
+        })    
         this.anims.play('faune-idle-down')
     }
 

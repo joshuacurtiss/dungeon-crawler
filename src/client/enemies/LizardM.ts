@@ -1,3 +1,4 @@
+import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
@@ -8,6 +9,7 @@ export default class LizardM extends Enemy {
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(40, 75)
         this.customOffset.set(0, 10)
+        createStandardAnims(scene, 'lizard_m')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(1500, 5000),
             callback: ()=>this.changeDirection(),

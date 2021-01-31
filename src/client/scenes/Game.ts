@@ -2,9 +2,6 @@ import Phaser from 'phaser'
 
 import AnimatedTile from './AnimatedTile'
 import { debugDraw } from '../utils/debug'
-import { createCharacterAnims } from '../anims/CharacterAnims'
-import { createEnemyAnims } from '../anims/EnemyAnims'
-import { createItemAnims } from '../anims/ItemAnims'
 import { BigDemon, BigZombie, Chort, Enemy, EnemyList, EnemyNames, EnemyUpdate, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, ItemUpdate, Lever, Spikes, Turkey } from '../items'
@@ -58,10 +55,6 @@ export default class Game extends Phaser.Scene {
 		this.cursors = this.input.keyboard.createCursorKeys()
 		// Misc keys
 		this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).on('up', ()=>this.pauseMenu())
-		// Anims 
-		createCharacterAnims(this.anims)
-		createEnemyAnims(this.anims)
-		createItemAnims(this.anims)
 		// Tilemap
 		const level = this.lvlmgr.levelKey(this.config.getNumber('level'))
         this.load.tilemapTiledJSON(level, `tiles/${level}.json`)

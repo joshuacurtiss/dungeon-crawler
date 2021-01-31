@@ -1,7 +1,6 @@
 import Phaser from 'phaser'
 
 import AnimatedTile from './AnimatedTile'
-import { createCharacterAnims } from '../anims/CharacterAnims'
 import { Faune, Player } from '../characters'
 import MenuItem from '../ui/MenuItem'
 import SoundManager from '../managers/SoundManager'
@@ -57,7 +56,6 @@ export default class MainMenu extends Phaser.Scene {
             item.on('pointerup', ()=>this.select())
         })
         this.menuIndex=0
-        createCharacterAnims(this.anims)
         this.map = this.make.tilemap({key: 'dungeon-start'})
         const tileset = this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2)
 		this.map.createStaticLayer('Ground', tileset)

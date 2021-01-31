@@ -8,6 +8,15 @@ export default class Mushroom extends Enemy {
         this.health = 2
         this.speed = Phaser.Math.Between(20, 40)
         this.customOffset.set(7, 16)
+        for (const dir of ['up','down','side']) {
+            scene.anims.create({
+                key: 'mushroom_run-' + dir,
+                frames: scene.anims.generateFrameNames('mushroom', {start: 1, end: 3, prefix: dir + '-', suffix: '.png'}),
+                repeat: -1,
+                yoyo: true,
+                frameRate: 8,
+            })
+        }    
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(3000, 5000),
             callback: ()=>this.changeDirection(),
