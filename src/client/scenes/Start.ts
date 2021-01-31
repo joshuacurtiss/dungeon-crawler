@@ -27,7 +27,7 @@ export default class Start extends Phaser.Scene {
         return this._menuIndex
     }
     set menuIndex(index: number) {
-        this.menu[this.menuIndex].selected=false
+        if( this.menu.length>this.menuIndex ) this.menu[this.menuIndex].selected=false
         this._menuIndex = index<0 ? 0 : index+1>this.menu.length ? this.menu.length-1 : index
         this.menu[this.menuIndex].selected=true
     }
