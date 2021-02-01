@@ -6,6 +6,7 @@
 		"server": "ts-node --project tsconfig.server.json src/server",
 		"serverdev": "ts-node-dev --project tsconfig.server.json --watch src/server src/server",
 		"build": "parcel build src/client/index.html --out-dir dist && minify-json dist",
+		"pack": "ts-node --project tsconfig.server.json imagePack",
 		"start": "parcel src/client/index.html -p 4000",
 		"watch": "parcel watch src/client/index.html --out-dir dist"
 	},
@@ -17,11 +18,13 @@
 	},
 	"homepage": "https://github.com/joshuacurtiss/dungeon-crawler",
 	"devDependencies": {
+		"@types/node": "^14.14.22",
 		"@typescript-eslint/eslint-plugin": "^4",
 		"@typescript-eslint/parser": "^4",
 		"colyseus.js": "^0.14.1",
 		"cssnano": "^4",
 		"eslint": "^7",
+		"free-tex-packer-core": "^0.3.2",
 		"minify-json": "^1.0.0",
 		"minimist": "^1",
 		"parcel-plugin-clean-easy": "^1",
