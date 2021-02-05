@@ -1,4 +1,4 @@
-const LEVELCOUNT = [6, 1]
+const LEVELCOUNT = [6, 2]
 const WORLDCOUNT = 2
 
 export type Level = {
