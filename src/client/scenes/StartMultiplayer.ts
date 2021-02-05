@@ -34,7 +34,7 @@ export default class StartMultiplayer extends Phaser.Scene {
         return this.players[this.playerIndex]
     }
     get playerSelectionName() {
-        return this.playerSelection.texture.key.slice(5)
+        return this.playerSelection.frame.name.split('_')[0]
     }
     get playerIndex() {
         return this._playerIndex
