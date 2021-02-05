@@ -5,11 +5,12 @@
 	"scripts": {
 		"server": "ts-node --project tsconfig.server.json src/server",
 		"serverdev": "ts-node-dev --project tsconfig.server.json --watch src/server src/server",
-		"build": "parcel build src/client/index.html --out-dir dist",
+		"build": "npm run pack && npm run bundle && npm run minify",
+		"bundle": "parcel build src/client/index.html --out-dir dist",
 		"pack": "ts-node --project tsconfig.server.json imagePack",
 		"minify": "minify-json dist",
-		"start": "parcel src/client/index.html -p 4000",
-		"watch": "parcel watch src/client/index.html --out-dir dist"
+		"start": "npm run pack && parcel src/client/index.html -p 4000",
+		"watch": "npm run pack && parcel watch src/client/index.html --out-dir dist"
 	},
 	"author": "joshuacurtiss",
 	"license": "MIT",

@@ -28,7 +28,7 @@ async function packImages(images: Img[]) {
             allowTrim: true,
             removeFileExtension: true,
         })
-        files.forEach(item=>fs.writeFileSync(path.resolve(__dirname, 'dist', item.name), item.buffer))
+        files.forEach(item=>fs.writeFileSync(path.resolve(__dirname, 'public', item.name), item.buffer))
     } catch(error) {
         console.log(error)
     }
@@ -41,6 +41,4 @@ const images: Img[] = findImages(path.resolve(__dirname, 'resources', 'images'))
     }
 })
 
-const dest = path.resolve(__dirname, 'dist')
-if( !fs.existsSync(dest) ) fs.mkdirSync(dest)
 packImages(images)
