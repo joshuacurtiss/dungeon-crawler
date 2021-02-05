@@ -36,7 +36,7 @@ export default class Start extends Phaser.Scene {
         return this.players[this.playerIndex]
     }
     get playerSelectionName() {
-        return this.playerSelection.texture.key.slice(5)
+        return this.playerSelection.frame.name.split('_')[0]
     }
     get playerIndex() {
         return this._playerIndex
@@ -59,10 +59,10 @@ export default class Start extends Phaser.Scene {
         this.add.text(centerX, 45, 'Dungeon Crawler', titleConfig).setOrigin(0.5).setScrollFactor(0, 0)
         this.playerBox = this.add.rectangle(centerX - 140 + 30, 105, 60, 70, 0x1a1a1a)
         this.players = [
-            this.add.image(centerX - 140 + 30, 105, 'face_faune'),
-            this.add.image(centerX -  70 + 30, 105, 'face_fighter'),
-            this.add.image(centerX +  66 - 30, 105, 'face_mage'),
-            this.add.image(centerX + 140 - 30, 105, 'face_ranger'),
+            this.add.image(centerX - 140 + 30, 105, 'textures', 'faune_face'),
+            this.add.image(centerX -  70 + 30, 105, 'textures', 'fighter_face'),
+            this.add.image(centerX +  66 - 30, 105, 'textures', 'mage_face'),
+            this.add.image(centerX + 140 - 30, 105, 'textures', 'ranger_face'),
         ]
         this.players.forEach((item, index)=>{
             item.setInteractive()
@@ -70,8 +70,8 @@ export default class Start extends Phaser.Scene {
             item.on('pointerup', ()=>this.select())
         })
         const menuIndicators: Phaser.GameObjects.Image[] = [
-            this.add.image(centerX - 100, 190, 'ui-menu-left').setScale(0.5).setScrollFactor(0, 0),
-            this.add.image(centerX + 100, 190, 'ui-menu-right').setScale(0.5).setScrollFactor(0, 0),
+            this.add.image(centerX - 100, 190, 'textures', 'menu_arrow').setScale(0.5).setScrollFactor(0, 0).setFlipX(true),
+            this.add.image(centerX + 100, 190, 'textures', 'menu_arrow').setScale(0.5).setScrollFactor(0, 0),
         ]
         this.menu = [
             new MenuItem(this, centerX, 175, 'Start Your Quest!', textConfig, {nextScene: 'game', menuIndicators}),

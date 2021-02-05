@@ -4,8 +4,8 @@ import Enemy from './Enemy'
 
 export default class BigZombie extends Enemy {
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
-        super(scene, x, y, texture, frame)
+    constructor(scene: Phaser.Scene, x: number, y: number) {
+        super(scene, x, y, 'textures', 'big_zombie_idle_0')
         this.damageInflicted = 2.0
         this.health = 3
         this.speed = Phaser.Math.Between(25, 50)

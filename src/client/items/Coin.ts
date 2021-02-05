@@ -8,7 +8,7 @@ export default class Coin extends Item {
     public rangeEnd: number = 5
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string='') {
-        super(scene, x, y, 'treasure', 'coin_anim_f0.png')
+        super(scene, x, y, 'textures', 'coin_0')
         // The name contains the coin value, either a number or a range like "5-10"
         const [startString, endString] = name.split('-')
         const start = Number(startString)
@@ -19,14 +19,14 @@ export default class Coin extends Item {
         }
         if( end && end>start ) this.rangeEnd = end
         // Animation Definitions
-        if( !scene.anims.exists('coin-spin') ) scene.anims.create({
-            key: 'coin-spin',
-            frames: scene.anims.generateFrameNames('treasure', {start: 0, end: 4, prefix: 'coin_anim_f', suffix: '.png'}),
+        if( !scene.anims.exists('coin_spin') ) scene.anims.create({
+            key: 'coin_spin',
+            frames: scene.anims.generateFrameNames('textures', {start: 0, end: 4, prefix: 'coin_'}),
             frameRate: 4,
             repeat: -1
         })
         // Animate the coin
-        this.play('coin-spin')
+        this.play('coin_spin')
     }
 
     use(player:Player) {

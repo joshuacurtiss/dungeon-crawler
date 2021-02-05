@@ -4,7 +4,7 @@ import Item from './Item'
 export default class Crate extends Item {
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
-        super(scene, x, y, 'crate', 0)
+        super(scene, x, y, 'textures', 'crate')
         this.name=name
     }
 

@@ -17,7 +17,7 @@ export default class Weapon extends Phaser.Physics.Arcade.Image {
     shoot(direction:Phaser.Math.Vector2) {
         this.setActive(true)
         this.setVisible(true)
-        this.setRotation(direction.angle())
+        this.setRotation(direction.angle() + Phaser.Math.DegToRad(90))
         this.setVelocity(direction.x * this.speed, direction.y * this.speed)
     }
 

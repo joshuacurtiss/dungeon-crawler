@@ -17,9 +17,9 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
         this.sndmgr = new SoundManager(scene)
-        if( !scene.anims.exists('smoke-fade') ) scene.anims.create({
-            key: 'smoke-fade',
-            frames: scene.anims.generateFrameNames('smoke', {start: 0, end: 7, prefix: 'smoke-0', suffix: '.png'}),
+        if( !scene.anims.exists('smoke_fade') ) scene.anims.create({
+            key: 'smoke_fade',
+            frames: scene.anims.generateFrameNames('textures', {start: 0, end: 7, prefix: 'smoke_'}),
             frameRate: 16,
         })    
         scene.physics.world.on(Phaser.Physics.Arcade.Events.TILE_COLLIDE, this.handleTileCollision, this)
@@ -102,9 +102,9 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     public die() {
         if( this.isBoss ) sceneEvents.emit('boss-dead') 
-        const smoke = this.scene.add.sprite(this.x, this.y, 'smoke', 'smoke-00.png')
+        const smoke = this.scene.add.sprite(this.x, this.y, 'textures', 'smoke_0')
         smoke.setScale(this.width/smoke.width, this.height/smoke.height)
-        smoke.anims.play('smoke-fade')
+        smoke.anims.play('smoke_fade')
         smoke.once(Phaser.Animations.Events.SPRITE_ANIMATION_COMPLETE, ()=>smoke.destroy())
         this.destroy()
     }

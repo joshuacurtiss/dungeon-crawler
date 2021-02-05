@@ -41,8 +41,8 @@ export default class Pause extends Phaser.Scene {
         }
         this.add.rectangle(centerX, centerY*0.7, centerX, centerY*.6, 0x111111, 0.9)
         const menuIndicators: Phaser.GameObjects.Image[] = [
-            this.add.image(centerX - 65, 0, 'ui-menu-left').setScale(0.5),
-            this.add.image(centerX + 65, 0, 'ui-menu-right').setScale(0.5),
+            this.add.image(centerX - 65, 0, 'textures', 'menu_arrow').setScale(0.5).setFlipX(true),
+            this.add.image(centerX + 65, 0, 'textures', 'menu_arrow').setScale(0.5),
         ]
         this.menu = [
             new MenuItem(this, centerX, centerY*0.7-20, 'Continue', textConfig, { menuIndicators }),

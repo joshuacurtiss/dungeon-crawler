@@ -3,15 +3,15 @@ import Enemy from './Enemy'
 
 export default class Mushroom extends Enemy {
 
-    constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
-        super(scene, x, y, texture, frame)
+    constructor(scene: Phaser.Scene, x: number, y: number) {
+        super(scene, x, y, 'textures', 'mushroom_down_0')
         this.health = 2
         this.speed = Phaser.Math.Between(20, 40)
         this.customOffset.set(7, 16)
         for (const dir of ['up','down','side']) {
             scene.anims.create({
-                key: 'mushroom_run-' + dir,
-                frames: scene.anims.generateFrameNames('mushroom', {start: 1, end: 3, prefix: dir + '-', suffix: '.png'}),
+                key: 'mushroom_run_' + dir,
+                frames: scene.anims.generateFrameNames('textures', {start: 1, end: 3, prefix: 'mushroom_' + dir + '_'}),
                 repeat: -1,
                 yoyo: true,
                 frameRate: 8,
@@ -30,8 +30,8 @@ export default class Mushroom extends Enemy {
     set direction(vec: Phaser.Math.Vector2) {
         super.direction = vec
         if( ! this.onCamera ) return
-        if( vec.y ) this.anims.play('mushroom_run-' + (vec.y<0 ? 'up' : 'down'))
-        else if( vec.x ) this.anims.play('mushroom_run-side')
+        if( vec.y ) this.anims.play('mushroom_run_' + (vec.y<0 ? 'up' : 'down'))
+        else if( vec.x ) this.anims.play('mushroom_run_side')
     }
 
     setup() {

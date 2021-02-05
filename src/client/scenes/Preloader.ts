@@ -48,63 +48,6 @@ const audio = {
     'rise-3': 'audio/rise-3.mp3',
 }
 
-const atlases = {
-    // Characters
-    'faune': 'characters/faune',
-    'fighter': 'characters/fighter',
-    'mage': 'characters/mage',
-    'ranger': 'characters/ranger',
-    // Enemies
-    'big_demon': 'enemies/big_demon',
-    'big_zombie': 'enemies/big_zombie',
-    'chort': 'enemies/chort',
-    'ice_zombie': 'enemies/ice_zombie',
-    'imp': 'enemies/imp',
-    'lizard_f': 'enemies/lizard_f',
-    'lizard_m': 'enemies/lizard_m',
-    'masked_orc': 'enemies/masked_orc',
-    'mushroom': 'enemies/mushroom',
-    'necromancer': 'enemies/necromancer',
-    'skelet': 'enemies/skelet',
-    // Items
-    'floor_spikes': 'items/floor_spikes',
-    'smoke': 'items/smoke',
-    'treasure': 'items/treasure',
-}
-
-const images = {
-    'button_blue_down': 'items/button_blue_down.png',
-    'button_blue_up': 'items/button_blue_up.png',
-    'button_red_down': 'items/button_red_down.png',
-    'button_red_up': 'items/button_red_up.png',
-    'crate': 'items/crate.png',
-    'door_closed': 'items/door_closed.png',
-    'door_open': 'items/door_open.png',
-    'face_faune': 'characters/faune-face.png',
-    'face_fighter': 'characters/fighter-face.png',
-    'face_mage': 'characters/mage-face.png',
-    'face_ranger': 'characters/ranger-face.png',
-    'flask_big_blue': 'items/flask_big_blue.png',
-    'flask_big_green': 'items/flask_big_green.png',
-    'flask_big_red': 'items/flask_big_red.png',
-    'flask_big_yellow': 'items/flask_big_yellow.png',
-    'lever': 'items/lever.png',
-    'turkey': 'items/turkey.png',
-    // 'weapon_anime_sword': 'items/weapon_anime_sword.png',
-    'weapon_fireball': 'items/weapon_fireball.png',
-    // 'weapon_golden_sword': 'items/weapon_golden_sword.png',
-    'weapon_knife': 'items/weapon_knife.png',
-    'weapon_knight_sword': 'items/weapon_knight_sword.png',
-    // 'weapon_lavish_sword': 'items/weapon_lavish_sword.png',
-    // 'weapon_red_gem_sword': 'items/weapon_red_gem_sword.png',
-    'weapon_regular_sword': 'items/weapon_regular_sword.png',
-    'ui-heart-empty': 'ui/heart_empty.png',
-    'ui-heart-full': 'ui/heart_full.png',
-    'ui-heart-half': 'ui/heart_half.png',
-    'ui-menu-left': 'ui/menu-left-lit.png',
-    'ui-menu-right': 'ui/menu-right-lit.png',
-}
-
 export default class Preloader extends Phaser.Scene {
 
     constructor() {
@@ -164,14 +107,8 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('overworld', 'tiles/overworld.png')
         this.load.image('roguelike_transparent', 'tiles/roguelike_transparent_extruded.png')
         this.load.tilemapTiledJSON('dungeon-start', 'tiles/start.json')
-        // Atlases
-        Object.keys(atlases).forEach(key=>{
-            this.load.atlas(key, atlases[key] + '.png', atlases[key] + '.json')
-        })
-        // Image
-        Object.keys(images).forEach(key=>{
-            this.load.image(key, images[key])
-        })
+        // Textures
+        this.load.atlas('textures', 'textures.png', 'textures.json')
         // Audio
         Object.keys(audio).forEach(key=>{
             this.load.audio(key, audio[key])

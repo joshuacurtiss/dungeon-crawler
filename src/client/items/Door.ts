@@ -12,7 +12,7 @@ export default class Door extends Item {
     private player?:Player
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string, type:string) {
-        super(scene, x+8, y+8, 'door_closed', 0)
+        super(scene, x+8, y+8, 'textures', 'door_closed')
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const [specialType, ...descparts] = type.split('_')
 		const specialDesc = descparts.join('_')
@@ -22,7 +22,7 @@ export default class Door extends Item {
 
     setup(player:Player) {
         this.player = player
-        if( this.open ) this.setTexture('door_open')
+        if( this.open ) this.setTexture('textures', 'door_open')
         else this.setColliders()
     }
 
@@ -40,13 +40,13 @@ export default class Door extends Item {
         if( this.playerCollider ) this.playerCollider.destroy()
         if( this.weaponCollider ) this.weaponCollider.destroy()
         this.sndmgr.play('door-open')
-        this.setTexture('door_open')
+        this.setTexture('textures', 'door_open')
     }
 
     private handleClose() {
         this.setColliders()
         this.sndmgr.play('door-closed')
-        this.setTexture('door_closed')
+        this.setTexture('textures', 'door_closed')
     }
 
     use(player:Player) {

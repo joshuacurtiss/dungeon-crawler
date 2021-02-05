@@ -25,7 +25,7 @@ export default class WinGame extends Phaser.Scene {
             fontFamily: 'Nova Script',
             fontSize: '16px',
         }
-        const face = this.add.image(centerX/2 + 35, centerY*0.7, 'face_'+this.config.getString('character', 'faune'))
+        const face = this.add.image(centerX/2 + 35, centerY*0.7, 'textures', this.config.getString('character', 'faune') + '_face')
         this.add.rectangle(centerX, centerY*0.7, centerX, face.height + 2, 0x111111, 0.9).setDepth(-1)
         const textCoord = face.getRightCenter()
         this.add.text(textCoord.x+10, textCoord.y-20, 'You Win!', textConfig)

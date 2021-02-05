@@ -43,8 +43,8 @@ export default class MainMenu extends Phaser.Scene {
         }
         this.add.text(centerX, 33, 'Dungeon Crawler', titleConfig).setOrigin(0.5).setScrollFactor(0, 0)
         const menuIndicators: Phaser.GameObjects.Image[] = [
-            this.add.image(centerX - 80, 170, 'ui-menu-left').setScale(0.5).setScrollFactor(0, 0),
-            this.add.image(centerX + 80, 170, 'ui-menu-right').setScale(0.5).setScrollFactor(0, 0),
+            this.add.image(centerX - 80, 170, 'textures', 'menu_arrow').setScale(0.5).setScrollFactor(0, 0).setFlipX(true),
+            this.add.image(centerX + 80, 170, 'textures', 'menu_arrow').setScale(0.5).setScrollFactor(0, 0),
         ]
         this.menu = [
             new MenuItem(this, centerX, 170, 'Start Campaign', textConfig, {nextScene: 'start', menuIndicators}),

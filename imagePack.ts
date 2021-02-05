@@ -23,7 +23,7 @@ async function packImages(images: Img[]) {
         const files = await packAsync(images, {
             textureName: 'textures',
             padding: 1,
-            allowRotation: true,
+            allowRotation: false,
             detectIdentical: true,
             allowTrim: true,
             removeFileExtension: true,

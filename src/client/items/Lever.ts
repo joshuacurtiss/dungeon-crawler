@@ -8,7 +8,7 @@ export default class Lever extends Item {
     private _flipped:boolean = false
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string) {
-        super(scene, x, y, 'lever', 0)
+        super(scene, x, y, 'textures', 'lever')
         this.name=name
     }
 

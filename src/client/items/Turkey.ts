@@ -5,7 +5,7 @@ import Item from './Item'
 export default class Turkey extends Item {
 
     constructor(scene:Phaser.Scene, x:number, y:number) {
-        super(scene, x, y, 'turkey', 0)
+        super(scene, x, y, 'textures', 'turkey')
     }
 
     use(player:Player) {

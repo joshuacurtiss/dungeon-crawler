@@ -38,8 +38,8 @@ export default class Options extends Phaser.Scene {
         }
         this.add.text(centerX, 45, 'Options', titleConfig).setOrigin(0.5).setScrollFactor(0, 0)
         const menuIndicators: Phaser.GameObjects.Image[] = [
-            this.add.image(centerX - 100, 190, 'ui-menu-left').setScale(0.5).setScrollFactor(0, 0),
-            this.add.image(centerX + 100, 190, 'ui-menu-right').setScale(0.5).setScrollFactor(0, 0),
+            this.add.image(centerX - 100, 190, 'textures', 'menu_arrow').setScale(0.5).setScrollFactor(0, 0).setFlipX(true),
+            this.add.image(centerX + 100, 190, 'textures', 'menu_arrow').setScale(0.5).setScrollFactor(0, 0),
         ]
         this.menu = [
             new MenuItem(this, centerX, 100, 'Music:', textConfig, {

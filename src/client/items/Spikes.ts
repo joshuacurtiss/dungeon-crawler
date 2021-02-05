@@ -7,20 +7,20 @@ export default class Spikes extends Item {
     public damageInflicted: number = 10
 
     constructor(scene:Phaser.Scene, x:number, y:number) {
-        super(scene, x, y, 'floor_spikes', 0)
-        if( !scene.anims.exists('spikes-spring') ) scene.anims.create({
-            key: 'spikes-spring',
-            frames: scene.anims.generateFrameNames('floor_spikes', {start: 0, end: 3, prefix: 'floor_spikes_anim_f', suffix: '.png'}),
+        super(scene, x, y, 'textures', 'spikes_0')
+        if( !scene.anims.exists('spikes_spring') ) scene.anims.create({
+            key: 'spikes_spring',
+            frames: scene.anims.generateFrameNames('textures', {start: 0, end: 3, prefix: 'spikes_'}),
             yoyo: true,
             frameRate: 8,
             repeat: -1,
             repeatDelay: 750
         })
-        this.play('spikes-spring')
+        this.play('spikes_spring')
     }
 
     get sprung():boolean {
-        return this.frame.name.indexOf('f0') < 0
+        return this.frame.name.indexOf('0') < 0
     }
 
     use(player:Player) {

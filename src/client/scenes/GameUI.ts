@@ -31,8 +31,8 @@ export default class GameUI extends Phaser.Scene {
     set lives(quantity: number) {this.setLives(quantity)}
 
     create() {
-        const coinSprite = this.add.sprite(57, 27, 'treasure')
-        coinSprite.play('coin-spin')
+        const coinSprite = this.add.sprite(57, 27, 'textures', 'coin_0')
+        coinSprite.play('coin_spin')
         this.coinsLabel = this.add.text(64, 20, '0', {
             fontFamily: 'Nova Script',
             fontSize: 12
@@ -62,7 +62,7 @@ export default class GameUI extends Phaser.Scene {
     setCharacter(name: string = this.config.getString('character', 'faune')) {
         this.config.setString('character', name)
         this.face?.destroy()
-        this.face = this.add.image(2, 1, 'face_' + name)
+        this.face = this.add.image(2, 1, 'textures', name + '_face')
             .setOrigin(0, 0)
             .setScale(0.5)
     }
@@ -74,7 +74,8 @@ export default class GameUI extends Phaser.Scene {
             classType: Phaser.GameObjects.Image
         })
         this.heartsGroup.createMultiple({
-            key: 'ui-heart-full',
+            key: 'textures',
+            frame: 'heart_full',
             setXY: {
                 x: 40, 
                 y: 10,
@@ -88,9 +89,9 @@ export default class GameUI extends Phaser.Scene {
         this._health = health
         this.heartsGroup?.children?.each((go, idx)=>{
             const heart = go as Phaser.GameObjects.Image
-            if( idx<Math.floor(health) ) heart.setTexture('ui-heart-full')
-            else if( idx<health) heart.setTexture('ui-heart-half')
-            else heart.setTexture('ui-heart-empty')
+            if( idx<Math.floor(health) ) heart.setTexture('textures', 'heart_full')
+            else if( idx<health) heart.setTexture('textures', 'heart_half')
+            else heart.setTexture('textures', 'heart_empty')
         })
     }
 

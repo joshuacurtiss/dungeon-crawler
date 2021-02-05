@@ -4,7 +4,7 @@ import Weapon from './Weapon'
 export default class Knife extends Weapon {
 
     constructor(scene:Phaser.Scene, x:number, y:number) {
-        super(scene, x, y, 'weapon_knife')
+        super(scene, x, y, 'textures', 'weapon_knife')
         this.speed = 4
     }
 

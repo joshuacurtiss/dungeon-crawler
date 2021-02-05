@@ -8,7 +8,7 @@ export default class Chest extends Item {
     public rangeEnd: number = 25
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string='') {
-        super(scene, x, y, 'chest', 0)
+        super(scene, x, y, 'textures', 'chest_0')
         // The name contains the coin value, either a number or a range like "5-10"
         const [startString, endString] = name.split('-')
         const start = Number(startString)
@@ -19,34 +19,34 @@ export default class Chest extends Item {
         }
         if( end && end>start ) this.rangeEnd = end
         // Animation Definitions
-        if( !scene.anims.exists('chest-open') ) scene.anims.create({
-            key: 'chest-open',
-            frames: scene.anims.generateFrameNames('treasure', {start: 0, end: 2, prefix: 'chest_empty_open_anim_f', suffix: '.png'}),
+        if( !scene.anims.exists('chest_open') ) scene.anims.create({
+            key: 'chest_open',
+            frames: scene.anims.generateFrameNames('textures', {start: 0, end: 2, prefix: 'chest_'}),
             frameRate: 6
         })
-        if( !scene.anims.exists('chest-closed') ) scene.anims.create({
-            key: 'chest-closed',
-            frames: [{key: 'treasure', frame: 'chest_empty_open_anim_f0.png'}]
+        if( !scene.anims.exists('chest_closed') ) scene.anims.create({
+            key: 'chest_closed',
+            frames: [{key: 'textures', frame: 'chest_0'}]
         })
-        if( !scene.anims.exists('coin-spin') ) scene.anims.create({
-            key: 'coin-spin',
-            frames: scene.anims.generateFrameNames('treasure', {start: 0, end: 4, prefix: 'coin_anim_f', suffix: '.png'}),
+        if( !scene.anims.exists('coin_spin') ) scene.anims.create({
+            key: 'coin_spin',
+            frames: scene.anims.generateFrameNames('textures', {start: 0, end: 4, prefix: 'coin_'}),
             frameRate: 4,
             repeat: -1
         })
         // Animate the coin
-        this.play('chest-closed')
+        this.play('chest_closed')
     }
 
     use(player:Player) {
         if( this.used ) return
         super.use(player)
-        this.play('chest-open')
+        this.play('chest_open')
         this.sndmgr.play('coin')
         player.coins += Phaser.Math.Between(this.rangeStart, this.rangeEnd)
         // Spin a coin on the chest
-        const coin = this.scene.physics.add.sprite(this.x, this.y, 'treasure')
-        coin.play('coin-spin')
+        const coin = this.scene.physics.add.sprite(this.x, this.y, 'textures', 'coin_0')
+        coin.play('coin_spin')
         coin.setVelocityY(-10)
         setTimeout(()=>{
             this.scene.tweens.add({

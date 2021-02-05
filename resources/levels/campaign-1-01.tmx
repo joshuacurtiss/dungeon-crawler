@@ -5707,10 +5707,10 @@
   <object id="21" type="floor_spikes" gid="354" x="720" y="496" width="16" height="16"/>
   <object id="22" type="floor_spikes" gid="354" x="736" y="496" width="16" height="16"/>
   <object id="24" type="chest" gid="596" x="825" y="1137" width="16" height="16"/>
-  <object id="28" name="1" type="flask_big_blue" gid="468" x="688" y="1136" width="16" height="16"/>
-  <object id="29" name="1" type="flask_big_blue" gid="468" x="974.831" y="1006.03" width="16" height="16"/>
-  <object id="31" name="-1" type="flask_big_red" gid="467" x="688.933" y="290" width="16" height="16"/>
-  <object id="71" name="1" type="flask_big_blue" gid="468" x="769.015" y="290" width="16" height="16"/>
+  <object id="28" name="1" type="flask_blue" gid="468" x="688" y="1136" width="16" height="16"/>
+  <object id="29" name="1" type="flask_blue" gid="468" x="974.831" y="1006.03" width="16" height="16"/>
+  <object id="31" name="-1" type="flask_red" gid="467" x="688.933" y="290" width="16" height="16"/>
+  <object id="71" name="1" type="flask_blue" gid="468" x="769.015" y="290" width="16" height="16"/>
   <object id="72" name="exit" type="door" gid="451" x="896" y="1152" width="16" height="16"/>
   <object id="73" gid="452" x="912" y="1152" width="16" height="16"/>
   <object id="74" gid="483" x="896" y="1168" width="16" height="16"/>

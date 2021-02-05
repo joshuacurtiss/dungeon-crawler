@@ -6,13 +6,13 @@ import {WeaponList} from '../weapons'
 export default class Mage extends Player {
 
     constructor(scene: Phaser.Scene, x: number, y: number, weapons?:WeaponList) {
-        super(scene, x, y, 'mage')
+        super(scene, x, y, 'textures', 'mage_down_2')
         this.name = 'mage'
         this.customOffset.set(8, 5)
         this.speed = 60
         this.weapon = weapons?.weapon_fireball
         createStandardAnims(scene, this.name)
-        this.anims.play('mage-idle-down')
+        this.anims.play('mage_idle_down')
     }
 
     public setup() {
@@ -25,7 +25,7 @@ export default class Mage extends Player {
         super.setHealth(newval)
         if( prev<=0 ) return
         if( newval<=0 ) {
-            this.anims.play('mage-idle-down')
+            this.anims.play('mage_idle_down')
             this.sndmgr.play('die-f')
         } else if( newval<prev ) {
             this.sndmgr.play('hit-f-' + Phaser.Math.Between(1,3))
@@ -35,13 +35,13 @@ export default class Mage extends Player {
     get directionAnim():string {
         // If they're moving, show the walking animation
         if( this.moving ) {
-            if( this.direction.y<0 ) return 'mage-walk-up'
-            if( this.direction.y>0 ) return 'mage-walk-down'
-            if( this.direction.x!==0 ) return 'mage-walk-side'
+            if( this.direction.y<0 ) return 'mage_walk_up'
+            if( this.direction.y>0 ) return 'mage_walk_down'
+            if( this.direction.x!==0 ) return 'mage_walk_side'
         }
         // Not moving? Show idle animation.
-        const dir = this.anims.currentAnim.key.split('-')[2]
-        return 'mage-idle-' + dir
+        const dir = this.anims.currentAnim.key.split('_')[2]
+        return 'mage_idle_' + dir
     }
 
 }

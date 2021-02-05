@@ -238,8 +238,8 @@ export default class Game extends Phaser.Scene {
 		const items: ItemUpdate[] = mapObjects.map((obj: any)=>{
 			// Fix old tile types to match the ItemNames spec
 			obj.type = obj.type.replace('floor_spikes', 'spikes')
-			obj.type = obj.type.replace('poison', 'flask_big_red')
-			obj.type = obj.type.replace('potion', 'flask_big_blue')
+			obj.type = obj.type.replace('poison', 'flask_red')
+			obj.type = obj.type.replace('potion', 'flask_blue')
 			return obj as ItemUpdate
 		})
 		return this.spawnItems(items)

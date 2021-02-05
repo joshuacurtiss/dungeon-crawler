@@ -9,7 +9,7 @@ export default class Button extends Item {
     private _color:string = 'blue'
 
     constructor(scene:Phaser.Scene, x:number, y:number, name:string, type:string) {
-        super(scene, x, y, 'button_blue_up', 0)
+        super(scene, x, y, 'textures', 'button_blue_up')
         this.name=name
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const [specialType, ...descparts] = type.split('_')
@@ -22,7 +22,7 @@ export default class Button extends Item {
     }
 
     private updateTexture() {
-        this.setTexture('button_' + this.color + '_' + (this.pressed ? 'down' : 'up'))
+        this.setTexture('textures', 'button_' + this.color + '_' + (this.pressed ? 'down' : 'up'))
     }
 
     get color() {
