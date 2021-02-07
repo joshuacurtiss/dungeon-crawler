@@ -28,7 +28,8 @@ export default class Game extends Phaser.Scene {
 	private map!: Phaser.Tilemaps.Tilemap
 	private mp!: MultiplayerManager
 	private mpOn: boolean = false
-	private sndmgr = new SoundManager(this)
+	private musicmgr = new SoundManager(this)
+	private sndmgr = new SoundManager(this, 'sfx')
 	private lvlmgr = new LevelManager()
 	private win!: boolean
 
@@ -58,7 +59,12 @@ export default class Game extends Phaser.Scene {
 		// Tilemap
 		const lvl:Level = {world: this.config.getNumber('world'), level: this.config.getNumber('level')}
 		const levelKey = this.lvlmgr.levelKey(lvl)
-        this.load.tilemapTiledJSON(levelKey, `tiles/${levelKey}.json`)
+        this.load.tilemapTiledJSON(levelKey, `levels/${levelKey}.json`)
+		// Music
+		if( this.config.getBoolean('music') ) {
+			this.load.audio('music-game', 'media/music-game.mp3')
+			this.musicmgr.preload()
+		}
     }
 
 	create() {
@@ -144,7 +150,7 @@ export default class Game extends Phaser.Scene {
 		this.scene.run('game-ui')
 		this.cameras.main.startFollow(this.player, true)
 		setTimeout(()=>{ this.check() }, 0) // After next tick so camera view is defined
-		this.sndmgr.play('music-game', { loop: true })
+		this.musicmgr.play('music-game', { loop: true })
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
 		// Setup multiplayer
 		if( this.mpOn ) {
@@ -337,8 +343,8 @@ export default class Game extends Phaser.Scene {
 
 	private handleBossNear() {
 		this.nearBoss=true
-		this.sndmgr.play('music-exciting', { loop: true })
-		this.sndmgr.stop('music-game')
+		this.musicmgr.play('music-exciting', { loop: true })
+		this.musicmgr.stop('music-game')
 		this.cameras.main.zoomTo(1.25, 250)
 		const door = this.items.door.getChildren().find(obj=>obj.name==='boss') as Door
 		if( door ) door.open=false
@@ -347,12 +353,12 @@ export default class Game extends Phaser.Scene {
 	private handleBossDead() {
 		this.nearBoss=false
 		this.sndmgr.play('exciting-end')
-		this.sndmgr.stop('music-exciting')
+		this.musicmgr.stop('music-exciting')
 		this.cameras.main.zoomTo(1, 3300)
 		setTimeout(()=>{
 			const door = this.items.door.getChildren().find(obj=>obj.name==='boss') as Door
 			if( door ) door.open=true
-			this.sndmgr.play('music-game', { loop: true })
+			this.musicmgr.play('music-game', { loop: true })
 		}, 4500)
 	}
 
@@ -360,8 +366,8 @@ export default class Game extends Phaser.Scene {
 		this.config.dec('lives')
 		this.scene.stop('pause')
 		this.scene.stop('game-ui')
-		this.sndmgr.fade('music-game', 500)
-		this.sndmgr.fade('music-exciting', 500)
+		this.musicmgr.fade('music-game', 500)
+		this.musicmgr.fade('music-exciting', 500)
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
 			this.scene.stop()
@@ -374,8 +380,8 @@ export default class Game extends Phaser.Scene {
 		this.win = true
 		this.scene.stop('pause')
 		this.scene.stop('game-ui')
-		this.sndmgr.fade('music-game')
-		this.sndmgr.fade('music-exciting')
+		this.musicmgr.fade('music-game')
+		this.musicmgr.fade('music-exciting')
 		this.player.stop()
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{

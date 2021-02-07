@@ -1,10 +1,37 @@
 import * as fs from 'fs'
 import * as path from 'path'
 import {packAsync} from 'free-tex-packer-core'
+import audiosprite from 'audiosprite'
 
 interface Img {
     path: string;
     contents: Buffer;
+}
+
+function findAudio(dir: string): string[] {
+    const exts = ['.mp3', '.ogg', '.flac', '.m4a']
+    const files: string[] = []
+    fs.readdirSync(dir).forEach(filename=>{
+        const fullPath = path.resolve(dir, filename)
+        const stat = fs.statSync(fullPath)
+        if( stat && stat.isDirectory() ) files.push(...findAudio(fullPath))
+        else if( stat && stat.isFile() && exts.includes(path.extname(filename).toLowerCase()) ) files.push(fullPath)
+    })
+    return files
+}
+
+function packAudio(files: string[]) {
+    audiosprite(files, {
+        output: 'public' + path.sep + 'media' + path.sep + 'sfx',
+        export: 'ogg,m4a,mp3',
+        gap: 0.1,
+    }, (err, result)=>{
+        if( err ) {
+            console.error(err)
+            return
+        }
+        fs.writeFileSync(path.resolve(__dirname, 'public', 'media', 'sfx.json'), JSON.stringify(result))
+    })
 }
 
 function findImages(dir: string): string[] {
@@ -28,7 +55,7 @@ async function packImages(images: Img[]) {
             allowTrim: true,
             removeFileExtension: true,
         })
-        files.forEach(item=>fs.writeFileSync(path.resolve(__dirname, 'public', item.name), item.buffer))
+        files.forEach(item=>fs.writeFileSync(path.resolve(__dirname, 'public', 'media', item.name), item.buffer))
     } catch(error) {
         console.log(error)
     }
@@ -41,4 +68,7 @@ const images: Img[] = findImages(path.resolve(__dirname, 'resources', 'images'))
     }
 })
 
+const audio: string[] = findAudio(path.resolve(__dirname, 'resources', 'audio'))
+
+packAudio(audio)
 packImages(images)

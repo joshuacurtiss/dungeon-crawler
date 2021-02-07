@@ -1,5 +1,6 @@
 /.cache
 /dist
 /node_modules
-/public/textures.*
+/public/media/textures.*
+/public/media/sfx.*
 test*

@@ -6,7 +6,7 @@ export default class Options extends Phaser.Scene {
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private config = new ConfigManager()
-    private sndmgr = new SoundManager(this)
+    private musicmgr = new SoundManager(this)
     private menu: MenuItem[] = []
     private _menuIndex: number = 0
 
@@ -76,8 +76,8 @@ export default class Options extends Phaser.Scene {
             item.chk = ! item.chk
             this.config.setBoolean(item.key, item.chk)
             if( item.key==='music' ) {
-                if( item.chk ) this.sndmgr.play('music-menu', {loop: true})
-                else this.sndmgr.remove('music-menu')
+                if( item.chk ) this.musicmgr.play('music-menu', {loop: true})
+                else this.musicmgr.remove('music-menu')
             }
         }
         if( item.nextScene ) {

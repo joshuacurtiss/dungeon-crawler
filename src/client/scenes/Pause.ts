@@ -5,7 +5,7 @@ import SoundManager from '../managers/SoundManager'
 export default class Pause extends Phaser.Scene {
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-    private sndmgr = new SoundManager(this)
+    private musicmgr = new SoundManager(this)
     private menu: MenuItem[] = []
     private _menuIndex: number = 0
 
@@ -72,7 +72,7 @@ export default class Pause extends Phaser.Scene {
     }
 
     private restartGame(nextScene:string = 'game') {
-        this.sndmgr.fade('music-game', 500)
+        this.musicmgr.fade('music-game', 500)
         this.scene.stop('game-ui')
         this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
@@ -82,7 +82,7 @@ export default class Pause extends Phaser.Scene {
     }
 
     private abortGame(nextScene:string = 'mainmenu') {
-        this.sndmgr.fade('music-game', 500)
+        this.musicmgr.fade('music-game', 500)
         this.scene.stop('game-ui')
         this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{

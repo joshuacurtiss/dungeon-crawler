@@ -7,7 +7,7 @@
 		"serverdev": "ts-node-dev --project tsconfig.server.json --watch src/server src/server",
 		"build": "npm run pack && npm run bundle && npm run minify",
 		"bundle": "parcel build src/client/index.html --out-dir dist",
-		"pack": "ts-node --project tsconfig.server.json imagePack",
+		"pack": "ts-node --project tsconfig.server.json pack",
 		"minify": "minify-json dist",
 		"start": "npm run pack && parcel src/client/index.html -p 4000",
 		"watch": "npm run pack && parcel watch src/client/index.html --out-dir dist"
@@ -23,6 +23,7 @@
 		"@types/node": "^14.14.22",
 		"@typescript-eslint/eslint-plugin": "^4",
 		"@typescript-eslint/parser": "^4",
+		"audiosprite": "^0.7.2",
 		"colyseus.js": "^0.14.1",
 		"cssnano": "^4",
 		"eslint": "^7",

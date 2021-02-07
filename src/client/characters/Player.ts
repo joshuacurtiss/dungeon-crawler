@@ -32,7 +32,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
         scene.add.existing(this)
-        this.sndmgr = new SoundManager(scene)
+        this.sndmgr = new SoundManager(scene, 'sfx')
         this.setup()
     }
 

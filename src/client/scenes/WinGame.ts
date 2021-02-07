@@ -4,7 +4,7 @@ import {ConfigManager, SoundManager} from '../managers'
 export default class WinGame extends Phaser.Scene {
 
     private config = new ConfigManager()
-    private sndmgr = new SoundManager(this)
+    private musicmgr = new SoundManager(this)
 
     constructor() {
         super('wingame')
@@ -18,7 +18,7 @@ export default class WinGame extends Phaser.Scene {
     }
 
     preload() {
-        this.load.audio('music-win', '../audio/music-win.mp3')
+        if( this.config.getBoolean('music') ) this.load.audio('music-win', 'media/music-win.mp3')
         const centerX = this.cameras.main.x + this.cameras.main.width / 2
         const centerY = this.cameras.main.y + this.cameras.main.height / 2
         const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {
@@ -32,11 +32,11 @@ export default class WinGame extends Phaser.Scene {
     }
 
     create() {
-        this.sndmgr.play('music-win')
+        this.musicmgr.play('music-win')
     }
 
     private nextLevel() {
-        this.sndmgr.remove('music-win')
+        this.musicmgr.remove('music-win')
         this.scene.stop()
         this.scene.start('mainmenu')
     }

@@ -7,7 +7,7 @@ export default class StartMultiplayer extends Phaser.Scene {
 
     private config = new ConfigManager()
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
-    private sndmgr = new SoundManager(this)
+    private musicmgr = new SoundManager(this)
     private menu: MenuItem[] = []
     private _menuIndex: number = 0
     private players: Phaser.GameObjects.Image[] = []
@@ -103,7 +103,7 @@ export default class StartMultiplayer extends Phaser.Scene {
             this.config.setNumber('level', 1)
             this.config.setNumber('lives', 3)
             // Fade music (if starting game) and camera
-            if( item.nextScene==='game' ) this.sndmgr.fade('music-menu')
+            if( item.nextScene==='game' ) this.musicmgr.fade('music-menu')
             this.cameras.main.fadeOut(1000, 0, 0, 0)
             this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
                 this.scene.start(item.nextScene, {

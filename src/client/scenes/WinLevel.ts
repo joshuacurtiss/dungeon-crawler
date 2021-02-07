@@ -5,7 +5,7 @@ export default class WinLevel extends Phaser.Scene {
 
     private config = new ConfigManager()
     private lvlmgr = new LevelManager()
-    private sndmgr = new SoundManager(this)
+    private musicmgr = new SoundManager(this)
 
     constructor() {
         super('winlevel')
@@ -33,7 +33,7 @@ export default class WinLevel extends Phaser.Scene {
     }
 
     create() {
-        this.sndmgr.play('music-victory')
+        this.musicmgr.play('music-victory')
     }
 
     private nextLevel() {
@@ -41,7 +41,7 @@ export default class WinLevel extends Phaser.Scene {
         const newlvl:Level = this.lvlmgr.inc(lvl)
         this.config.setNumber('world', newlvl.world)
         this.config.setNumber('level', newlvl.level)
-        this.sndmgr.remove('music-victory')
+        this.musicmgr.remove('music-victory')
         this.scene.stop()
         this.scene.start('game')
     }

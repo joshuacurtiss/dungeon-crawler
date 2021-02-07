@@ -4,7 +4,7 @@ import {ConfigManager, SoundManager} from '../managers'
 export default class LoseLife extends Phaser.Scene {
 
     private config = new ConfigManager()
-    private sndmgr = new SoundManager(this)
+    private musicmgr = new SoundManager(this)
 
     constructor() {
         super('loselife')
@@ -32,7 +32,7 @@ export default class LoseLife extends Phaser.Scene {
     }
 
     create() {
-        this.sndmgr.play('music-lose')
+        this.musicmgr.play('music-lose')
     }
 
     get message() {
@@ -44,7 +44,7 @@ export default class LoseLife extends Phaser.Scene {
     }
 
     private restartLevel() {
-        this.sndmgr.remove('music-lose')
+        this.musicmgr.remove('music-lose')
         this.scene.stop()
         this.scene.start(this.nextScene)
     }

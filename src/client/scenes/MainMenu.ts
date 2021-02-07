@@ -9,7 +9,7 @@ export default class MainMenu extends Phaser.Scene {
 
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private player!: Player
-    private sndmgr = new SoundManager(this)
+    private musicmgr = new SoundManager(this)
     private speed: number = 50
     private map!: Phaser.Tilemaps.Tilemap
     private menu: MenuItem[] = []
@@ -74,7 +74,7 @@ export default class MainMenu extends Phaser.Scene {
         const playerTile = this.map.getObjectLayer('Characters').objects.find(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject
         this.player.setPosition(playerTile.x!, playerTile.y!)
         this.cameras.main.fadeIn(550, 0, 0, 0)
-        this.sndmgr.play('music-menu', {loop: true})
+        this.musicmgr.play('music-menu', {loop: true})
         this.walk()
         this.time.addEvent({
             delay: 90000,

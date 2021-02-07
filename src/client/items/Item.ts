@@ -11,7 +11,7 @@ export default class Item extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene:Phaser.Scene, x:number, y:number, texture:string, frame:string|number) {
         super(scene, x+8, y-8, texture, frame)
-        this.sndmgr = new SoundManager(scene)
+        this.sndmgr = new SoundManager(scene, 'sfx')
     }
 
     get health() {

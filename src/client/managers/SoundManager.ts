@@ -2,22 +2,17 @@ import ConfigManager from './ConfigManager'
 
 export default class SoundManager {
 
-    private config: ConfigManager
-    private scene: Phaser.Scene
+    private config = new ConfigManager()
 
-    constructor(scene: Phaser.Scene) {
-        this.config = new ConfigManager()
-        this.scene = scene
-        return this
-    }
+    constructor(private scene: Phaser.Scene, private key?: string) {}
 
-    public play(key: string, extra?: Phaser.Types.Sound.SoundConfig | Phaser.Types.Sound.SoundMarker | undefined) {
-        const isMusic = key.indexOf('music')>=0
-        if( isMusic && !this.config.getBoolean('music') ) return
-        if( !isMusic && !this.config.getBoolean('sfx') ) return
-        const snd = this.scene.sound.get(key)
+    public play(name: string, extra?: Phaser.Types.Sound.SoundConfig | undefined) {
+        if( this.key?.length && !this.config.getBoolean(this.key) ) return
+        if( name.indexOf('music')>=0 && !this.config.getBoolean('music') ) return
+        const snd = this.scene.sound.get(name)
         if( snd && snd.isPlaying ) snd.play()
-        else this.scene.sound.play(key, extra)
+        else if( this.key ) this.scene.sound.playAudioSprite(this.key, name, extra)
+        else this.scene.sound.play(name, extra)
     }
 
     public fade(key: string, duration: number = 800) {
@@ -38,6 +33,17 @@ export default class SoundManager {
     public remove(key: string) {
         if( !this.scene.sound.get(key) ) return
         this.scene.sound.removeByKey(key)
+    }
+
+    public preload() {
+        const music = {
+            'music-exciting': 'media/music-exciting.mp3',
+            'music-lose': 'media/music-lose.mp3',
+            'music-victory': 'media/music-victory.mp3',
+        }
+        Object.keys(music).forEach(key=>{
+            this.scene.load.audio(key, music[key])
+        })
     }
 
 }

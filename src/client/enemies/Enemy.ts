@@ -16,7 +16,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
-        this.sndmgr = new SoundManager(scene)
+        this.sndmgr = new SoundManager(scene, 'sfx')
         if( !scene.anims.exists('smoke_fade') ) scene.anims.create({
             key: 'smoke_fade',
             frames: scene.anims.generateFrameNames('textures', {start: 0, end: 7, prefix: 'smoke_'}),

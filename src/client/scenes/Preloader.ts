@@ -1,53 +1,6 @@
 import Phaser from 'phaser'
 import WebFont from 'webfontloader'
 
-const audio = {
-    'coin': 'audio/coin.mp3',
-    'die-f': 'audio/die-f.mp3',
-    'die-m': 'audio/die-m.mp3',
-    'door-closed': 'audio/door-closed.mp3',
-    'door-open': 'audio/door-open.mp3',
-    'exciting-end': 'audio/exciting-end.mp3',
-    'fireball': 'audio/fireball.mp3',
-    'fireball-hit': 'audio/fireball-hit.mp3',
-    'health': 'audio/health.mp3',
-    'melee-1': 'audio/melee-1.mp3',
-    'melee-2': 'audio/melee-2.mp3',
-    'melee-hit': 'audio/melee-hit.mp3',
-    'monster-1': 'audio/monster-1.mp3',
-    'monster-2': 'audio/monster-2.mp3',
-    'monster-3': 'audio/monster-3.mp3',
-    'monster-4': 'audio/monster-4.mp3',
-    'monster-5': 'audio/monster-5.mp3',
-    'monster-bug-1': 'audio/monster-bug-1.mp3',
-    'monster-bug-2': 'audio/monster-bug-2.mp3',
-    'monster-bug-3': 'audio/monster-bug-3.mp3',
-    'monster-demon-1': 'audio/monster-demon-1.mp3',
-    'monster-demon-2': 'audio/monster-demon-2.mp3',
-    'monster-demon-3': 'audio/monster-demon-3.mp3',
-    'monster-ice-1': 'audio/monster-ice-1.mp3',
-    'monster-ice-2': 'audio/monster-ice-2.mp3',
-    'monster-ice-3': 'audio/monster-ice-3.mp3',
-    'monster-nec-1': 'audio/monster-nec-1.mp3',
-    'monster-nec-2': 'audio/monster-nec-2.mp3',
-    'monster-nec-3': 'audio/monster-nec-3.mp3',
-    'monster-zombie-1': 'audio/monster-zombie-1.mp3',
-    'monster-zombie-2': 'audio/monster-zombie-2.mp3',
-    'monster-zombie-3': 'audio/monster-zombie-3.mp3',
-    'music-exciting': 'audio/music-exciting.mp3',
-    'music-game': 'audio/music-game.mp3',
-    'music-lose': 'audio/music-lose.mp3',
-    'music-menu': 'audio/music-menu.mp3',
-    'music-victory': 'audio/music-victory.mp3',
-    'hit-f-1': 'audio/hit-f-1.mp3',
-    'hit-f-2': 'audio/hit-f-2.mp3',
-    'hit-f-3': 'audio/hit-f-3.mp3',
-    'hit-m-1': 'audio/hit-m-1.mp3',
-    'hit-m-2': 'audio/hit-m-2.mp3',
-    'hit-m-3': 'audio/hit-m-3.mp3',
-    'rise-3': 'audio/rise-3.mp3',
-}
-
 export default class Preloader extends Phaser.Scene {
 
     constructor() {
@@ -106,13 +59,12 @@ export default class Preloader extends Phaser.Scene {
         this.load.image('lava', 'tiles/lava.png')
         this.load.image('overworld', 'tiles/overworld.png')
         this.load.image('roguelike_transparent', 'tiles/roguelike_transparent_extruded.png')
-        this.load.tilemapTiledJSON('dungeon-start', 'tiles/start.json')
+        this.load.tilemapTiledJSON('dungeon-start', 'levels/start.json')
         // Textures
-        this.load.atlas('textures', 'textures.png', 'textures.json')
+        this.load.atlas('textures', 'media/textures.png', 'media/textures.json')
         // Audio
-        Object.keys(audio).forEach(key=>{
-            this.load.audio(key, audio[key])
-        })
+        this.load.audioSprite('sfx', 'media/sfx.json', ['media/sfx.ogg', 'media/sfx.m4a', 'media/sfx.mp3'])
+        this.load.audio('music-menu', 'media/music-menu.mp3')
     }
 
     create() {

@@ -11,7 +11,7 @@ export default class Weapon extends Phaser.Physics.Arcade.Image {
 
     constructor(scene:Phaser.Scene, x:number, y:number, texture:string, frame?:string|number) {
         super(scene, x, y, texture, frame)
-        this.sndmgr = new SoundManager(scene)
+        this.sndmgr = new SoundManager(scene, 'sfx')
     }
 
     shoot(direction:Phaser.Math.Vector2) {
