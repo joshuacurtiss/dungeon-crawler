@@ -5,8 +5,9 @@
 	"scripts": {
 		"server": "ts-node --project tsconfig.server.json src/server",
 		"serverdev": "ts-node-dev --project tsconfig.server.json --watch src/server src/server",
-		"build": "npm run pack && npm run bundle && npm run minify",
+		"build": "npm run clean && npm run pack && npm run bundle && npm run minify",
 		"bundle": "parcel build src/client/index.html --out-dir dist",
+		"clean": "rimraf public/media/sfx.* public/media/textures.*",
 		"pack": "ts-node --project tsconfig.server.json pack",
 		"minify": "minify-json dist",
 		"start": "npm run pack && parcel src/client/index.html -p 4000",
@@ -32,6 +33,7 @@
 		"minimist": "^1",
 		"parcel-plugin-clean-easy": "^1",
 		"parcel-plugin-static-files-copy": "^2",
+		"rimraf": "^3.0.2",
 		"ts-node": "^9",
 		"ts-node-dev": "^1",
 		"typescript": "^4"
