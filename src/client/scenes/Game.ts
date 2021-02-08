@@ -107,6 +107,7 @@ export default class Game extends Phaser.Scene {
 		const hearts = this.config.getNumber('hearts') || this.player.hearts
 		this.config.setNumber('hearts', hearts)
 		this.player.hearts = hearts
+		this.player.health = hearts
 		this.player.coins=this.config.getNumber('coins')
 		// Add items
 		this.items = this.spawnItemsFromMap(this.map)
