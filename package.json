@@ -6,7 +6,7 @@
 		"server": "ts-node --project tsconfig.server.json src/server",
 		"serverdev": "ts-node-dev --project tsconfig.server.json --watch src/server src/server",
 		"build": "npm run clean && npm run pack && npm run bundle && npm run minify",
-		"bundle": "parcel build src/client/index.html --out-dir dist",
+		"bundle": "parcel build --public-url '.' src/client/index.html --out-dir dist",
 		"clean": "rimraf public/media/*.*",
 		"pack": "ts-node --project tsconfig.server.json pack",
 		"minify": "minify-json dist",
