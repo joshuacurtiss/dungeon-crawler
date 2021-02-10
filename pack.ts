@@ -2,6 +2,7 @@ import * as fs from 'fs'
 import * as path from 'path'
 import {packAsync} from 'free-tex-packer-core'
 import audiosprite from 'audiosprite'
+import ffmpeg from 'fluent-ffmpeg'
 
 interface Img {
     path: string;
@@ -31,6 +32,18 @@ function packAudio(files: string[]) {
             return
         }
         fs.writeFileSync(path.resolve(__dirname, 'public', 'media', 'sfx.json'), JSON.stringify(result))
+    })
+}
+function convertAudio(files: string[]) {
+    files.forEach(fullpath=>{
+        const ext = path.extname(fullpath)
+        const name = path.basename(fullpath, ext)
+        ffmpeg(fullpath)
+            .output(path.resolve('public', 'media', name + '.ogg'))
+            .on('end', ()=>{
+                fs.copyFileSync(fullpath, path.resolve('public', 'media', name + ext))
+            })
+            .run()
     })
 }
 
@@ -68,7 +81,9 @@ const images: Img[] = findImages(path.resolve(__dirname, 'resources', 'images'))
     }
 })
 
-const audio: string[] = findAudio(path.resolve(__dirname, 'resources', 'audio'))
+const spriteAudio: string[] = findAudio(path.resolve(__dirname, 'resources', 'audio'))
+const musicAudio: string[] = findAudio(path.resolve(__dirname, 'resources', 'music'))
 
-packAudio(audio)
+convertAudio(musicAudio)
+packAudio(spriteAudio)
 packImages(images)

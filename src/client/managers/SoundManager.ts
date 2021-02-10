@@ -2,6 +2,14 @@ import ConfigManager from './ConfigManager'
 
 export default class SoundManager {
 
+    public static readonly Library = {
+        GeneralMusic: ['music-exciting', 'music-lose', 'music-victory'],
+        SoundEffects: 'sfx',
+        StartMusic: 'music-menu',
+        WinMusic: 'music-win',
+        WorldMusic: ['music-1', 'music-2'],
+    }
+
     private config = new ConfigManager()
 
     constructor(private scene: Phaser.Scene, private key?: string) {}
@@ -35,14 +43,17 @@ export default class SoundManager {
         this.scene.sound.removeByKey(key)
     }
 
-    public preload() {
-        const music = {
-            'music-exciting': 'media/music-exciting.mp3',
-            'music-lose': 'media/music-lose.mp3',
-            'music-victory': 'media/music-victory.mp3',
-        }
-        Object.keys(music).forEach(key=>{
-            this.scene.load.audio(key, music[key])
+    public preload(keys: string | string[]) {
+        const items = Array.isArray(keys) ? keys : [keys]
+        items.forEach(key=>{
+            this.scene.load.audio(key, [`media/${key}.ogg`, `media/${key}.mp3`])
+        })
+    }
+
+    public preloadSprite(keys: string | string[]) {
+        const items = Array.isArray(keys) ? keys : [keys]
+        items.forEach(key=>{
+            this.scene.load.audioSprite(key, `media/${key}.json`, [`media/${key}.ogg`, `media/${key}.m4a`, `media/${key}.mp3`])
         })
     }
 

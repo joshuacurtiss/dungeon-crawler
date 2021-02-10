@@ -1,4 +1,5 @@
 import Phaser from 'phaser'
+import SoundManager from '../managers/SoundManager'
 import WebFont from 'webfontloader'
 
 export default class Preloader extends Phaser.Scene {
@@ -63,8 +64,9 @@ export default class Preloader extends Phaser.Scene {
         // Textures
         this.load.atlas('textures', 'media/textures.png', 'media/textures.json')
         // Audio
-        this.load.audioSprite('sfx', 'media/sfx.json', ['media/sfx.ogg', 'media/sfx.m4a', 'media/sfx.mp3'])
-        this.load.audio('music-menu', 'media/music-menu.mp3')
+        const sndmgr = new SoundManager(this)
+        sndmgr.preloadSprite(SoundManager.Library.SoundEffects)
+        sndmgr.preload(SoundManager.Library.StartMusic)
     }
 
     create() {

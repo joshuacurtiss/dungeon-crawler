@@ -18,7 +18,7 @@ export default class WinGame extends Phaser.Scene {
     }
 
     preload() {
-        if( this.config.getBoolean('music') ) this.load.audio('music-win', 'media/music-win.mp3')
+        if( this.config.getBoolean('music') ) this.musicmgr.preload(SoundManager.Library.WinMusic)
         const centerX = this.cameras.main.x + this.cameras.main.width / 2
         const centerY = this.cameras.main.y + this.cameras.main.height / 2
         const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {

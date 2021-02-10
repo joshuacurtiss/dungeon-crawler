@@ -28,6 +28,7 @@ export default class Game extends Phaser.Scene {
 	private map!: Phaser.Tilemaps.Tilemap
 	private mp!: MultiplayerManager
 	private mpOn: boolean = false
+	private musicKey!: string
 	private musicmgr = new SoundManager(this)
 	private sndmgr = new SoundManager(this, 'sfx')
 	private lvlmgr = new LevelManager()
@@ -61,9 +62,10 @@ export default class Game extends Phaser.Scene {
 		const levelKey = this.lvlmgr.levelKey(lvl)
         this.load.tilemapTiledJSON(levelKey, `levels/${levelKey}.json`)
 		// Music
+		this.musicKey = SoundManager.Library.WorldMusic[lvl.world-1]
 		if( this.config.getBoolean('music') ) {
-			this.load.audio('music-game', 'media/music-game.mp3')
-			this.musicmgr.preload()
+			this.musicmgr.preload(SoundManager.Library.GeneralMusic)
+			this.musicmgr.preload(this.musicKey)
 		}
     }
 
@@ -151,7 +153,7 @@ export default class Game extends Phaser.Scene {
 		this.scene.run('game-ui')
 		this.cameras.main.startFollow(this.player, true)
 		setTimeout(()=>{ this.check() }, 0) // After next tick so camera view is defined
-		this.musicmgr.play('music-game', { loop: true })
+		this.musicmgr.play(this.musicKey, { loop: true })
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
 		// Setup multiplayer
 		if( this.mpOn ) {
@@ -345,7 +347,7 @@ export default class Game extends Phaser.Scene {
 	private handleBossNear() {
 		this.nearBoss=true
 		this.musicmgr.play('music-exciting', { loop: true })
-		this.musicmgr.stop('music-game')
+		this.musicmgr.stop(this.musicKey)
 		this.cameras.main.zoomTo(1.25, 250)
 		const door = this.items.door.getChildren().find(obj=>obj.name==='boss') as Door
 		if( door ) door.open=false
@@ -359,7 +361,7 @@ export default class Game extends Phaser.Scene {
 		setTimeout(()=>{
 			const door = this.items.door.getChildren().find(obj=>obj.name==='boss') as Door
 			if( door ) door.open=true
-			this.musicmgr.play('music-game', { loop: true })
+			this.musicmgr.play(this.musicKey, { loop: true })
 		}, 4500)
 	}
 
@@ -367,7 +369,7 @@ export default class Game extends Phaser.Scene {
 		this.config.dec('lives')
 		this.scene.stop('pause')
 		this.scene.stop('game-ui')
-		this.musicmgr.fade('music-game', 500)
+		this.musicmgr.fade(this.musicKey, 500)
 		this.musicmgr.fade('music-exciting', 500)
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
@@ -381,7 +383,7 @@ export default class Game extends Phaser.Scene {
 		this.win = true
 		this.scene.stop('pause')
 		this.scene.stop('game-ui')
-		this.musicmgr.fade('music-game')
+		this.musicmgr.fade(this.musicKey)
 		this.musicmgr.fade('music-exciting')
 		this.player.stop()
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
@@ -415,7 +417,7 @@ export default class Game extends Phaser.Scene {
 
 	pauseMenu() {
 		this.scene.pause()
-		this.scene.launch('pause')
+		this.scene.launch('pause', { musicKey: this.musicKey })
 	}
 	
 	update(t: number, dt: number) {
