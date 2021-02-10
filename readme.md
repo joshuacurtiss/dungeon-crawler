@@ -28,10 +28,20 @@ I've completed the tutorial, and in the end, I had a map with enemies and a char
 
 ## To Build This Game
 
-You can build this game yourself with [Node.js](https://nodejs.org/en/) and [Parcel](https://parceljs.org/). These must be installed.
+**Prerequisites.**
+Both the client and server portion of this game require [Node.js](https://nodejs.org). After installing that, install [Parcel](https://parceljs.org/) and [FFmpeg](https://ffmpeg.org), which are used to pack and build the client.
 
-Clone this repository to your local machine:
+Install Parcel with npm: 
+```
+npm install -g parcel
+```
 
+Install FFmpeg with a package installer of your choice. For Windows users, try these instructions: [Install FFmpeg on Windows](https://www.wikihow.com/Install-FFmpeg-on-Windows). Here's an example using [brew](https://brew.sh) on macOS:
+```
+brew install ffmpeg
+```
+
+Using [git](https://git-scm.com), clone this repository to your local machine:
 ```bash
 git clone https://github.com/joshuacurtiss/dungeon-crawler.git
 ```
