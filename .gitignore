@@ -3,3 +3,4 @@
 /node_modules
 /public/media/*.*
 test*
+*.js.map
