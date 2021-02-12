@@ -108,9 +108,7 @@ export default class Game extends Phaser.Scene {
 		// Otherwise, the config holds current number of hearts. After we get it, set it.
 		const hearts = this.config.getNumber('hearts') || this.player.hearts
 		this.config.setNumber('hearts', hearts)
-		this.player.hearts = hearts
-		this.player.health = hearts
-		this.player.coins=this.config.getNumber('coins')
+		this.player.setup(this.config.getNumber('coins'), hearts)
 		// Add items
 		this.items = this.spawnItemsFromMap(this.map)
 		// Add enemies
@@ -374,7 +372,7 @@ export default class Game extends Phaser.Scene {
 		this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
 			this.scene.stop()
-			this.scene.start('loselife')
+			this.scene.start('loselife', {player: this.player})
         })
 	}
 
@@ -417,7 +415,7 @@ export default class Game extends Phaser.Scene {
 
 	pauseMenu() {
 		this.scene.pause()
-		this.scene.launch('pause', { musicKey: this.musicKey })
+		this.scene.launch('pause', { musicKey: this.musicKey, player: this.player })
 	}
 	
 	update(t: number, dt: number) {

@@ -1,13 +1,16 @@
 import Phaser from 'phaser'
 import MenuItem from '../ui/MenuItem'
-import SoundManager from '../managers/SoundManager'
+import {ConfigManager, SoundManager} from '../managers'
+import {Player} from '../characters'
 
 export default class Pause extends Phaser.Scene {
 
+    private config = new ConfigManager()
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
     private musicKey!: string
     private musicmgr = new SoundManager(this)
     private menu: MenuItem[] = []
+    private player!: Player
     private _menuIndex: number = 0
 
     constructor() {
@@ -26,8 +29,9 @@ export default class Pause extends Phaser.Scene {
         this.menu[this.menuIndex].selected=true
     }
 
-    init(data) {
+    init(data: any) {
         this.musicKey = data.musicKey
+        this.player = data.player
 		this.events.once('shutdown', ()=>{
             this.input.keyboard.removeAllKeys()
             this.menu.forEach(item=>item.removeAllListeners())
@@ -76,6 +80,8 @@ export default class Pause extends Phaser.Scene {
     private restartGame(nextScene:string = 'game') {
         this.musicmgr.fade(this.musicKey, 500)
         this.scene.stop('game-ui')
+        this.config.setNumber('coins', this.player.origState.coins)
+        this.config.setNumber('hearts', this.player.origState.hearts)
         this.cameras.main.fadeOut(1000, 0, 0, 0)
         this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
             this.scene.stop()

@@ -1,5 +1,6 @@
 import Phaser from 'phaser'
 import {ConfigManager, SoundManager} from '../managers'
+import { Player } from '../characters'
 
 export default class LoseLife extends Phaser.Scene {
 
@@ -10,7 +11,10 @@ export default class LoseLife extends Phaser.Scene {
         super('loselife')
     }
 
-    init() {
+    init(data: any) {
+        const player = data.player as Player
+        this.config.setNumber('coins', player.origState.coins)
+        this.config.setNumber('hearts', player.origState.hearts)
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).once('up', ()=>this.restartLevel())
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC).once('up', ()=>this.restartLevel())
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE).once('up', ()=>this.restartLevel())

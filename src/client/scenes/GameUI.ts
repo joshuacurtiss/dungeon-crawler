@@ -97,12 +97,12 @@ export default class GameUI extends Phaser.Scene {
 
     setLives(quantity: number = this.config.getNumber('lives')) {
         this.config.setNumber('lives', quantity)
-        this.livesLabel.text = 'x' + quantity
+        if( this.livesLabel.active ) this.livesLabel.text = 'x' + quantity
     }
 
     setCoins(coins: number = this.config.getNumber('coins')) {
         this.config.setNumber('coins', coins)
-        this.coinsLabel.text = coins.toLocaleString()
+        if( this.coinsLabel.active ) this.coinsLabel.text = coins.toLocaleString()
     }
 
 }

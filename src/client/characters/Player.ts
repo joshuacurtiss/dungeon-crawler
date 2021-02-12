@@ -10,12 +10,17 @@ enum HealthState {
     DEAD
 }
 
+type PlayerState = {
+    coins: number;
+    health: number;
+    hearts: number;
+}
+
 export default class Player extends Phaser.Physics.Arcade.Sprite {
 
-    private _coins = 0
+    private currState: PlayerState = {coins: 0, health: 3.0, hearts: 3}
     private _direction = new Phaser.Math.Vector2(0, 100)
-    private _health = 3.0
-    private _hearts = 3
+    private _origState: PlayerState = {...this.currState}
 
     private damageTime = 0
     private healthState = HealthState.IDLE
@@ -37,14 +42,28 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.setDepth(1)
     }
 
+    public setup(coins?: number, hearts?: number, health?: number) {
+        if( coins ) this.currState.coins = coins
+        if( hearts ) {
+            this.currState.hearts = hearts
+            this.currState.health = hearts
+        }
+        if( health ) this.currState.health = health
+        this._origState = {...this.currState}
+    }
+
+    get origState() {
+        return this._origState
+    }
+
     get coins() {
-        return this._coins>0 ? this._coins : 0
+        return this.currState.coins>0 ? this.currState.coins : 0
     }
 
     set coins(newval:number) {
         if( newval<0 ) newval=0
-        if( this._coins!==newval ) sceneEvents.emit('player-coins-changed', newval)
-        this._coins=newval
+        if( this.currState.coins!==newval ) sceneEvents.emit('player-coins-changed', newval)
+        this.currState.coins=newval
     }
 
     get damage() {
@@ -77,7 +96,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     get health() {
-        return this._health>0 ? this._health : 0
+        return this.currState.health>0 ? this.currState.health : 0
     }
 
     set health(newval:number) {
@@ -85,11 +104,11 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     get hearts() {
-        return this._hearts
+        return this.currState.hearts
     }
 
     set hearts(newval:number) {
-        this._hearts = newval
+        this.currState.hearts = newval
         sceneEvents.emit('player-hearts-changed', newval)
     }
 
@@ -104,8 +123,8 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
             this.setTint(0xffffff)
         }
         // Apply the change, emit the event
-        if( this._health!==newval ) sceneEvents.emit('player-health-changed', newval)
-        this._health=newval
+        if( this.currState.health!==newval ) sceneEvents.emit('player-health-changed', newval)
+        this.currState.health=newval
         if( this.dead ) sceneEvents.emit('player-dead')
     }
 
