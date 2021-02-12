@@ -13,10 +13,6 @@ export default class Mage extends Player {
         this.weapon = weapons?.weapon_fireball
         createStandardAnims(scene, this.name)
         this.anims.play('mage_idle_down')
-    }
-
-    public setup() {
-        super.setup()
         this.body.setSize(this.width*0.4, this.height*0.8)
     }
 

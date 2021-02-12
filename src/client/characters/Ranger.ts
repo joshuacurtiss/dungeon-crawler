@@ -13,10 +13,6 @@ export default class Ranger extends Player {
         this.weapon = weapons?.weapon_knight_sword
         createStandardAnims(scene, this.name)
         this.anims.play('ranger_idle_down')
-    }
-
-    public setup() {
-        super.setup()
         this.body.setSize(this.width*0.4, this.height*0.8)
     }
 

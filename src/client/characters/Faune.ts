@@ -45,10 +45,6 @@ export default class Faune extends Player {
             frameRate: 8
         })    
         this.anims.play('faune_idle_down')
-    }
-
-    public setup() {
-        super.setup()
         this.body.setSize(this.width*0.5, this.height*0.6)
     }
 

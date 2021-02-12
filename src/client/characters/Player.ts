@@ -33,10 +33,6 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         super(scene, x, y, texture, frame)
         scene.add.existing(this)
         this.sndmgr = new SoundManager(scene, 'sfx')
-        this.setup()
-    }
-
-    public setup() {
         this.scene.physics.world.enableBody(this, Phaser.Physics.Arcade.DYNAMIC_BODY)
         this.setDepth(1)
     }

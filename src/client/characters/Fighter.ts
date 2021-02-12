@@ -13,10 +13,6 @@ export default class Fighter extends Player {
         this.weapon = weapons?.weapon_knife
         createStandardAnims(scene, this.name)
         this.anims.play('fighter_idle_down')
-    }
-
-    public setup() {
-        super.setup()
         this.body.setSize(this.width*0.4, this.height*0.8)
     }
 
