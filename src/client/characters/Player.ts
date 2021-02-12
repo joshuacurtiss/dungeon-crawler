@@ -2,7 +2,7 @@ import Phaser from 'phaser'
 import Enemy from '../enemies/Enemy'
 import {Crate, Item} from '../items'
 import {EventManager as sceneEvents, SoundManager} from '../managers'
-import Weapon from '../weapons/Weapon'
+import {Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList} from '../weapons'
 
 enum HealthState {
     IDLE,
@@ -33,6 +33,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     public speed: number = 100
     public touching?: Item
     public weapon?: Phaser.Physics.Arcade.Group
+    public weapons: WeaponList
 
     constructor(scene: Phaser.Scene, x: number, y: number, texture: string, frame?: string|number) {
         super(scene, x, y, texture, frame)
@@ -40,6 +41,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         this.sndmgr = new SoundManager(scene, 'sfx')
         this.scene.physics.world.enableBody(this, Phaser.Physics.Arcade.DYNAMIC_BODY)
         this.setDepth(1)
+        this.weapons = {
+            'weapon_fireball': scene.physics.add.group({ classType: Fireball, maxSize: 4 }),
+            'weapon_knife': scene.physics.add.group({ classType: Knife, maxSize: 8 }),
+            'weapon_knight_sword': scene.physics.add.group({ classType: KnightSword, maxSize: 2 }),
+            'weapon_regular_sword': scene.physics.add.group({ classType: RegularSword, maxSize: 2 }),
+        }
     }
 
     public setup(coins?: number, hearts?: number, health?: number) {
@@ -176,7 +183,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
 
     hit(obj: Weapon | Enemy) {
         if( this.damage || this.dead ) return
-		const dir = new Phaser.Math.Vector2(this.x-obj.x, this.y-obj.y).normalize().scale(200)
+        const dir = new Phaser.Math.Vector2(this.x-obj.x, this.y-obj.y).normalize().scale(200)
         this.setVelocity(dir.x, dir.y)
         this.setTint(0xff0000)
         this.healthState = HealthState.DAMAGE

@@ -1,16 +1,15 @@
 import Phaser from 'phaser'
 import Player from './Player'
 import createStandardAnims from './createStandardAnims'
-import {WeaponList} from '../weapons'
 
 export default class Ranger extends Player {
 
-    constructor(scene: Phaser.Scene, x: number, y: number, weapons?:WeaponList) {
+    constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'textures', 'ranger_down_2')
         this.name = 'ranger'
         this.customOffset.set(8, 5)
         this.speed = 100
-        this.weapon = weapons?.weapon_knight_sword
+        this.weapon = this.weapons.weapon_knight_sword
         createStandardAnims(scene, this.name)
         this.anims.play('ranger_idle_down')
         this.body.setSize(this.width*0.4, this.height*0.8)

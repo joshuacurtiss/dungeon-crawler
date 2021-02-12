@@ -58,7 +58,6 @@ export class MultiplayerManager {
         private scene: Game,
         private enemies: EnemyList,
         private items: ItemList,
-        private weapons: WeaponList,
         private player: Player,
     ) {
         // TODO: Should be a collider registered for wallsLayer
@@ -163,7 +162,7 @@ export class MultiplayerManager {
         } else {
             // Otherwise player isn't on the board; create them.
             const name = characterKeys[nameIndex as number]
-            const newplayer = new characters[name](this.scene, x, y, this.weapons) as Player
+            const newplayer = new characters[name](this.scene, x, y) as Player
             newplayer.id = id as string
             newplayer.walk(velx as number, vely as number)
             this.players.push(newplayer)

@@ -5,7 +5,7 @@ import { debugDraw } from '../utils/debug'
 import { BigDemon, BigZombie, Chort, Enemy, EnemyList, EnemyNames, EnemyUpdate, IceZombie, Imp, LizardF, LizardM, MaskedOrc, Mushroom, Necromancer, Skelet } from '../enemies'
 import { characters, Player } from '../characters'
 import { Button, Chest, Coin, Crate, Door, Flask, Item, ItemList, ItemUpdate, Lever, Spikes, Turkey } from '../items'
-import { Fireball, Knife, KnightSword, RegularSword, Weapon, WeaponList } from '../weapons'
+import { Weapon } from '../weapons'
 import { ComboManager, ConfigManager, EventManager as sceneEvents, Level, LevelManager, MultiplayerManager, SoundManager } from '../managers'
 
 const CHECKINTERVAL = 1000
@@ -22,7 +22,6 @@ export default class Game extends Phaser.Scene {
 	private player!: Player
 	private enemies!: EnemyList
 	private items!: ItemList
-	private weapons!: WeaponList
 	private nearBoss: boolean = false
 	private playerEnemiesCollider?: Phaser.Physics.Arcade.Collider
 	private map!: Phaser.Tilemaps.Tilemap
@@ -92,17 +91,11 @@ export default class Game extends Phaser.Scene {
 		this.map.createStaticLayer('Above', tilesets)?.setDepth(10)
 		this.map.createStaticLayer('Ceiling', tilesets)?.setDepth(20)
 		wallsLayer.setCollisionByProperty({collides: true})
-		// Add player and their weapons
-		this.weapons = {
-			'weapon_fireball': this.physics.add.group({ classType: Fireball, maxSize: 4 }),
-			'weapon_knife': this.physics.add.group({ classType: Knife, maxSize: 8 }),
-			'weapon_knight_sword': this.physics.add.group({ classType: KnightSword, maxSize: 2 }),
-			'weapon_regular_sword': this.physics.add.group({ classType: RegularSword, maxSize: 2 }),
-		}
+		// Add player
 		const playerTiles = this.map.getObjectLayer('Characters').objects.filter(obj=>obj.type==='player') as Phaser.Types.Tilemaps.TiledObject[]
 		playerTiles.forEach(playerTile=>{
 			const {x, y, name} = playerTile
-			if( name===this.config.getString('character', 'faune') ) this.player = new characters[name](this, x, y, this.weapons)
+			if( name===this.config.getString('character', 'faune') ) this.player = new characters[name](this, x, y)
 		})
 		// "Start" sets 'hearts' to 0. So in beginning, use player hearts default.
 		// Otherwise, the config holds current number of hearts. After we get it, set it.
@@ -126,7 +119,7 @@ export default class Game extends Phaser.Scene {
 		this.physics.add.collider(this.allEnemies, crate, this.handleEnemyWallCollision, undefined, this)
 		this.physics.add.collider(this.allEnemies, [crate, this.items.door])
 		this.playerEnemiesCollider = this.physics.add.collider(this.allEnemies, this.player, this.handlePlayerEnemyCollision, undefined, this)
-		Object.keys(this.weapons).map(key=>this.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
+		Object.keys(this.player.weapons).map(key=>this.player.weapons[key]).forEach((weaponGroup:Phaser.Physics.Arcade.Group)=>{
 			this.physics.add.collider(weaponGroup, crate, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, wallsLayer, this.handleWeaponWallCollision, undefined, this)
 			this.physics.add.collider(weaponGroup, this.allEnemies, this.handleWeaponEnemyCollision, undefined, this)
@@ -156,7 +149,7 @@ export default class Game extends Phaser.Scene {
 		// Setup multiplayer
 		if( this.mpOn ) {
 			const endpoint = location.protocol.replace("http", "ws") + "//" + location.host
-			this.mp = new MultiplayerManager(this, this.enemies, this.items, this.weapons, this.player)
+			this.mp = new MultiplayerManager(this, this.enemies, this.items, this.player)
 			this.mp.join(endpoint, 'relay')
 		}
 		// Combo Manager (only in single-player mode)
@@ -167,11 +160,18 @@ export default class Game extends Phaser.Scene {
 	}
 
 	private check(t:number=CHECKINTERVAL+1) {
+		const cam = this.cameras.main.worldView
 		this.lastCheck = t
+		//
+		// Weapon Distance Check
+		//
+		this.player.weapon?.getChildren().forEach(obj=>{
+			const weapon = obj as Weapon
+			if( ! cam.contains(weapon.x, weapon.y) ) weapon.destroy()
+		})
 		//
 		// Camera Check for Enemy Movement
 		//
-		const cam = this.cameras.main.worldView
 		const extRect = this.extendedCameraView
 		// Adjust extended view with current camera
 		extRect.setPosition(cam.x - cam.width * 0.3, cam.y - cam.height * 0.3)

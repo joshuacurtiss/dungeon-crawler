@@ -1,16 +1,15 @@
 import Phaser from 'phaser'
 import Player from './Player'
 import createStandardAnims from './createStandardAnims'
-import {WeaponList} from '../weapons'
 
 export default class Fighter extends Player {
 
-    constructor(scene: Phaser.Scene, x: number, y: number, weapons?:WeaponList) {
+    constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'textures', 'fighter_down_2')
         this.name = 'fighter'
         this.customOffset.set(8, 5)
         this.speed = 110
-        this.weapon = weapons?.weapon_knife
+        this.weapon = this.weapons.weapon_knife
         createStandardAnims(scene, this.name)
         this.anims.play('fighter_idle_down')
         this.body.setSize(this.width*0.4, this.height*0.8)
