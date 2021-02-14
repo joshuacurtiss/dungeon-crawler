@@ -7,6 +7,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     private _health: number = 1
     private _isBoss: boolean = false
     private _onCamera: boolean = false
+    public allowChangeDirection: boolean = true
     public damageInflicted: number = 1
     public id: string = Math.floor(Math.random() * 10**8).toString()
     public speed: number = 50
@@ -129,7 +130,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     public changeDirection() {
-        this.direction = this.randomDirection()
+        if( this.allowChangeDirection ) this.direction = this.randomDirection()
     }
 
     protected randomDirection(): Phaser.Math.Vector2 {
