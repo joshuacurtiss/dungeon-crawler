@@ -17,13 +17,10 @@ export default class Skelet extends Enemy {
         })
     }
 
-    get direction(): Phaser.Math.Vector2 {
-        return super.direction
-    }
-    set direction(vec: Phaser.Math.Vector2) {
-        super.direction = vec
+    setDirection(x:number, y:number) {
+        super.setDirection(x, y)
         if( ! this.onCamera ) return
-        if( vec.x || vec.y ) this.anims.play('skelet_run')
+        if( this.direction.x || this.direction.y ) this.anims.play('skelet_run')
         else this.anims.play('skelet_idle')
     }
 

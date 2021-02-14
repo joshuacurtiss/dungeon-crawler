@@ -17,13 +17,10 @@ export default class Necromancer extends Enemy {
         })
     }
 
-    get direction(): Phaser.Math.Vector2 {
-        return super.direction
-    }
-    set direction(vec: Phaser.Math.Vector2) {
-        super.direction = vec
+    setDirection(x:number, y:number) {
+        super.setDirection(x, y)
         if( ! this.onCamera ) return
-        if( vec.x || vec.y ) this.anims.play('necromancer_run')
+        if( this.direction.x || this.direction.y ) this.anims.play('necromancer_run')
         else this.anims.play('necromancer_idle')
     }
 
