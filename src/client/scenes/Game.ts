@@ -403,7 +403,7 @@ export default class Game extends Phaser.Scene {
 		})
 		Object.keys(buttonGroups).forEach(color=>{
 			const solved = buttonGroups[color].every(go=>(go as Button).pressed)
-			const door = this.items.door.getChildren().find(obj=>obj.name==='buttons_'+color)
+			const door = this.items.door.getChildren().find(obj=>obj.name.includes('buttons_'+color))
 			if( door ) (door as Door).open=solved
 		})
 	}
