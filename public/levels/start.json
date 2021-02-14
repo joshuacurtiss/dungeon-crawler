@@ -48,8 +48,368 @@
                  "type":"player",
                  "visible":true,
                  "width":16,
-                 "x":240.447,
-                 "y":53.8153
+                 "x":100,
+                 "y":54
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":74,
+                 "name":"lizard_f",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":500,
+                 "y":51.6
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":75,
+                 "name":"masked_orc",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":750,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":76,
+                 "name":"mushroom",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":1000,
+                 "y":50
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":77,
+                 "name":"necromancer",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":1250,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":78,
+                 "name":"skelet",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":1500,
+                 "y":54
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":79,
+                 "name":"big_zombie",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":1750,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":80,
+                 "name":"imp",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":2000,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":81,
+                 "name":"big_demon",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":2250,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":82,
+                 "name":"ice_zombie",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":2500,
+                 "y":54
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":83,
+                 "name":"chort",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":2750,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":73,
+                 "name":"lizard_m",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":3000,
+                 "y":51.6
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":84,
+                 "name":"lizard_m",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":3250,
+                 "y":51.6
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":85,
+                 "name":"lizard_f",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":3500,
+                 "y":51.6
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":86,
+                 "name":"masked_orc",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":3750,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":87,
+                 "name":"mushroom",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":4000,
+                 "y":50
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":88,
+                 "name":"necromancer",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":4250,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":89,
+                 "name":"skelet",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":4500,
+                 "y":54
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":90,
+                 "name":"big_zombie",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":4750,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":91,
+                 "name":"imp",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":5000,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":92,
+                 "name":"big_demon",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":5250,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":93,
+                 "name":"ice_zombie",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":5500,
+                 "y":54
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":94,
+                 "name":"chort",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":5750,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":95,
+                 "name":"mushroom",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":6000,
+                 "y":50
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":96,
+                 "name":"necromancer",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":6250,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":97,
+                 "name":"skelet",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":6500,
+                 "y":54
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":98,
+                 "name":"big_zombie",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":6750,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":99,
+                 "name":"imp",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":7000,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":100,
+                 "name":"big_demon",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":7250,
+                 "y":53
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":101,
+                 "name":"ice_zombie",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":7500,
+                 "y":54
+                }, 
+                {
+                 "gid":489,
+                 "height":16,
+                 "id":102,
+                 "name":"chort",
+                 "rotation":0,
+                 "type":"enemy",
+                 "visible":true,
+                 "width":16,
+                 "x":7750,
+                 "y":53
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -58,7 +418,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":73,
+ "nextobjectid":103,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.4.3",
@@ -67,7 +427,7 @@
         {
          "columns":32,
          "firstgid":1,
-         "image":"dungeon_tiles.png",
+         "image":"..\/tiles\/dungeon_tiles.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -4184,7 +4544,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -4193,7 +4553,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -4472,7 +4832,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {
@@ -4481,7 +4841,7 @@
                         {
                          "name":"collides",
                          "type":"bool",
-                         "value":true
+                         "value":false
                         }]
                 }, 
                 {

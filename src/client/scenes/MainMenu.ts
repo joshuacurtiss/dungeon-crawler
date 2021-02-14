@@ -2,12 +2,16 @@ import Phaser from 'phaser'
 
 import AnimatedTile from './AnimatedTile'
 import { Faune, Player } from '../characters'
+import { Enemy, EnemyList, spawnEnemiesFromMap } from '../enemies'
+import { Weapon } from '../weapons'
 import MenuItem from '../ui/MenuItem'
 import SoundManager from '../managers/SoundManager'
 
 export default class MainMenu extends Phaser.Scene {
 
+    private checkTime: number = 0
     private cursors?: Phaser.Types.Input.Keyboard.CursorKeys
+    private enemies!: EnemyList
     private player!: Player
     private musicmgr = new SoundManager(this)
     private speed: number = 50
@@ -17,6 +21,18 @@ export default class MainMenu extends Phaser.Scene {
 
     constructor() {
         super('mainmenu')
+    }
+
+    get allEnemyGroups() {
+		return this.enemies ? Object.keys(this.enemies).map(key=>this.enemies![key]) : []
+	}
+    get allEnemies() {
+        const enemies: Enemy[] = []
+        this.allEnemyGroups.forEach((group:Phaser.Physics.Arcade.Group)=>{
+            const thisGroupEnemies = group.getChildren() as Enemy[]
+            enemies.push(...thisGroupEnemies)
+        })
+        return enemies
     }
 
     get menuSelection() {
@@ -60,8 +76,18 @@ export default class MainMenu extends Phaser.Scene {
         const tileset = this.map.addTilesetImage('dungeon', undefined, 16, 16, 1, 2)
 		this.map.createStaticLayer('Ground', tileset)
 		const wallsLayer = this.map.createDynamicLayer('Walls', tileset)
+        this.enemies = spawnEnemiesFromMap(this, this.map)
+        this.allEnemies.forEach(obj=>{
+            const enemy = obj as Enemy
+            enemy.allowChangeDirection = false
+            enemy.onCamera = true
+            enemy.walk(-5, 0)
+        })
         wallsLayer.setCollisionByProperty({collides: true})
         this.player = new Faune(this, 0, 0)
+		this.physics.add.collider(this.player, wallsLayer, this.handlePlayerWallCollision, undefined, this)
+        this.physics.add.collider(this.player.weapon!, wallsLayer, this.handleWeaponWallCollision, undefined, this)
+        this.physics.add.collider(this.player.weapon!, this.allEnemyGroups, this.handleWeaponEnemyCollision, undefined, this)
         this.cameras.main.startFollow(this.player, true, 0.9, 0.9, 0, -20)
         this.cursors = this.input.keyboard.createCursorKeys()
         this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
@@ -76,11 +102,6 @@ export default class MainMenu extends Phaser.Scene {
         this.cameras.main.fadeIn(550, 0, 0, 0)
         this.musicmgr.play('music-menu', {loop: true})
         this.walk()
-        this.time.addEvent({
-            delay: 90000,
-            callback: ()=>this.walk(-this.speed),
-            loop: true
-        })
     }
 
     private select() {
@@ -98,6 +119,10 @@ export default class MainMenu extends Phaser.Scene {
         this.speed=speed
     }
 
+    handlePlayerWallCollision() {
+        this.walk(-this.speed)
+    }
+
     update(t:number, dt:number) {
         super.update(t, dt)
         AnimatedTile.update(dt)
@@ -109,6 +134,29 @@ export default class MainMenu extends Phaser.Scene {
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.down!) ) {
             this.menuIndex++
         }
+        // Shoot if enemies are in front of me on screen
+        if( t - this.checkTime > 1500 ) {
+            this.checkTime = t
+            const cam = this.cameras.main.worldView
+            const bodies = this.physics.overlapRect(cam.x, cam.y, cam.width, cam.height) as any[]
+            const nearObj = bodies.find(b=>b.gameObject instanceof Enemy)
+            const nearEnemy = nearObj?.gameObject
+            if( nearEnemy ) this.player.shoot()
+            if( nearEnemy && nearEnemy.health > 1 ) setTimeout(()=>{
+                this.player.shoot()
+            }, 500)
+        }
     }
+
+    private handleWeaponWallCollision(obj1: Phaser.GameObjects.GameObject) {
+		const weapon = obj1 as Weapon
+		weapon.miss()
+	}
+
+	private handleWeaponEnemyCollision(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
+		const weapon = obj1 as Weapon
+		const enemy = obj2 as Enemy
+		weapon.hit(enemy)
+	}
 
 }

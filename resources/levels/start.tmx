@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="500" height="7" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="73">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="500" height="7" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="103">
  <editorsettings>
   <export target="../../public/levels/start.json" format="json"/>
  </editorsettings>
@@ -2277,12 +2277,12 @@
   </tile>
   <tile id="450">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="451">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="452">
@@ -2437,12 +2437,12 @@
   </tile>
   <tile id="482">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="483">
    <properties>
-    <property name="collides" type="bool" value="true"/>
+    <property name="collides" type="bool" value="false"/>
    </properties>
   </tile>
   <tile id="484">
@@ -5169,6 +5169,39 @@
 </data>
  </layer>
  <objectgroup id="5" name="Characters">
-  <object id="17" type="player" gid="41" x="240.447" y="53.8153" width="16" height="16"/>
+  <object id="17" type="player" gid="41" x="100" y="54" width="16" height="16"/>
+  <object id="74" name="lizard_f" type="enemy" gid="489"    x="500" y="51.6" width="16" height="16"/>
+  <object id="75" name="masked_orc" type="enemy" gid="489"  x="750" y="53" width="16" height="16"/>
+  <object id="76" name="mushroom" type="enemy" gid="489"    x="1000" y="50" width="16" height="16"/>
+  <object id="77" name="necromancer" type="enemy" gid="489" x="1250" y="53" width="16" height="16"/>
+  <object id="78" name="skelet" type="enemy" gid="489"      x="1500" y="54" width="16" height="16"/>
+  <object id="79" name="big_zombie" type="enemy" gid="489"  x="1750" y="53" width="16" height="16"/>
+  <object id="80" name="imp" type="enemy" gid="489"         x="2000" y="53" width="16" height="16"/>
+  <object id="81" name="big_demon" type="enemy" gid="489"   x="2250" y="53" width="16" height="16"/>
+  <object id="82" name="ice_zombie" type="enemy" gid="489"  x="2500" y="54" width="16" height="16"/>
+  <object id="83" name="chort" type="enemy" gid="489"       x="2750" y="53" width="16" height="16"/>
+  <object id="73" name="lizard_m" type="enemy" gid="489"    x="3000" y="51.6" width="16" height="16"/>
+
+  <object id="84" name="lizard_m" type="enemy" gid="489"    x="3250" y="51.6" width="16" height="16"/>
+  <object id="85" name="lizard_f" type="enemy" gid="489"    x="3500" y="51.6" width="16" height="16"/>
+  <object id="86" name="masked_orc" type="enemy" gid="489"  x="3750" y="53" width="16" height="16"/>
+  <object id="87" name="mushroom" type="enemy" gid="489"    x="4000" y="50" width="16" height="16"/>
+  <object id="88" name="necromancer" type="enemy" gid="489" x="4250" y="53" width="16" height="16"/>
+  <object id="89" name="skelet" type="enemy" gid="489"      x="4500" y="54" width="16" height="16"/>
+  <object id="90" name="big_zombie" type="enemy" gid="489"  x="4750" y="53" width="16" height="16"/>
+  <object id="91" name="imp" type="enemy" gid="489"         x="5000" y="53" width="16" height="16"/>
+  <object id="92" name="big_demon" type="enemy" gid="489"   x="5250" y="53" width="16" height="16"/>
+  <object id="93" name="ice_zombie" type="enemy" gid="489"  x="5500" y="54" width="16" height="16"/>
+  <object id="94" name="chort" type="enemy" gid="489"       x="5750" y="53" width="16" height="16"/>
+
+  <object id="95" name="mushroom" type="enemy" gid="489"    x="6000" y="50" width="16" height="16"/>
+  <object id="96" name="necromancer" type="enemy" gid="489" x="6250" y="53" width="16" height="16"/>
+  <object id="97" name="skelet" type="enemy" gid="489"      x="6500" y="54" width="16" height="16"/>
+  <object id="98" name="big_zombie" type="enemy" gid="489"  x="6750" y="53" width="16" height="16"/>
+  <object id="99" name="imp" type="enemy" gid="489"         x="7000" y="53" width="16" height="16"/>
+  <object id="100" name="big_demon" type="enemy" gid="489"  x="7250" y="53" width="16" height="16"/>
+  <object id="101" name="ice_zombie" type="enemy" gid="489" x="7500" y="54" width="16" height="16"/>
+  <object id="102" name="chort" type="enemy" gid="489"      x="7750" y="53" width="16" height="16"/>
+
  </objectgroup>
 </map>
