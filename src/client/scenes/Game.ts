@@ -147,7 +147,9 @@ export default class Game extends Phaser.Scene {
 		if( this.game.config.physics.arcade?.debug ) debugDraw(wallsLayer, this)
 		// Setup multiplayer
 		if( this.mpOn ) {
-			const endpoint = location.protocol.replace("http", "ws") + "//" + location.host
+			const endpoint = location.hostname.includes('curtiss.me') ? 
+				'ws://home.curtiss.me:4000' :
+				location.protocol.replace("http", "ws") + "//" + location.host
 			this.mp = new MultiplayerManager(this, this.enemies, this.items, this.player)
 			this.mp.join(endpoint, 'relay')
 		}
