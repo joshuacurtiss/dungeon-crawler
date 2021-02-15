@@ -1386,7 +1386,7 @@
                  "gid":5301,
                  "height":16,
                  "id":1364,
-                 "name":"buttons_red",
+                 "name":"buttons_red exit",
                  "rotation":0,
                  "type":"door",
                  "visible":true,
@@ -1590,7 +1590,7 @@
         {
          "columns":32,
          "firstgid":1,
-         "image":"dungeon_tiles.png",
+         "image":"..\/tiles\/dungeon_tiles.png",
          "imageheight":512,
          "imagewidth":512,
          "margin":0,
@@ -10872,7 +10872,7 @@
         {
          "columns":29,
          "firstgid":1025,
-         "image":"legend_of_faune_tiles.png",
+         "image":"..\/tiles\/legend_of_faune_tiles.png",
          "imageheight":256,
          "imagewidth":464,
          "margin":0,
@@ -11606,7 +11606,7 @@
         {
          "columns":57,
          "firstgid":1489,
-         "image":"roguelike_transparent.png",
+         "image":"..\/tiles\/roguelike_transparent.png",
          "imageheight":526,
          "imagewidth":968,
          "margin":0,
@@ -12646,7 +12646,7 @@
         {
          "columns":17,
          "firstgid":3256,
-         "image":"forest.png",
+         "image":"..\/tiles\/forest.png",
          "imageheight":304,
          "imagewidth":272,
          "margin":0,
@@ -12984,7 +12984,7 @@
         {
          "columns":45,
          "firstgid":3579,
-         "image":"lava.png",
+         "image":"..\/tiles\/lava.png",
          "imageheight":16,
          "imagewidth":720,
          "margin":0,
@@ -13182,7 +13182,7 @@
         {
          "columns":6,
          "firstgid":3624,
-         "image":"legend_of_faune_water.png",
+         "image":"..\/tiles\/legend_of_faune_water.png",
          "imageheight":224,
          "imagewidth":96,
          "margin":0,
@@ -14212,7 +14212,7 @@
         {
          "columns":22,
          "firstgid":3708,
-         "image":"ffi_snow.png",
+         "image":"..\/tiles\/ffi_snow.png",
          "imageheight":224,
          "imagewidth":352,
          "margin":0,
@@ -14225,7 +14225,7 @@
         {
          "columns":40,
          "firstgid":4016,
-         "image":"overworld.png",
+         "image":"..\/tiles\/overworld.png",
          "imageheight":576,
          "imagewidth":640,
          "margin":0,
@@ -14482,7 +14482,7 @@
         {
          "columns":40,
          "firstgid":5456,
-         "image":"cave.png",
+         "image":"..\/tiles\/cave.png",
          "imageheight":400,
          "imagewidth":640,
          "margin":0,

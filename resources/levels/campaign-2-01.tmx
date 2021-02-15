@@ -7260,7 +7260,7 @@
  <objectgroup id="3" name="Items">
   <object id="1362" name="70-100" type="chest" gid="596" x="887.333" y="1002.17" width="16" height="16"/>
   <object id="1363" name="75" type="chest" gid="596" x="672" y="992" width="16" height="16"/>
-  <object id="1364" name="buttons_red" type="door" gid="5301" x="1296" y="128" width="16" height="16"/>
+  <object id="1364" name="buttons_red exit" type="door" gid="5301" x="1296" y="128" width="16" height="16"/>
   <object id="1365" gid="5302" x="1312" y="128" width="16" height="16"/>
   <object id="1366" gid="5341" x="1296" y="144" width="16" height="16"/>
   <object id="1367" gid="5342" x="1312" y="144" width="16" height="16"/>
