@@ -134,7 +134,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
     }
 
     protected randomDirection(): Phaser.Math.Vector2 {
-        return new Phaser.Math.Vector2(Phaser.Math.Between(-1,1) * this.speed, Phaser.Math.Between(-1,1) * this.speed)
+        const rads = Phaser.Math.DegToRad(Phaser.Math.Between(0, 360))
+        return new Phaser.Math.Vector2(this.speed).rotate(rads)
     }
 
     private handleTileCollision(go: Phaser.GameObjects.GameObject) {
