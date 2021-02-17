@@ -51,6 +51,17 @@ export default class Game extends Phaser.Scene {
 	}
 
 	preload() {
+		// Loading screen
+        const centerX = this.cameras.main.worldView.x + this.cameras.main.width / 2
+		const centerY = this.cameras.main.worldView.y + this.cameras.main.height / 2
+        const textConfig: Phaser.Types.GameObjects.Text.TextStyle = {
+            fontFamily: 'Nova Script',
+            fontSize: '20px',
+			backgroundColor: '#1a1a1a',
+			padding: {x: 40, y: 20},
+
+        }
+		this.add.text(centerX, centerY*0.8, 'Get Ready...', textConfig).setOrigin(0.5)
 		// Cursors
 		this.cursors = this.input.keyboard.createCursorKeys()
 		// Misc keys
