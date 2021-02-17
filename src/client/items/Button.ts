@@ -38,9 +38,27 @@ export default class Button extends Item {
      */
     get hasCrate() {
         const { halfWidth, halfHeight } = this.body
-        const bodies = this.scene.physics.overlapRect(this.x-halfWidth, this.y-halfHeight, this.width, this.height) as any[]
+        const bodies = this.scene.physics.overlapRect(this.x-halfWidth, this.y-halfHeight, this.width-3, this.height-3) as any[]
         const crates = bodies.filter(b=>b.gameObject ! instanceof Crate)
         return crates.length>0
+    }
+
+    press(crate: Crate) {
+        this.pressed = true
+        // Check the crate and slowly snap it into position.
+        const props = ['x', 'y']
+        props.forEach(prop=>{
+            const cratePos = Math.floor(crate[prop] * 10)
+            const btnPos = Math.floor(this[prop] * 10)
+            const diff = Math.abs(cratePos-btnPos)
+            if( !diff ) return
+            let delta = 0
+            if( diff<5 ) delta=0.02
+            else if( diff<80 ) delta=0.30
+            else delta=0.08
+            if( cratePos > btnPos ) delta*=-1.1
+            if( delta ) crate[prop]+=delta
+        })
     }
 
     get pressed() {

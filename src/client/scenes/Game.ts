@@ -4,7 +4,7 @@ import AnimatedTile from './AnimatedTile'
 import { debugDraw } from '../utils/debug'
 import { Enemy, EnemyList, spawnEnemiesFromMap } from '../enemies'
 import { characters, Player } from '../characters'
-import { Button, Door, Item, ItemList, spawnItemsFromMap } from '../items'
+import { Button, Crate, Door, Item, ItemList, spawnItemsFromMap } from '../items'
 import { Weapon } from '../weapons'
 import { ComboManager, ConfigManager, EventManager as sceneEvents, Level, LevelManager, MultiplayerManager, SoundManager } from '../managers'
 
@@ -120,7 +120,7 @@ export default class Game extends Phaser.Scene {
 		const {chest, coin, crate, flask, lever, spikes, turkey} = this.items
 		this.physics.add.overlap(this.player, [chest, lever], this.handlePlayerTouchItem, undefined, this)
 		this.physics.add.overlap(this.player, [coin, this.items.door, flask, spikes, turkey], this.handlePlayerOverItem, undefined, this)
-		this.physics.add.overlap(this.items.button, crate, this.handleButtonOverlap, undefined, this)
+		this.physics.add.overlap(this.items.button, crate, this.handleButtonCrateTouch, undefined, this)
 		this.physics.add.collider(this.player, crate)
 		this.physics.add.collider(this.player, wallsLayer)
 		this.physics.add.collider(crate, wallsLayer)
@@ -219,9 +219,10 @@ export default class Game extends Phaser.Scene {
 		})
 	}
 
-	private handleButtonOverlap(obj1: Phaser.GameObjects.GameObject) {
+	private handleButtonCrateTouch(obj1: Phaser.GameObjects.GameObject, obj2: Phaser.GameObjects.GameObject) {
 		const button = obj1 as Button
-		button.pressed = true
+		const crate = obj2 as Crate
+		button.press(crate)
 	}
 
 	private handleEnemyWallCollision(obj1: Phaser.GameObjects.GameObject) {
