@@ -87,6 +87,7 @@ export default class StartMultiplayer extends Phaser.Scene {
         this.menuIndex=0
         this.playerIndex=0
         this.cameras.main.fadeIn(550, 0, 0, 0)
+        document.getElementById('startmultiplayer')!.style.display = 'block'
     }
 
     private select() {
@@ -105,6 +106,7 @@ export default class StartMultiplayer extends Phaser.Scene {
             // Fade music (if starting game) and camera
             if( item.nextScene==='game' ) this.musicmgr.fade('music-menu')
             this.cameras.main.fadeOut(1000, 0, 0, 0)
+            document.getElementById('startmultiplayer')!.style.display = 'none'
             this.cameras.main.once(Phaser.Cameras.Scene2D.Events.FADE_OUT_COMPLETE, ()=>{
                 this.scene.start(item.nextScene, {
                     multiplayer: true

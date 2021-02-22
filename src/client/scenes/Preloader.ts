@@ -70,6 +70,13 @@ export default class Preloader extends Phaser.Scene {
     }
 
     create() {
+        // Initialization of HTML elements
+        const canvas = document.getElementsByTagName('canvas')[0]
+        const forms = document.getElementsByTagName('form')
+        for( const frm of forms ) {
+            frm.style.marginTop = canvas.style.marginTop
+        }
+        // Load Font and engage game
         WebFont.load({
             google: {
                 families: [ 'Nova Script' ]
