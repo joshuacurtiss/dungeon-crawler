@@ -12,7 +12,7 @@ import StartMultiplayer from './scenes/StartMultiplayer'
 import WinLevel from './scenes/WinLevel'
 import WinGame from './scenes/WinGame'
 
-const ratio = Math.max(window.innerWidth / window.innerHeight, window.innerHeight / window.innerWidth)
+const ratio = 1.8
 const DEFAULT_HEIGHT = 250
 const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT
 
@@ -20,8 +20,6 @@ const debug = location.search.toLowerCase().indexOf('debug')>0
 
 export default new Phaser.Game({
 	type: Phaser.AUTO,
-	width: 800,
-	height: 600,
 	physics: {
 		default: 'arcade',
 		arcade: {
