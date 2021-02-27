@@ -41,7 +41,15 @@ export default new Phaser.Game({
 })
 
 function initForms() {
-	// nothing yet
+	document.querySelectorAll('form').forEach(frm=>{
+		frm.addEventListener('submit', event=>event.preventDefault())
+	})
+	document.querySelectorAll('form input').forEach(obj=>{
+		const elem = obj as HTMLElement
+		elem.addEventListener('keyup', event=>{
+			if( event.key==='Enter' ) elem.blur()
+		})
+	})
 }
 
 function winResize() {

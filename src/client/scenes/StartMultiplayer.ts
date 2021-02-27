@@ -79,8 +79,21 @@ export default class StartMultiplayer extends Phaser.Scene {
             item.on('pointerover', ()=>this.menuIndex=index)
             item.on('pointerup', ()=>this.select())
         })
-        this.cursors = this.input.keyboard.createCursorKeys()
-        this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
+    }
+
+    deregisterKeys(): void {
+        if( this.cursors ) {
+            this.input.keyboard.clearCaptures()
+            this.input.keyboard.removeAllKeys()
+            this.cursors = undefined
+        }
+    }
+
+    registerKeys() {
+        if( !this.cursors ) {
+            this.cursors = this.input.keyboard.createCursorKeys()
+            this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ENTER).on('up', ()=>this.select())
+        }
     }
 
     create() {
@@ -117,7 +130,9 @@ export default class StartMultiplayer extends Phaser.Scene {
 
     update(t:number, dt:number) {
 		super.update(t, dt)
-        if( !this.cursors ) return;
+        if( document.activeElement?.tagName==='INPUT' ) this.deregisterKeys()
+        else if( !this.cursors) this.registerKeys()
+        if( !this.cursors ) return
         if ( Phaser.Input.Keyboard.JustDown(this.cursors.space!) ) {
             this.select()
         } else if ( Phaser.Input.Keyboard.JustDown(this.cursors.up!) ) {
