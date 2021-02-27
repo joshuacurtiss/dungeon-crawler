@@ -17,6 +17,7 @@ const DEFAULT_HEIGHT = 250
 const DEFAULT_WIDTH = ratio * DEFAULT_HEIGHT
 
 const debug = location.search.toLowerCase().indexOf('debug')>0
+let winResizeTimer
 
 export default new Phaser.Game({
 	type: Phaser.AUTO,
@@ -38,3 +39,33 @@ export default new Phaser.Game({
 		height: DEFAULT_HEIGHT
 	}
 })
+
+function initForms() {
+	// nothing yet
+}
+
+function winResize() {
+	// Initialization of HTML elements
+	const canvas = document.getElementsByTagName('canvas')[0]
+	const h = canvas.clientHeight
+	const w = canvas.clientWidth
+	const forms = document.getElementsByTagName('form')
+	for( const frm of forms ) {
+		frm.style.marginTop = canvas.style.marginTop
+		frm.style.marginLeft = canvas.style.marginLeft
+		frm.style.height = h + 'px'
+		frm.style.width = w + 'px'
+		frm.querySelectorAll('input').forEach(elem=>{
+			elem.style.fontSize = Math.ceil(h*0.03) + 'px'
+		})
+	}	
+}
+
+function handleWinResize() {
+	clearTimeout(winResizeTimer)
+	winResizeTimer = setTimeout(winResize, 50)
+}
+
+window.addEventListener('resize', handleWinResize)
+window.addEventListener('load', winResize)
+window.addEventListener('load', initForms)

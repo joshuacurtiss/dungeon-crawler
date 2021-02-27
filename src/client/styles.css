@@ -7,16 +7,16 @@ form {
     position: absolute;
     display: none;
 }
-#playername {
+form input, form select {
     font-family: 'Nova Script';
-    font-size: 2vw;
-    position: absolute;
-    margin: 24vw 0 0 60vw;
-    width: 32vw;
-    border: 2px solid #777;
-    background-color: #1a1a1a;
     color: white;
-    padding: 0.5vw 0.7vw;
+    padding: 0.3% 0.5%;
+    background-color: #1a1a1a;
+    border: 2px solid #777;
     border-radius: 6px;
     outline: none;
+}
+#playername {
+    width: 30%;
+    margin: 23% 0 0 60%;
 }
