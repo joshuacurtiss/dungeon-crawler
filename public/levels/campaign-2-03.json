@@ -68,7 +68,19 @@
          "id":3,
          "name":"Items",
          "objects":[
-                {
+              {
+              "gid":323,
+              "height":16,
+              "id":1632,
+              "name":"outside",
+              "rotation":0,
+              "type":"entrance",
+              "visible":true,
+              "width":80.6667,
+              "x":1504,
+              "y":1600
+              },
+              {
                  "gid":596,
                  "height":16,
                  "id":1633,
@@ -198,19 +210,7 @@
          "draworder":"topdown",
          "id":10,
          "name":"Teleport",
-         "objects":[
-                {
-                 "gid":323,
-                 "height":16,
-                 "id":1632,
-                 "name":"outside",
-                 "rotation":0,
-                 "type":"entrance",
-                 "visible":true,
-                 "width":80.6667,
-                 "x":1504,
-                 "y":1600
-                }],
+         "objects":[],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,

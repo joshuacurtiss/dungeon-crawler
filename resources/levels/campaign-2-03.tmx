@@ -8318,6 +8318,7 @@
  </layer>
  <objectgroup id="5" name="Characters"/>
  <objectgroup id="3" name="Items">
+  <object id="1632" name="outside" type="entrance" gid="323" x="1504" y="1600" width="80.6667" height="16"/>
   <object id="1633" name="900" type="chest" gid="596" x="1472" y="1488" width="16" height="16"/>
   <object id="1634" name="1" type="chest" gid="596" x="1520" y="1488" width="16" height="16"/>
   <object id="1635" name="1" type="chest" gid="596" x="1568" y="1488" width="16" height="16"/>
@@ -8330,7 +8331,6 @@
   <object id="1642" type="chest" gid="627" x="1328" y="253.5" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="10" name="Teleport">
-  <object id="1632" name="outside" type="entrance" gid="323" x="1504" y="1600" width="80.6667" height="16"/>
  </objectgroup>
  <layer id="8" name="Above" width="100" height="100">
   <data encoding="csv">

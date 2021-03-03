@@ -2,7 +2,9 @@ import Button from './Button'
 import Chest from './Chest'
 import Coin from './Coin'
 import Crate from './Crate'
+import Destination from './Destination'
 import Door from './Door'
+import Entrance from './Entrance'
 import Flask from './Flask'
 import Item from './Item'
 import Lever from './Lever'
@@ -10,7 +12,7 @@ import Player from '../characters/Player'
 import Spikes from './Spikes'
 import Turkey from './Turkey'
 
-type ItemNames = 'button' | 'chest' | 'coin' | 'crate' | 'door' | 'flask' | 'lever' | 'spikes' | 'turkey'
+type ItemNames = 'button' | 'chest' | 'coin' | 'crate' | 'destination' | 'door' | 'entrance' | 'flask' | 'lever' | 'spikes' | 'turkey'
 type ItemList = Record<ItemNames, Phaser.Physics.Arcade.Group | Phaser.Physics.Arcade.StaticGroup>
 
 interface ItemUpdate {
@@ -37,12 +39,15 @@ function spawnItem(def: ItemUpdate, group:Phaser.Physics.Arcade.Group | Phaser.P
 
 function spawnItems(scene: Phaser.Scene, defs: ItemUpdate[], player: Player): ItemList {
     const doorCreateCallback = go=>(go as Door).setup(player)
+    const entranceCreateCallback = go=>(go as Entrance).setup(items.destination as Phaser.Physics.Arcade.StaticGroup)
     const items: ItemList = {
         'button': scene.physics.add.staticGroup({ classType: Button, createCallback: createcb }),
         'chest': scene.physics.add.staticGroup({ classType: Chest }),
         'coin': scene.physics.add.group({ classType: Coin }),
         'crate': scene.physics.add.group({ classType: Crate, createCallback: createcb }),
+        'destination': scene.physics.add.staticGroup({ classType: Destination }),
         'door': scene.physics.add.staticGroup({ classType: Door, createCallback: doorCreateCallback }),
+        'entrance': scene.physics.add.staticGroup({ classType: Entrance, createCallback: entranceCreateCallback }),
         'flask': scene.physics.add.staticGroup({ classType: Flask }),
         'lever': scene.physics.add.staticGroup({ classType: Lever }),
         'spikes': scene.physics.add.staticGroup({ classType: Spikes }),
@@ -73,7 +78,9 @@ export {
     Chest,
     Coin,
     Crate,
+    Destination,
     Door,
+    Entrance,
     Flask,
     Item,
     ItemList,

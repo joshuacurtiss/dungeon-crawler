@@ -117,9 +117,9 @@ export default class Game extends Phaser.Scene {
 		// Add enemies
 		this.enemies = spawnEnemiesFromMap(this, this.map)
 		// Colliders
-		const {chest, coin, crate, flask, lever, spikes, turkey} = this.items
+		const {chest, coin, crate, door, entrance, flask, lever, spikes, turkey} = this.items
 		this.physics.add.overlap(this.player, [chest, lever], this.handlePlayerTouchItem, undefined, this)
-		this.physics.add.overlap(this.player, [coin, this.items.door, flask, spikes, turkey], this.handlePlayerOverItem, undefined, this)
+		this.physics.add.overlap(this.player, [coin, door, entrance, flask, spikes, turkey], this.handlePlayerOverItem, undefined, this)
 		this.physics.add.overlap(this.items.button, crate, this.handleButtonCrateTouch, undefined, this)
 		this.physics.add.collider(this.player, crate)
 		this.physics.add.collider(this.player, wallsLayer)
