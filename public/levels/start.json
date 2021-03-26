@@ -79,7 +79,7 @@
                  "gid":489,
                  "height":16,
                  "id":76,
-                 "name":"mushroom",
+                 "name":"stumpy",
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,
@@ -187,13 +187,13 @@
                  "gid":489,
                  "height":16,
                  "id":84,
-                 "name":"lizard_m",
+                 "name":"mushroom",
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,
                  "width":16,
                  "x":3250,
-                 "y":51.6
+                 "y":50
                 }, 
                 {
                  "gid":489,

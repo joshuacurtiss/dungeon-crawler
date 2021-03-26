@@ -10,8 +10,9 @@ import MaskedOrc from './MaskedOrc'
 import Mushroom from './Mushroom'
 import Necromancer from './Necromancer'
 import Skelet from './Skelet'
+import Stumpy from './Stumpy'
 
-type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'big_demon' | 'big_zombie'
+type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'stumpy' | 'big_demon' | 'big_zombie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
 
 interface EnemyUpdate {
@@ -45,6 +46,7 @@ function spawnEnemies(scene: Phaser.Scene, defs: EnemyUpdate[]): EnemyList {
         'mushroom': scene.physics.add.group({classType: Mushroom, createCallback: createcb}),
         'necromancer': scene.physics.add.group({classType: Necromancer, createCallback: createcb}),
         'skelet': scene.physics.add.group({classType: Skelet, createCallback: createcb}),
+        'stumpy': scene.physics.add.group({classType: Stumpy, createCallback: createcb}),
         'big_demon': scene.physics.add.group({classType: BigDemon, createCallback: createcb}),
         'big_zombie': scene.physics.add.group({classType: BigZombie, createCallback: createcb})
     }
@@ -91,6 +93,7 @@ export {
     Mushroom,
     Necromancer,
     Skelet,
+    Stumpy,
     spawnEnemies,
     spawnEnemiesFromMap,
     spawnEnemy,

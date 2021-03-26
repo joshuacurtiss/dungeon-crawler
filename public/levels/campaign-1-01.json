@@ -55,13 +55,13 @@
                  "gid":489,
                  "height":16,
                  "id":7,
-                 "name":"mushroom",
+                 "name":"stumpy",
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,
                  "width":16,
-                 "x":423.333,
-                 "y":210
+                 "x":423,
+                 "y":200
                 }, 
                 {
                  "gid":489,

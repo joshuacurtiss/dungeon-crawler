@@ -5663,7 +5663,7 @@
 </data>
  </layer>
  <objectgroup id="5" name="Characters">
-  <object id="7" name="mushroom" type="enemy" gid="489" x="423.333" y="210" width="16" height="16"/>
+  <object id="7" name="stumpy" type="enemy" gid="489" x="423" y="200" width="16" height="16"/>
   <object id="16" name="lizard_m" type="enemy" gid="489" x="37.3758" y="95.7297" width="16" height="16"/>
   <object id="17" name="faune" type="player" gid="41" x="150" y="150" width="16" height="16"/>
   <object id="32" name="big_demon" type="enemy" gid="771" x="623.407" y="1122.5" width="16" height="16"/>
