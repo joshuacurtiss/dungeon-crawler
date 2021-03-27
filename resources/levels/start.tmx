@@ -5172,7 +5172,7 @@
   <object id="17" type="player" gid="41" x="100" y="54" width="16" height="16"/>
   <object id="74" name="lizard_f" type="enemy" gid="489"    x="500" y="51.6" width="16" height="16"/>
   <object id="75" name="masked_orc" type="enemy" gid="489"  x="750" y="53" width="16" height="16"/>
-  <object id="76" name="stumpy" type="enemy" gid="489"    x="1000" y="50" width="16" height="16"/>
+  <object id="76" name="stumpy" type="enemy" gid="489"      x="1000" y="50" width="16" height="16"/>
   <object id="77" name="necromancer" type="enemy" gid="489" x="1250" y="53" width="16" height="16"/>
   <object id="78" name="skelet" type="enemy" gid="489"      x="1500" y="54" width="16" height="16"/>
   <object id="79" name="big_zombie" type="enemy" gid="489"  x="1750" y="53" width="16" height="16"/>
@@ -5183,12 +5183,12 @@
   <object id="73" name="lizard_m" type="enemy" gid="489"    x="3000" y="51.6" width="16" height="16"/>
   <object id="84" name="mushroom" type="enemy" gid="489"    x="3250" y="50" width="16" height="16"/>
 
-  <object id="85" name="lizard_f" type="enemy" gid="489"    x="3500" y="51.6" width="16" height="16"/>
-  <object id="86" name="masked_orc" type="enemy" gid="489"  x="3750" y="53" width="16" height="16"/>
-  <object id="87" name="mushroom" type="enemy" gid="489"    x="4000" y="50" width="16" height="16"/>
-  <object id="88" name="necromancer" type="enemy" gid="489" x="4250" y="53" width="16" height="16"/>
-  <object id="89" name="skelet" type="enemy" gid="489"      x="4500" y="54" width="16" height="16"/>
-  <object id="90" name="big_zombie" type="enemy" gid="489"  x="4750" y="53" width="16" height="16"/>
+  <object id="85" name="georgette" type="enemy" gid="489"   x="3500" y="51.6" width="16" height="16"/>
+  <object id="86" name="georgey" type="enemy" gid="489"     x="3750" y="53" width="16" height="16"/>
+  <object id="87" name="puggley" type="enemy" gid="489"     x="4000" y="50" width="16" height="16"/>
+  <object id="88" name="swampy" type="enemy" gid="489"      x="4250" y="53" width="16" height="16"/>
+  <object id="89" name="vart" type="enemy" gid="489"        x="4500" y="54" width="16" height="16"/>
+  <object id="90" name="yarg" type="enemy" gid="489"        x="4750" y="53" width="16" height="16"/>
   <object id="91" name="imp" type="enemy" gid="489"         x="5000" y="53" width="16" height="16"/>
   <object id="92" name="big_demon" type="enemy" gid="489"   x="5250" y="53" width="16" height="16"/>
   <object id="93" name="ice_zombie" type="enemy" gid="489"  x="5500" y="54" width="16" height="16"/>

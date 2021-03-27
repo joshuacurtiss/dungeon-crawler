@@ -2,6 +2,8 @@ import BigDemon from './BigDemon'
 import BigZombie from './BigZombie'
 import Chort from './Chort'
 import Enemy from './Enemy'
+import Georgette from './Georgette'
+import Georgey from './Georgey'
 import IceZombie from './IceZombie'
 import Imp from './Imp'
 import LizardF from './LizardF'
@@ -9,10 +11,14 @@ import LizardM from './LizardM'
 import MaskedOrc from './MaskedOrc'
 import Mushroom from './Mushroom'
 import Necromancer from './Necromancer'
+import Puggley from './Puggley'
 import Skelet from './Skelet'
 import Stumpy from './Stumpy'
+import Swampy from './Swampy'
+import Vart from './Vart'
+import Yarg from './Yarg'
 
-type EnemyNames = 'chort' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'skelet' | 'stumpy' | 'big_demon' | 'big_zombie'
+type EnemyNames = 'chort' | 'georgette' | 'georgey' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'puggley' | 'skelet' | 'stumpy' | 'swampy' | 'vart' | 'yarg' | 'big_demon' | 'big_zombie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
 
 interface EnemyUpdate {
@@ -38,6 +44,8 @@ function spawnEnemy(def: EnemyUpdate, group: Phaser.Physics.Arcade.Group): Enemy
 function spawnEnemies(scene: Phaser.Scene, defs: EnemyUpdate[]): EnemyList {
     const enemies: EnemyList = {
         'chort': scene.physics.add.group({classType: Chort, createCallback: createcb}),
+        'georgette': scene.physics.add.group({classType: Georgette, createCallback: createcb}),
+        'georgey': scene.physics.add.group({classType: Georgey, createCallback: createcb}),
         'ice_zombie': scene.physics.add.group({classType: IceZombie, createCallback: createcb}),
         'imp': scene.physics.add.group({classType: Imp, createCallback: createcb}),
         'lizard_m': scene.physics.add.group({classType: LizardM, createCallback: createcb}),
@@ -45,8 +53,12 @@ function spawnEnemies(scene: Phaser.Scene, defs: EnemyUpdate[]): EnemyList {
         'masked_orc': scene.physics.add.group({classType: MaskedOrc, createCallback: createcb}),
         'mushroom': scene.physics.add.group({classType: Mushroom, createCallback: createcb}),
         'necromancer': scene.physics.add.group({classType: Necromancer, createCallback: createcb}),
+        'puggley': scene.physics.add.group({classType: Puggley, createCallback: createcb}),
         'skelet': scene.physics.add.group({classType: Skelet, createCallback: createcb}),
         'stumpy': scene.physics.add.group({classType: Stumpy, createCallback: createcb}),
+        'swampy': scene.physics.add.group({classType: Swampy, createCallback: createcb}),
+        'vart': scene.physics.add.group({classType: Vart, createCallback: createcb}),
+        'yarg': scene.physics.add.group({classType: Yarg, createCallback: createcb}),
         'big_demon': scene.physics.add.group({classType: BigDemon, createCallback: createcb}),
         'big_zombie': scene.physics.add.group({classType: BigZombie, createCallback: createcb})
     }
@@ -85,6 +97,8 @@ export {
     EnemyList,
     EnemyNames,
     EnemyUpdate,
+    Georgette,
+    Georgey,
     IceZombie,
     Imp,
     LizardF,
@@ -92,8 +106,12 @@ export {
     MaskedOrc,
     Mushroom,
     Necromancer,
+    Puggley,
     Skelet,
     Stumpy,
+    Swampy,
+    Vart,
+    Yarg,
     spawnEnemies,
     spawnEnemiesFromMap,
     spawnEnemy,
