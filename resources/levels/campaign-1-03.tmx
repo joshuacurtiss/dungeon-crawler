@@ -6048,14 +6048,14 @@
 </data>
  </layer>
  <objectgroup id="5" name="Characters">
-  <object id="241" name="imp" type="enemy" gid="120" x="495.333" y="916" width="16" height="16"/>
-  <object id="242" name="imp" type="enemy" gid="120" x="511.333" y="898.667" width="16" height="16"/>
-  <object id="243" name="imp" type="enemy" gid="120" x="486" y="884.667" width="16" height="16"/>
-  <object id="244" name="imp" type="enemy" gid="120" x="450.667" y="905.333" width="16" height="16"/>
-  <object id="245" name="imp" type="enemy" gid="120" x="472.667" y="907.333" width="16" height="16"/>
-  <object id="246" name="imp" type="enemy" gid="120" x="444" y="920" width="16" height="16"/>
-  <object id="247" name="imp" type="enemy" gid="120" x="448" y="866" width="16" height="16"/>
-  <object id="248" name="imp" type="enemy" gid="120" x="499.333" y="838" width="16" height="16"/>
+  <object id="241" name="bacon" type="enemy" gid="120" x="495.333" y="916" width="16" height="16"/>
+  <object id="242" name="bacon" type="enemy" gid="120" x="511.333" y="898.667" width="16" height="16"/>
+  <object id="243" name="bacon" type="enemy" gid="120" x="486" y="884.667" width="16" height="16"/>
+  <object id="244" name="bacon" type="enemy" gid="120" x="450.667" y="905.333" width="16" height="16"/>
+  <object id="245" name="bacon" type="enemy" gid="120" x="472.667" y="907.333" width="16" height="16"/>
+  <object id="246" name="bacon" type="enemy" gid="120" x="444" y="920" width="16" height="16"/>
+  <object id="247" name="bacon" type="enemy" gid="120" x="448" y="866" width="16" height="16"/>
+  <object id="248" name="bacon" type="enemy" gid="120" x="499.333" y="838" width="16" height="16"/>
   <object id="249" name="lizard_m" type="enemy" gid="489" x="718.667" y="791.25" width="16" height="16"/>
   <object id="250" name="lizard_m" type="enemy" gid="489" x="663.25" y="783.25" width="16" height="16"/>
   <object id="251" name="lizard_m" type="enemy" gid="489" x="690.5" y="793.25" width="16" height="16"/>

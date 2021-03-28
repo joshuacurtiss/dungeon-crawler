@@ -5176,7 +5176,7 @@
   <object id="77" name="necromancer" type="enemy" gid="489" x="1250" y="53" width="16" height="16"/>
   <object id="78" name="skelet" type="enemy" gid="489"      x="1500" y="54" width="16" height="16"/>
   <object id="79" name="salgie" type="enemy" gid="489"  x="1750" y="53" width="16" height="16"/>
-  <object id="80" name="imp" type="enemy" gid="489"         x="2000" y="53" width="16" height="16"/>
+  <object id="80" name="bacon" type="enemy" gid="489"         x="2000" y="53" width="16" height="16"/>
   <object id="81" name="hom_nom" type="enemy" gid="489"   x="2250" y="53" width="16" height="16"/>
   <object id="82" name="ice_nugget" type="enemy" gid="489"  x="2500" y="54" width="16" height="16"/>
   <object id="83" name="homsquatch" type="enemy" gid="489"       x="2750" y="53" width="16" height="16"/>
@@ -5189,7 +5189,7 @@
   <object id="88" name="swampy" type="enemy" gid="489"      x="4250" y="53" width="16" height="16"/>
   <object id="89" name="vart" type="enemy" gid="489"        x="4500" y="54" width="16" height="16"/>
   <object id="90" name="yarg" type="enemy" gid="489"        x="4750" y="53" width="16" height="16"/>
-  <object id="91" name="imp" type="enemy" gid="489"         x="5000" y="53" width="16" height="16"/>
+  <object id="91" name="bacon" type="enemy" gid="489"         x="5000" y="53" width="16" height="16"/>
   <object id="92" name="hom_nom" type="enemy" gid="489"   x="5250" y="53" width="16" height="16"/>
   <object id="93" name="ice_nugget" type="enemy" gid="489"  x="5500" y="54" width="16" height="16"/>
   <object id="94" name="homsquatch" type="enemy" gid="489"       x="5750" y="53" width="16" height="16"/>
@@ -5198,7 +5198,7 @@
   <object id="96" name="necromancer" type="enemy" gid="489" x="6250" y="53" width="16" height="16"/>
   <object id="97" name="skelet" type="enemy" gid="489"      x="6500" y="54" width="16" height="16"/>
   <object id="98" name="salgie" type="enemy" gid="489"  x="6750" y="53" width="16" height="16"/>
-  <object id="99" name="imp" type="enemy" gid="489"         x="7000" y="53" width="16" height="16"/>
+  <object id="99" name="bacon" type="enemy" gid="489"         x="7000" y="53" width="16" height="16"/>
   <object id="100" name="hom_nom" type="enemy" gid="489"  x="7250" y="53" width="16" height="16"/>
   <object id="101" name="ice_nugget" type="enemy" gid="489" x="7500" y="54" width="16" height="16"/>
   <object id="102" name="homsquatch" type="enemy" gid="489"      x="7750" y="53" width="16" height="16"/>

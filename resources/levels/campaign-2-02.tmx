@@ -8190,11 +8190,11 @@
   <object id="1561" name="homsquatch" type="enemy" gid="696" x="1298" y="862" width="16" height="16"/>
   <object id="1562" name="homsquatch" type="enemy" gid="696" x="1049.5" y="751.5" width="16" height="16"/>
   <object id="1563" name="homsquatch" type="enemy" gid="696" x="718" y="662" width="16" height="16"/>
-  <object id="1564" name="imp" type="enemy" gid="120" x="713" y="868" width="16" height="16"/>
-  <object id="1565" name="imp" type="enemy" gid="120" x="812" y="854" width="16" height="16"/>
-  <object id="1566" name="imp" type="enemy" gid="120" x="340" y="592" width="16" height="16"/>
-  <object id="1567" name="imp" type="enemy" gid="120" x="506" y="480" width="16" height="16"/>
-  <object id="1568" name="imp" type="enemy" gid="120" x="646" y="352" width="16" height="16"/>
+  <object id="1564" name="bacon" type="enemy" gid="120" x="713" y="868" width="16" height="16"/>
+  <object id="1565" name="bacon" type="enemy" gid="120" x="812" y="854" width="16" height="16"/>
+  <object id="1566" name="bacon" type="enemy" gid="120" x="340" y="592" width="16" height="16"/>
+  <object id="1567" name="bacon" type="enemy" gid="120" x="506" y="480" width="16" height="16"/>
+  <object id="1568" name="bacon" type="enemy" gid="120" x="646" y="352" width="16" height="16"/>
   <object id="1587" name="hom_nom" type="enemy" gid="738" x="1120" y="960" width="16" height="16"/>
   <object id="1588" gid="739" x="1136" y="960" width="16" height="16"/>
   <object id="1589" gid="770" x="1120" y="976" width="16" height="16"/>

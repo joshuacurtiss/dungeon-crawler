@@ -5567,11 +5567,11 @@
   <object id="186" name="lizard_m" type="enemy" gid="489" x="1005.5" y="1375.5" width="16" height="16"/>
   <object id="188" name="lizard_m" type="enemy" gid="489" x="994" y="1407.5" width="16" height="16"/>
   <object id="190" name="lizard_m" type="enemy" gid="489" x="845" y="1549.5" width="10" height="11"/>
-  <object id="191" name="imp" type="enemy" gid="120" x="35.5303" y="1487.82" width="16" height="16"/>
-  <object id="192" name="imp" type="enemy" gid="120" x="55.5303" y="1487.82" width="16" height="16"/>
-  <object id="193" name="imp" type="enemy" gid="120" x="14.5303" y="1487.82" width="16" height="16"/>
-  <object id="194" name="imp" type="enemy" gid="120" x="73.5303" y="1487.82" width="16" height="16"/>
-  <object id="195" name="imp" type="enemy" gid="120" x="97.1969" y="1487.82" width="16" height="16"/>
+  <object id="191" name="bacon" type="enemy" gid="120" x="35.5303" y="1487.82" width="16" height="16"/>
+  <object id="192" name="bacon" type="enemy" gid="120" x="55.5303" y="1487.82" width="16" height="16"/>
+  <object id="193" name="bacon" type="enemy" gid="120" x="14.5303" y="1487.82" width="16" height="16"/>
+  <object id="194" name="bacon" type="enemy" gid="120" x="73.5303" y="1487.82" width="16" height="16"/>
+  <object id="195" name="bacon" type="enemy" gid="120" x="97.1969" y="1487.82" width="16" height="16"/>
   <object id="197" gid="771" x="1332.5" y="1569" width="16" height="16"/>
   <object id="198" gid="770" x="1315.5" y="1569.5" width="16" height="16"/>
   <object id="199" name="hom_nom" type="enemy" gid="738" x="1315.5" y="1556.5" width="16" height="16"/>

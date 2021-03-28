@@ -5687,16 +5687,16 @@
   <object id="54" name="lizard_f" type="enemy" gid="489" x="817.707" y="787.2" width="16" height="16"/>
   <object id="55" name="lizard_f" type="enemy" gid="489" x="874.652" y="789.234" width="16" height="16"/>
   <object id="56" name="lizard_f" type="enemy" gid="489" x="924.479" y="782.116" width="16" height="16"/>
-  <object id="57" name="imp" type="enemy" gid="489" x="603.145" y="1056.67" width="16" height="16"/>
-  <object id="58" name="imp" type="enemy" gid="489" x="639.752" y="1026.17" width="16" height="16"/>
-  <object id="59" name="imp" type="enemy" gid="489" x="672.293" y="1056.67" width="16" height="16"/>
+  <object id="57" name="bacon" type="enemy" gid="489" x="603.145" y="1056.67" width="16" height="16"/>
+  <object id="58" name="bacon" type="enemy" gid="489" x="639.752" y="1026.17" width="16" height="16"/>
+  <object id="59" name="bacon" type="enemy" gid="489" x="672.293" y="1056.67" width="16" height="16"/>
   <object id="60" name="masked_orc" type="enemy" gid="489" x="921.898" y="1072.35" width="16" height="16"/>
   <object id="61" name="masked_orc" type="enemy" gid="489" x="946.242" y="1123.27" width="16" height="16"/>
   <object id="62" name="masked_orc" type="enemy" gid="489" x="985.461" y="1122.06" width="16" height="16"/>
   <object id="63" name="fighter" type="player" gid="169" x="831.943" y="127.992" width="16" height="16"/>
-  <object id="64" name="imp" type="enemy" gid="489" x="639.753" y="1073.96" width="16" height="16"/>
-  <object id="65" name="imp" type="enemy" gid="489" x="549.25" y="1048.54" width="16" height="16"/>
-  <object id="66" name="imp" type="enemy" gid="489" x="544.166" y="1097.35" width="16" height="16"/>
+  <object id="64" name="bacon" type="enemy" gid="489" x="639.753" y="1073.96" width="16" height="16"/>
+  <object id="65" name="bacon" type="enemy" gid="489" x="549.25" y="1048.54" width="16" height="16"/>
+  <object id="66" name="bacon" type="enemy" gid="489" x="544.166" y="1097.35" width="16" height="16"/>
   <object id="68" name="mage" type="player" gid="361" x="150" y="100" width="16" height="16"/>
   <object id="70" name="ranger" type="player" gid="105" x="150" y="200" width="16" height="16"/>
  </objectgroup>

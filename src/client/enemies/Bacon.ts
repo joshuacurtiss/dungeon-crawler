@@ -2,14 +2,14 @@ import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class Imp extends Enemy {
+export default class Bacon extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
         super(scene, x, y, 'textures', 'imp_idle_0')
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(50, 90)
         this.customOffset.set(3, 3)
-        createStandardAnims(scene, 'imp')
+        createStandardAnims(scene, 'bacon')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(300, 2000),
             callback: ()=>this.changeDirection(),

@@ -8384,20 +8384,20 @@
   <object id="1714" name="skelet" type="enemy" gid="184" x="746" y="977" width="16" height="16"/>
   <object id="1715" name="skelet" type="enemy" gid="184" x="1057" y="718" width="16" height="16"/>
   <object id="1716" name="skelet" type="enemy" gid="184" x="760" y="691" width="16" height="16"/>
-  <object id="1717" name="imp" type="enemy" gid="120" x="914" y="740" width="16" height="16"/>
-  <object id="1718" name="imp" type="enemy" gid="120" x="730" y="588" width="16" height="16"/>
-  <object id="1719" name="imp" type="enemy" gid="120" x="905" y="1072" width="16" height="16"/>
-  <object id="1720" name="imp" type="enemy" gid="120" x="666" y="995" width="16" height="16"/>
-  <object id="1721" name="imp" type="enemy" gid="120" x="626" y="833" width="16" height="16"/>
-  <object id="1722" name="imp" type="enemy" gid="120" x="463" y="1429" width="16" height="16"/>
-  <object id="1723" name="imp" type="enemy" gid="120" x="370" y="1291" width="16" height="16"/>
-  <object id="1724" name="imp" type="enemy" gid="120" x="178" y="1131" width="16" height="16"/>
-  <object id="1725" name="imp" type="enemy" gid="120" x="180" y="1081" width="16" height="16"/>
-  <object id="1726" name="imp" type="enemy" gid="120" x="232" y="874" width="16" height="16"/>
-  <object id="1727" name="imp" type="enemy" gid="120" x="212" y="753" width="16" height="16"/>
-  <object id="1728" name="imp" type="enemy" gid="120" x="233" y="540" width="16" height="16"/>
-  <object id="1729" name="imp" type="enemy" gid="120" x="213" y="599" width="16" height="16"/>
-  <object id="1730" name="imp" type="enemy" gid="120" x="193" y="263" width="16" height="16"/>
+  <object id="1717" name="bacon" type="enemy" gid="120" x="914" y="740" width="16" height="16"/>
+  <object id="1718" name="bacon" type="enemy" gid="120" x="730" y="588" width="16" height="16"/>
+  <object id="1719" name="bacon" type="enemy" gid="120" x="905" y="1072" width="16" height="16"/>
+  <object id="1720" name="bacon" type="enemy" gid="120" x="666" y="995" width="16" height="16"/>
+  <object id="1721" name="bacon" type="enemy" gid="120" x="626" y="833" width="16" height="16"/>
+  <object id="1722" name="bacon" type="enemy" gid="120" x="463" y="1429" width="16" height="16"/>
+  <object id="1723" name="bacon" type="enemy" gid="120" x="370" y="1291" width="16" height="16"/>
+  <object id="1724" name="bacon" type="enemy" gid="120" x="178" y="1131" width="16" height="16"/>
+  <object id="1725" name="bacon" type="enemy" gid="120" x="180" y="1081" width="16" height="16"/>
+  <object id="1726" name="bacon" type="enemy" gid="120" x="232" y="874" width="16" height="16"/>
+  <object id="1727" name="bacon" type="enemy" gid="120" x="212" y="753" width="16" height="16"/>
+  <object id="1728" name="bacon" type="enemy" gid="120" x="233" y="540" width="16" height="16"/>
+  <object id="1729" name="bacon" type="enemy" gid="120" x="213" y="599" width="16" height="16"/>
+  <object id="1730" name="bacon" type="enemy" gid="120" x="193" y="263" width="16" height="16"/>
   <object id="1735" name="lizard_m" type="enemy" gid="489" x="1507.5" y="1498" width="16" height="16"/>
   <object id="1741" name="stumpy" type="enemy" gid="169" x="799.333" y="436" width="16" height="16"/>
   <object id="1742" name="stumpy" type="enemy" gid="169" x="984" y="420" width="16" height="16"/>
