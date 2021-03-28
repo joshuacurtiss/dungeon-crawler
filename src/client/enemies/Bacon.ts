@@ -5,7 +5,7 @@ import Enemy from './Enemy'
 export default class Bacon extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, 'textures', 'imp_idle_0')
+        super(scene, x, y, 'textures', 'bacon_idle_0')
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(50, 90)
         this.customOffset.set(3, 3)
@@ -20,8 +20,8 @@ export default class Bacon extends Enemy {
     setDirection(x:number, y:number) {
         super.setDirection(x, y)
         if( ! this.onCamera ) return
-        if( this.direction.x || this.direction.y ) this.anims.play('imp_run')
-        else this.anims.play('imp_idle')
+        if( this.direction.x || this.direction.y ) this.anims.play('bacon_run')
+        else this.anims.play('bacon_idle')
     }
 
     setup() {
