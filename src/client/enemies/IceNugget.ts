@@ -2,14 +2,14 @@ import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class Chort extends Enemy {
+export default class IceNugget extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, 'textures', 'ice_zombie_idle_0')
+        super(scene, x, y, 'textures', 'ice_nugget_idle_0')
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(40, 75)
         this.customOffset.set(4, 3)
-        createStandardAnims(scene, 'ice_zombie')
+        createStandardAnims(scene, 'ice_nugget')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(1500, 5000),
             callback: ()=>this.changeDirection(),
@@ -20,8 +20,8 @@ export default class Chort extends Enemy {
     setDirection(x:number, y:number) {
         super.setDirection(x, y)
         if( ! this.onCamera ) return
-        if( this.direction.x || this.direction.y ) this.anims.play('ice_zombie_run')
-        else this.anims.play('ice_zombie_idle')
+        if( this.direction.x || this.direction.y ) this.anims.play('ice_nugget_run')
+        else this.anims.play('ice_nugget_idle')
     }
 
     setup() {
