@@ -5171,7 +5171,7 @@
  <objectgroup id="5" name="Characters">
   <object id="17" type="player" gid="41" x="100" y="54" width="16" height="16"/>
   <object id="74" name="lizard_f" type="enemy" gid="489"    x="500" y="51.6" width="16" height="16"/>
-  <object id="75" name="masked_orc" type="enemy" gid="489"  x="750" y="53" width="16" height="16"/>
+  <object id="75" name="shy_guy" type="enemy" gid="489"  x="750" y="53" width="16" height="16"/>
   <object id="76" name="stumpy" type="enemy" gid="489"      x="1000" y="50" width="16" height="16"/>
   <object id="77" name="necromancer" type="enemy" gid="489" x="1250" y="53" width="16" height="16"/>
   <object id="78" name="skelet" type="enemy" gid="489"      x="1500" y="54" width="16" height="16"/>
