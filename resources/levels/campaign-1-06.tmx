@@ -6009,15 +6009,15 @@
   <object id="663" gid="678" x="1486.96" y="1523.67" width="16" height="16"/>
   <object id="664" gid="679" x="1502.75" y="1523.63" width="16" height="16"/>
   <object id="669" name="fighter" type="player" gid="760" x="1529.67" y="1516.67" width="16" height="16"/>
-  <object id="906" name="big_zombie" type="enemy" gid="546" x="1328" y="1360" width="16" height="16"/>
+  <object id="906" name="salgie" type="enemy" gid="546" x="1328" y="1360" width="16" height="16"/>
   <object id="907" gid="547" x="1344" y="1360" width="16" height="16"/>
   <object id="908" gid="578" x="1328" y="1376" width="16" height="16"/>
   <object id="909" gid="579" x="1344" y="1376" width="16" height="16"/>
-  <object id="910" name="big_demon" type="enemy" gid="738" x="1488" y="1264" width="16" height="16"/>
+  <object id="910" name="hom_nom" type="enemy" gid="738" x="1488" y="1264" width="16" height="16"/>
   <object id="911" gid="739" x="1504" y="1264" width="16" height="16"/>
   <object id="912" gid="770" x="1488" y="1280" width="16" height="16"/>
   <object id="913" gid="771" x="1504" y="1280" width="16" height="16"/>
-  <object id="914" name="big_demon" type="enemy" gid="738" x="1252" y="1441.33" width="16" height="16"/>
+  <object id="914" name="hom_nom" type="enemy" gid="738" x="1252" y="1441.33" width="16" height="16"/>
   <object id="915" gid="739" x="1268" y="1441.33" width="16" height="16"/>
   <object id="916" gid="770" x="1252" y="1457.33" width="16" height="16"/>
   <object id="917" gid="771" x="1268" y="1457.33" width="16" height="16"/>
@@ -6025,15 +6025,15 @@
   <object id="919" gid="643" x="1352.67" y="1151.33" width="16" height="16"/>
   <object id="920" gid="674" x="1336.67" y="1167.33" width="16" height="16"/>
   <object id="921" gid="675" x="1352.67" y="1167.33" width="16" height="16"/>
-  <object id="922" name="big_demon" type="enemy" gid="738" x="1538" y="1174.67" width="16" height="16"/>
+  <object id="922" name="hom_nom" type="enemy" gid="738" x="1538" y="1174.67" width="16" height="16"/>
   <object id="923" gid="739" x="1554" y="1174.67" width="16" height="16"/>
   <object id="924" gid="770" x="1538" y="1190.67" width="16" height="16"/>
   <object id="925" gid="771" x="1554" y="1190.67" width="16" height="16"/>
-  <object id="926" name="big_demon" type="enemy" gid="738" x="1448.67" y="1311.33" width="16" height="16"/>
+  <object id="926" name="hom_nom" type="enemy" gid="738" x="1448.67" y="1311.33" width="16" height="16"/>
   <object id="927" gid="739" x="1464.67" y="1311.33" width="16" height="16"/>
   <object id="928" gid="770" x="1448.67" y="1327.33" width="16" height="16"/>
   <object id="929" gid="771" x="1464.67" y="1327.33" width="16" height="16"/>
-  <object id="930" name="big_demon" type="enemy" gid="738" x="1256.67" y="1564" width="16" height="16"/>
+  <object id="930" name="hom_nom" type="enemy" gid="738" x="1256.67" y="1564" width="16" height="16"/>
   <object id="931" gid="739" x="1272.67" y="1564" width="16" height="16"/>
   <object id="932" gid="770" x="1256.67" y="1580" width="16" height="16"/>
   <object id="933" gid="771" x="1272.67" y="1580" width="16" height="16"/>

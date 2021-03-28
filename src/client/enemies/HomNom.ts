@@ -2,15 +2,15 @@ import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class BigDemon extends Enemy {
+export default class HomNom extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, 'textures', 'big_demon_idle_0')
+        super(scene, x, y, 'textures', 'hom_nom_idle_0')
         this.damageInflicted = 1.0
         this.health = 2
         this.speed = Phaser.Math.Between(75, 125)
         this.customOffset.set(5, 5)
-        createStandardAnims(scene, 'big_demon')
+        createStandardAnims(scene, 'hom_nom')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(1500, 4000),
             callback: ()=>this.changeDirection(),
@@ -21,8 +21,8 @@ export default class BigDemon extends Enemy {
     setDirection(x:number, y:number) {
         super.setDirection(x, y)
         if( ! this.onCamera ) return
-        if( this.direction.x || this.direction.y ) this.anims.play('big_demon_run')
-        else this.anims.play('big_demon_idle')
+        if( this.direction.x || this.direction.y ) this.anims.play('hom_nom_run')
+        else this.anims.play('hom_nom_idle')
     }
 
     setup() {

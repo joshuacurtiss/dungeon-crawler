@@ -7269,31 +7269,31 @@
   <object id="1450" gid="643" x="269" y="167" width="16" height="16"/>
   <object id="1451" gid="674" x="253" y="183" width="16" height="16"/>
   <object id="1452" gid="675" x="269" y="183" width="16" height="16"/>
-  <object id="1453" name="big_zombie" type="enemy" gid="546" x="496" y="304" width="16" height="16"/>
+  <object id="1453" name="salgie" type="enemy" gid="546" x="496" y="304" width="16" height="16"/>
   <object id="1454" gid="547" x="512" y="304" width="16" height="16"/>
   <object id="1455" gid="578" x="496" y="320" width="16" height="16"/>
   <object id="1456" gid="579" x="512" y="320" width="16" height="16"/>
-  <object id="1457" name="big_zombie" type="enemy" gid="546" x="513" y="182" width="16" height="16"/>
+  <object id="1457" name="salgie" type="enemy" gid="546" x="513" y="182" width="16" height="16"/>
   <object id="1458" gid="547" x="529" y="182" width="16" height="16"/>
   <object id="1459" gid="578" x="513" y="198" width="16" height="16"/>
   <object id="1460" gid="579" x="529" y="198" width="16" height="16"/>
-  <object id="1461" name="big_zombie" type="enemy" gid="546" x="944" y="452" width="16" height="16"/>
+  <object id="1461" name="salgie" type="enemy" gid="546" x="944" y="452" width="16" height="16"/>
   <object id="1462" gid="547" x="960" y="452" width="16" height="16"/>
   <object id="1463" gid="578" x="944" y="468" width="16" height="16"/>
   <object id="1464" gid="579" x="960" y="468" width="16" height="16"/>
-  <object id="1465" name="big_zombie" type="enemy" gid="546" x="1395" y="383" width="16" height="16"/>
+  <object id="1465" name="salgie" type="enemy" gid="546" x="1395" y="383" width="16" height="16"/>
   <object id="1466" gid="547" x="1411" y="383" width="16" height="16"/>
   <object id="1467" gid="578" x="1395" y="399" width="16" height="16"/>
   <object id="1468" gid="579" x="1411" y="399" width="16" height="16"/>
-  <object id="1469" name="big_zombie" type="enemy" gid="546" x="1283" y="1053" width="16" height="16"/>
+  <object id="1469" name="salgie" type="enemy" gid="546" x="1283" y="1053" width="16" height="16"/>
   <object id="1470" gid="547" x="1299" y="1053" width="16" height="16"/>
   <object id="1471" gid="578" x="1283" y="1069" width="16" height="16"/>
   <object id="1472" gid="579" x="1299" y="1069" width="16" height="16"/>
-  <object id="1473" name="big_zombie" type="enemy" gid="546" x="531" y="650" width="16" height="16"/>
+  <object id="1473" name="salgie" type="enemy" gid="546" x="531" y="650" width="16" height="16"/>
   <object id="1474" gid="547" x="547" y="650" width="16" height="16"/>
   <object id="1475" gid="578" x="531" y="666" width="16" height="16"/>
   <object id="1476" gid="579" x="547" y="666" width="16" height="16"/>
-  <object id="1477" name="big_zombie" type="enemy" gid="546" x="623" y="742" width="16" height="16"/>
+  <object id="1477" name="salgie" type="enemy" gid="546" x="623" y="742" width="16" height="16"/>
   <object id="1478" gid="547" x="639" y="742" width="16" height="16"/>
   <object id="1479" gid="578" x="623" y="758" width="16" height="16"/>
   <object id="1480" gid="579" x="639" y="758" width="16" height="16"/>

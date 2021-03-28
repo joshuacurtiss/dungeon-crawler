@@ -2,15 +2,15 @@ import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class BigZombie extends Enemy {
+export default class Salgie extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, 'textures', 'big_zombie_idle_0')
+        super(scene, x, y, 'textures', 'salgie_idle_0')
         this.damageInflicted = 2.0
         this.health = 3
         this.speed = Phaser.Math.Between(25, 50)
         this.customOffset.set(6, 12)
-        createStandardAnims(scene, 'big_zombie')
+        createStandardAnims(scene, 'salgie')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(3500, 8000),
             callback: ()=>this.changeDirection(),
@@ -21,8 +21,8 @@ export default class BigZombie extends Enemy {
     setDirection(x:number, y:number) {
         super.setDirection(x, y)
         if( ! this.onCamera ) return
-        if( this.direction.x || this.direction.y ) this.anims.play('big_zombie_run')
-        else this.anims.play('big_zombie_idle')
+        if( this.direction.x || this.direction.y ) this.anims.play('salgie_run')
+        else this.anims.play('salgie_idle')
     }
 
     setup() {

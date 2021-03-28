@@ -8339,23 +8339,23 @@
   <object id="1646" name="fighter" type="player" gid="233" x="670.667" y="257.333" width="16" height="16"/>
   <object id="1647" name="mage" type="player" gid="297" x="701.333" y="285.333" width="16" height="16"/>
   <object id="1648" name="ranger" type="player" gid="105" x="672" y="316" width="16" height="16"/>
-  <object id="1670" name="big_zombie" type="enemy" gid="546" x="928" y="224" width="16" height="16"/>
+  <object id="1670" name="salgie" type="enemy" gid="546" x="928" y="224" width="16" height="16"/>
   <object id="1671" gid="547" x="944" y="224" width="16" height="16"/>
   <object id="1672" gid="578" x="928" y="240" width="16" height="16"/>
   <object id="1673" gid="579" x="944" y="240" width="16" height="16"/>
-  <object id="1674" name="big_zombie" type="enemy" gid="546" x="986.5" y="308" width="16" height="16"/>
+  <object id="1674" name="salgie" type="enemy" gid="546" x="986.5" y="308" width="16" height="16"/>
   <object id="1675" gid="547" x="1002.5" y="308" width="16" height="16"/>
   <object id="1676" gid="578" x="986.5" y="324" width="16" height="16"/>
   <object id="1677" gid="579" x="1002.5" y="324" width="16" height="16"/>
-  <object id="1678" name="big_zombie" type="enemy" gid="546" x="1054.5" y="163" width="16" height="16"/>
+  <object id="1678" name="salgie" type="enemy" gid="546" x="1054.5" y="163" width="16" height="16"/>
   <object id="1679" gid="547" x="1070.5" y="163" width="16" height="16"/>
   <object id="1680" gid="578" x="1054.5" y="179" width="16" height="16"/>
   <object id="1681" gid="579" x="1070.5" y="179" width="16" height="16"/>
-  <object id="1682" name="big_zombie" type="enemy" gid="546" x="1164.5" y="375" width="16" height="16"/>
+  <object id="1682" name="salgie" type="enemy" gid="546" x="1164.5" y="375" width="16" height="16"/>
   <object id="1683" gid="547" x="1180.5" y="375" width="16" height="16"/>
   <object id="1684" gid="578" x="1164.5" y="391" width="16" height="16"/>
   <object id="1685" gid="579" x="1180.5" y="391" width="16" height="16"/>
-  <object id="1686" name="big_zombie" type="enemy" gid="546" x="928.5" y="544.5" width="16" height="16"/>
+  <object id="1686" name="salgie" type="enemy" gid="546" x="928.5" y="544.5" width="16" height="16"/>
   <object id="1687" gid="547" x="944.5" y="544.5" width="16" height="16"/>
   <object id="1688" gid="578" x="928.5" y="560.5" width="16" height="16"/>
   <object id="1689" gid="579" x="944.5" y="560.5" width="16" height="16"/>

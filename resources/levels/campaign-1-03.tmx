@@ -6117,16 +6117,16 @@
   <object id="324" gid="583" x="129.333" y="1504" width="16" height="16"/>
   <object id="325" gid="582" x="113.333" y="1504.67" width="16" height="16"/>
   <object id="326" gid="551" x="127.333" y="1488.67" width="16" height="16"/>
-  <object id="327" name="big_zombie" type="enemy" gid="550" x="112.667" y="1489.33" width="16" height="16"/>
+  <object id="327" name="salgie" type="enemy" gid="550" x="112.667" y="1489.33" width="16" height="16"/>
   <object id="328" gid="583" x="63.9997" y="1458.33" width="16" height="16"/>
   <object id="329" gid="582" x="47.9997" y="1459" width="16" height="16"/>
   <object id="330" gid="551" x="61.9997" y="1443" width="16" height="16"/>
-  <object id="331" name="big_zombie" type="enemy" gid="550" x="47.3337" y="1443.66" width="16" height="16"/>
+  <object id="331" name="salgie" type="enemy" gid="550" x="47.3337" y="1443.66" width="16" height="16"/>
   <object id="332" gid="583" x="145.666" y="1421.33" width="16" height="16"/>
   <object id="333" gid="582" x="129.666" y="1422" width="16" height="16"/>
   <object id="334" gid="551" x="143.666" y="1406" width="16" height="16"/>
-  <object id="335" name="big_zombie" type="enemy" gid="550" x="129" y="1406.66" width="16" height="16"/>
-  <object id="336" name="big_demon" type="enemy" gid="742" x="1200" y="205" width="16" height="16"/>
+  <object id="335" name="salgie" type="enemy" gid="550" x="129" y="1406.66" width="16" height="16"/>
+  <object id="336" name="hom_nom" type="enemy" gid="742" x="1200" y="205" width="16" height="16"/>
   <object id="337" gid="743" x="1216.67" y="204.667" width="16" height="16"/>
   <object id="338" gid="774" x="1200.67" y="218.667" width="16" height="16"/>
   <object id="339" gid="775" x="1216.67" y="218.667" width="16" height="16"/>

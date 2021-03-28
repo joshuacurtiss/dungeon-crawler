@@ -1,5 +1,5 @@
-import BigDemon from './BigDemon'
-import BigZombie from './BigZombie'
+import HomNom from './HomNom'
+import Salgie from './Salgie'
 import Chort from './Chort'
 import Enemy from './Enemy'
 import Georgette from './Georgette'
@@ -18,7 +18,7 @@ import Swampy from './Swampy'
 import Vart from './Vart'
 import Yarg from './Yarg'
 
-type EnemyNames = 'chort' | 'georgette' | 'georgey' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'puggley' | 'skelet' | 'stumpy' | 'swampy' | 'vart' | 'yarg' | 'big_demon' | 'big_zombie'
+type EnemyNames = 'chort' | 'georgette' | 'georgey' | 'ice_zombie' | 'imp' | 'lizard_m' | 'lizard_f' | 'masked_orc' | 'mushroom' | 'necromancer' | 'puggley' | 'skelet' | 'stumpy' | 'swampy' | 'vart' | 'yarg' | 'hom_nom' | 'salgie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
 
 interface EnemyUpdate {
@@ -59,8 +59,8 @@ function spawnEnemies(scene: Phaser.Scene, defs: EnemyUpdate[]): EnemyList {
         'swampy': scene.physics.add.group({classType: Swampy, createCallback: createcb}),
         'vart': scene.physics.add.group({classType: Vart, createCallback: createcb}),
         'yarg': scene.physics.add.group({classType: Yarg, createCallback: createcb}),
-        'big_demon': scene.physics.add.group({classType: BigDemon, createCallback: createcb}),
-        'big_zombie': scene.physics.add.group({classType: BigZombie, createCallback: createcb})
+        'hom_nom': scene.physics.add.group({classType: HomNom, createCallback: createcb}),
+        'salgie': scene.physics.add.group({classType: Salgie, createCallback: createcb})
     }
     defs.forEach(def=>{
         const {name} = def
@@ -90,8 +90,8 @@ function spawnEnemiesFromMap(scene: Phaser.Scene, map: Phaser.Tilemaps.Tilemap):
 }
 
 export {
-    BigDemon,
-    BigZombie,
+    HomNom,
+    Salgie,
     Chort,
     Enemy,
     EnemyList,

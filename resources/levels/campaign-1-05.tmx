@@ -6118,11 +6118,11 @@
   <object id="479" gid="770" x="726" y="1339.5" width="16" height="16"/>
   <object id="480" gid="771" x="743" y="1340" width="16" height="16"/>
   <object id="481" gid="738" x="726" y="1324.5" width="16" height="16"/>
-  <object id="482" name="big_demon" type="enemy" gid="739" x="743" y="1324" width="16" height="16"/>
+  <object id="482" name="hom_nom" type="enemy" gid="739" x="743" y="1324" width="16" height="16"/>
   <object id="483" gid="770" x="780" y="1272.5" width="16" height="16"/>
   <object id="484" gid="771" x="797" y="1273" width="16" height="16"/>
   <object id="485" gid="738" x="780" y="1257.5" width="16" height="16"/>
-  <object id="486" name="big_demon" type="enemy" gid="739" x="797" y="1257" width="16" height="16"/>
+  <object id="486" name="hom_nom" type="enemy" gid="739" x="797" y="1257" width="16" height="16"/>
   <object id="539" name="necromancer" type="enemy" gid="568" x="871.333" y="1185.33" width="16" height="16"/>
   <object id="540" name="necromancer" type="enemy" gid="568" x="704.667" y="1113.33" width="16" height="16"/>
   <object id="541" name="necromancer" type="enemy" gid="568" x="760.667" y="1183.33" width="16" height="16"/>
@@ -6135,27 +6135,27 @@
   <object id="548" gid="579" x="278.415" y="339.002" width="63.9184" height="63.9184"/>
   <object id="549" gid="578" x="213.165" y="340.333" width="63.9184" height="63.9184"/>
   <object id="550" gid="547" x="275.752" y="273.752" width="63.9184" height="63.9184"/>
-  <object id="551" name="boss_big_zombie" type="enemy" gid="546" x="211.833" y="275.629" width="63.9184" height="63.9184"/>
+  <object id="551" name="boss_salgie" type="enemy" gid="546" x="211.833" y="275.629" width="63.9184" height="63.9184"/>
   <object id="552" gid="579" x="1344" y="703.5" width="16" height="16"/>
   <object id="553" gid="578" x="1327.5" y="704" width="16" height="16"/>
   <object id="554" gid="547" x="1343" y="686.5" width="16" height="16"/>
-  <object id="555" name="big_zombie" type="enemy" gid="546" x="1326.5" y="687" width="16" height="16"/>
+  <object id="555" name="salgie" type="enemy" gid="546" x="1326.5" y="687" width="16" height="16"/>
   <object id="556" gid="579" x="1254.08" y="673.583" width="16" height="16"/>
   <object id="557" gid="578" x="1237.58" y="674.083" width="16" height="16"/>
   <object id="558" gid="547" x="1253.08" y="656.583" width="16" height="16"/>
-  <object id="559" name="big_zombie" type="enemy" gid="546" x="1236.58" y="657.083" width="16" height="16"/>
+  <object id="559" name="salgie" type="enemy" gid="546" x="1236.58" y="657.083" width="16" height="16"/>
   <object id="560" gid="579" x="1388.75" y="550.25" width="16" height="16"/>
   <object id="561" gid="578" x="1372.25" y="550.75" width="16" height="16"/>
   <object id="562" gid="547" x="1387.75" y="533.25" width="16" height="16"/>
-  <object id="563" name="big_zombie" type="enemy" gid="546" x="1371.25" y="533.75" width="16" height="16"/>
+  <object id="563" name="salgie" type="enemy" gid="546" x="1371.25" y="533.75" width="16" height="16"/>
   <object id="564" gid="579" x="1225.42" y="242.917" width="16" height="16"/>
   <object id="565" gid="578" x="1208.92" y="243.417" width="16" height="16"/>
   <object id="566" gid="547" x="1224.42" y="225.917" width="16" height="16"/>
-  <object id="567" name="big_zombie" type="enemy" gid="546" x="1207.92" y="226.417" width="16" height="16"/>
+  <object id="567" name="salgie" type="enemy" gid="546" x="1207.92" y="226.417" width="16" height="16"/>
   <object id="568" gid="579" x="772.083" y="517.583" width="16" height="16"/>
   <object id="569" gid="578" x="755.583" y="518.083" width="16" height="16"/>
   <object id="570" gid="547" x="771.083" y="500.583" width="16" height="16"/>
-  <object id="571" name="big_zombie" type="enemy" gid="546" x="754.583" y="501.083" width="16" height="16"/>
+  <object id="571" name="salgie" type="enemy" gid="546" x="754.583" y="501.083" width="16" height="16"/>
   <object id="572" name="faune" type="player" gid="41" x="754" y="819.333" width="16" height="16"/>
   <object id="573" name="ranger" type="player" gid="105" x="833.333" y="848" width="16" height="16"/>
   <object id="574" name="mage" type="player" gid="361" x="749.333" y="880.667" width="16" height="16"/>

@@ -5574,7 +5574,7 @@
   <object id="195" name="imp" type="enemy" gid="120" x="97.1969" y="1487.82" width="16" height="16"/>
   <object id="197" gid="771" x="1332.5" y="1569" width="16" height="16"/>
   <object id="198" gid="770" x="1315.5" y="1569.5" width="16" height="16"/>
-  <object id="199" name="big_demon" type="enemy" gid="738" x="1315.5" y="1556.5" width="16" height="16"/>
+  <object id="199" name="hom_nom" type="enemy" gid="738" x="1315.5" y="1556.5" width="16" height="16"/>
   <object id="200" gid="739" x="1332.5" y="1556" width="16" height="16"/>
   <object id="201" name="boss_lizard_m" type="enemy" gid="489" x="1252.5" y="1186" width="62" height="63.5"/>
   <object id="209" name="skelet" type="enemy" gid="184" x="296.5" y="1568" width="16" height="16"/>
