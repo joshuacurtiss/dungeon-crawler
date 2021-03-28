@@ -5173,7 +5173,7 @@
   <object id="74" name="lizard_f" type="enemy" gid="489"    x="500" y="51.6" width="16" height="16"/>
   <object id="75" name="shy_guy" type="enemy" gid="489"  x="750" y="53" width="16" height="16"/>
   <object id="76" name="stumpy" type="enemy" gid="489"      x="1000" y="50" width="16" height="16"/>
-  <object id="77" name="necromancer" type="enemy" gid="489" x="1250" y="53" width="16" height="16"/>
+  <object id="77" name="creep" type="enemy" gid="489" x="1250" y="53" width="16" height="16"/>
   <object id="78" name="skelet" type="enemy" gid="489"      x="1500" y="54" width="16" height="16"/>
   <object id="79" name="salgie" type="enemy" gid="489"  x="1750" y="53" width="16" height="16"/>
   <object id="80" name="bacon" type="enemy" gid="489"         x="2000" y="53" width="16" height="16"/>
@@ -5195,7 +5195,7 @@
   <object id="94" name="homsquatch" type="enemy" gid="489"       x="5750" y="53" width="16" height="16"/>
 
   <object id="95" name="mushroom" type="enemy" gid="489"    x="6000" y="50" width="16" height="16"/>
-  <object id="96" name="necromancer" type="enemy" gid="489" x="6250" y="53" width="16" height="16"/>
+  <object id="96" name="creep" type="enemy" gid="489" x="6250" y="53" width="16" height="16"/>
   <object id="97" name="skelet" type="enemy" gid="489"      x="6500" y="54" width="16" height="16"/>
   <object id="98" name="salgie" type="enemy" gid="489"  x="6750" y="53" width="16" height="16"/>
   <object id="99" name="bacon" type="enemy" gid="489"         x="7000" y="53" width="16" height="16"/>

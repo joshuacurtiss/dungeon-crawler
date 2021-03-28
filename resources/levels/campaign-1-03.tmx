@@ -6089,18 +6089,18 @@
   <object id="291" name="ranger" type="player" gid="105" x="148" y="71" width="16" height="16"/>
   <object id="292" name="fighter" type="player" gid="169" x="38.6667" y="72.6667" width="16" height="16"/>
   <object id="293" name="mage" type="player" gid="361" x="118.667" y="87" width="16" height="16"/>
-  <object id="294" name="necromancer" type="enemy" gid="568" x="1377" y="1436" width="16" height="16"/>
-  <object id="296" name="necromancer" type="enemy" gid="568" x="1329" y="1453" width="16" height="16"/>
-  <object id="297" name="necromancer" type="enemy" gid="568" x="1362" y="1505.5" width="16" height="16"/>
-  <object id="298" name="necromancer" type="enemy" gid="568" x="1315" y="1515.5" width="16" height="16"/>
-  <object id="299" name="necromancer" type="enemy" gid="568" x="1350" y="1558" width="16" height="16"/>
-  <object id="300" name="necromancer" type="enemy" gid="568" x="1302" y="1370.5" width="16" height="16"/>
-  <object id="301" name="necromancer" type="enemy" gid="568" x="1362" y="1347.5" width="16" height="16"/>
-  <object id="302" name="necromancer" type="enemy" gid="568" x="1170" y="1530" width="16" height="16"/>
-  <object id="303" name="necromancer" type="enemy" gid="568" x="1052" y="1495" width="16" height="16"/>
-  <object id="304" name="necromancer" type="enemy" gid="568" x="928" y="1538" width="16" height="16"/>
-  <object id="305" name="necromancer" type="enemy" gid="568" x="862" y="1487" width="16" height="16"/>
-  <object id="306" name="necromancer" type="enemy" gid="568" x="800" y="1534" width="16" height="16"/>
+  <object id="294" name="creep" type="enemy" gid="568" x="1377" y="1436" width="16" height="16"/>
+  <object id="296" name="creep" type="enemy" gid="568" x="1329" y="1453" width="16" height="16"/>
+  <object id="297" name="creep" type="enemy" gid="568" x="1362" y="1505.5" width="16" height="16"/>
+  <object id="298" name="creep" type="enemy" gid="568" x="1315" y="1515.5" width="16" height="16"/>
+  <object id="299" name="creep" type="enemy" gid="568" x="1350" y="1558" width="16" height="16"/>
+  <object id="300" name="creep" type="enemy" gid="568" x="1302" y="1370.5" width="16" height="16"/>
+  <object id="301" name="creep" type="enemy" gid="568" x="1362" y="1347.5" width="16" height="16"/>
+  <object id="302" name="creep" type="enemy" gid="568" x="1170" y="1530" width="16" height="16"/>
+  <object id="303" name="creep" type="enemy" gid="568" x="1052" y="1495" width="16" height="16"/>
+  <object id="304" name="creep" type="enemy" gid="568" x="928" y="1538" width="16" height="16"/>
+  <object id="305" name="creep" type="enemy" gid="568" x="862" y="1487" width="16" height="16"/>
+  <object id="306" name="creep" type="enemy" gid="568" x="800" y="1534" width="16" height="16"/>
   <object id="307" name="ice_nugget" type="enemy" gid="316" x="654.333" y="1532.67" width="16" height="16"/>
   <object id="308" name="ice_nugget" type="enemy" gid="316" x="611.333" y="1515.33" width="16" height="16"/>
   <object id="309" name="ice_nugget" type="enemy" gid="316" x="608.667" y="1547.67" width="16" height="16"/>

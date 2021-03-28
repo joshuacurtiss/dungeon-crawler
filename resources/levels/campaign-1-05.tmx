@@ -6123,15 +6123,15 @@
   <object id="484" gid="771" x="797" y="1273" width="16" height="16"/>
   <object id="485" gid="738" x="780" y="1257.5" width="16" height="16"/>
   <object id="486" name="hom_nom" type="enemy" gid="739" x="797" y="1257" width="16" height="16"/>
-  <object id="539" name="necromancer" type="enemy" gid="568" x="871.333" y="1185.33" width="16" height="16"/>
-  <object id="540" name="necromancer" type="enemy" gid="568" x="704.667" y="1113.33" width="16" height="16"/>
-  <object id="541" name="necromancer" type="enemy" gid="568" x="760.667" y="1183.33" width="16" height="16"/>
-  <object id="542" name="necromancer" type="enemy" gid="568" x="834.667" y="1082" width="16" height="16"/>
-  <object id="543" name="necromancer" type="enemy" gid="568" x="812.667" y="223.333" width="16" height="16"/>
-  <object id="544" name="necromancer" type="enemy" gid="568" x="730.667" y="295.333" width="16" height="16"/>
-  <object id="545" name="necromancer" type="enemy" gid="568" x="851.333" y="334" width="16" height="16"/>
-  <object id="546" name="necromancer" type="enemy" gid="568" x="770" y="393.333" width="16" height="16"/>
-  <object id="547" name="necromancer" type="enemy" gid="568" x="824.667" y="438.667" width="16" height="16"/>
+  <object id="539" name="creep" type="enemy" gid="568" x="871.333" y="1185.33" width="16" height="16"/>
+  <object id="540" name="creep" type="enemy" gid="568" x="704.667" y="1113.33" width="16" height="16"/>
+  <object id="541" name="creep" type="enemy" gid="568" x="760.667" y="1183.33" width="16" height="16"/>
+  <object id="542" name="creep" type="enemy" gid="568" x="834.667" y="1082" width="16" height="16"/>
+  <object id="543" name="creep" type="enemy" gid="568" x="812.667" y="223.333" width="16" height="16"/>
+  <object id="544" name="creep" type="enemy" gid="568" x="730.667" y="295.333" width="16" height="16"/>
+  <object id="545" name="creep" type="enemy" gid="568" x="851.333" y="334" width="16" height="16"/>
+  <object id="546" name="creep" type="enemy" gid="568" x="770" y="393.333" width="16" height="16"/>
+  <object id="547" name="creep" type="enemy" gid="568" x="824.667" y="438.667" width="16" height="16"/>
   <object id="548" gid="579" x="278.415" y="339.002" width="63.9184" height="63.9184"/>
   <object id="549" gid="578" x="213.165" y="340.333" width="63.9184" height="63.9184"/>
   <object id="550" gid="547" x="275.752" y="273.752" width="63.9184" height="63.9184"/>

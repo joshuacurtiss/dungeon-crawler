@@ -271,7 +271,7 @@
                  "gid":489,
                  "height":16,
                  "id":51,
-                 "name":"necromancer",
+                 "name":"creep",
                  "rotation":0,
                  "type":"enemy",
                  "visible":true,

@@ -2,14 +2,14 @@ import createStandardAnims from './createStandardAnims'
 import Phaser from 'phaser'
 import Enemy from './Enemy'
 
-export default class Necromancer extends Enemy {
+export default class Creep extends Enemy {
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
-        super(scene, x, y, 'textures', 'necromancer_idle_0')
+        super(scene, x, y, 'textures', 'creep_idle_0')
         this.damageInflicted = 0.5
         this.speed = Phaser.Math.Between(60, 90)
         this.customOffset.set(3, 4)
-        createStandardAnims(scene, 'necromancer')
+        createStandardAnims(scene, 'creep')
         this.moveEvent = scene.time.addEvent({
             delay: Phaser.Math.Between(3000, 6000),
             callback: ()=>this.changeDirection(),
@@ -20,8 +20,8 @@ export default class Necromancer extends Enemy {
     setDirection(x:number, y:number) {
         super.setDirection(x, y)
         if( ! this.onCamera ) return
-        if( this.direction.x || this.direction.y ) this.anims.play('necromancer_run')
-        else this.anims.play('necromancer_idle')
+        if( this.direction.x || this.direction.y ) this.anims.play('creep_run')
+        else this.anims.play('creep_idle')
     }
 
     setup() {

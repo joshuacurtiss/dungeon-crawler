@@ -10,7 +10,7 @@ import LizardF from './LizardF'
 import LizardM from './LizardM'
 import ShyGuy from './ShyGuy'
 import Mushroom from './Mushroom'
-import Necromancer from './Necromancer'
+import Creep from './Creep'
 import Puggley from './Puggley'
 import Skelet from './Skelet'
 import Stumpy from './Stumpy'
@@ -18,7 +18,7 @@ import Swampy from './Swampy'
 import Vart from './Vart'
 import Yarg from './Yarg'
 
-type EnemyNames = 'homsquatch' | 'georgette' | 'georgey' | 'ice_nugget' | 'bacon' | 'lizard_m' | 'lizard_f' | 'shy_guy' | 'mushroom' | 'necromancer' | 'puggley' | 'skelet' | 'stumpy' | 'swampy' | 'vart' | 'yarg' | 'hom_nom' | 'salgie'
+type EnemyNames = 'homsquatch' | 'georgette' | 'georgey' | 'ice_nugget' | 'bacon' | 'lizard_m' | 'lizard_f' | 'shy_guy' | 'mushroom' | 'creep' | 'puggley' | 'skelet' | 'stumpy' | 'swampy' | 'vart' | 'yarg' | 'hom_nom' | 'salgie'
 type EnemyList = Record<EnemyNames, Phaser.Physics.Arcade.Group>
 
 interface EnemyUpdate {
@@ -52,7 +52,7 @@ function spawnEnemies(scene: Phaser.Scene, defs: EnemyUpdate[]): EnemyList {
         'lizard_f': scene.physics.add.group({classType: LizardF, createCallback: createcb}),
         'shy_guy': scene.physics.add.group({classType: ShyGuy, createCallback: createcb}),
         'mushroom': scene.physics.add.group({classType: Mushroom, createCallback: createcb}),
-        'necromancer': scene.physics.add.group({classType: Necromancer, createCallback: createcb}),
+        'creep': scene.physics.add.group({classType: Creep, createCallback: createcb}),
         'puggley': scene.physics.add.group({classType: Puggley, createCallback: createcb}),
         'skelet': scene.physics.add.group({classType: Skelet, createCallback: createcb}),
         'stumpy': scene.physics.add.group({classType: Stumpy, createCallback: createcb}),
@@ -105,7 +105,7 @@ export {
     LizardM,
     ShyGuy,
     Mushroom,
-    Necromancer,
+    Creep,
     Puggley,
     Skelet,
     Stumpy,

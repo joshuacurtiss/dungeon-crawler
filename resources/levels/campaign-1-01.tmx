@@ -5681,7 +5681,7 @@
   <object id="48" name="homsquatch" type="enemy" gid="489" x="660.09" y="209.612" width="16" height="16"/>
   <object id="49" name="homsquatch" type="enemy" gid="489" x="698.732" y="245.203" width="16" height="16"/>
   <object id="50" name="homsquatch" type="enemy" gid="489" x="819.74" y="268.591" width="16" height="16"/>
-  <object id="51" name="necromancer" type="enemy" gid="489" x="856.348" y="239.102" width="16" height="16"/>
+  <object id="51" name="creep" type="enemy" gid="489" x="856.348" y="239.102" width="16" height="16"/>
   <object id="52" name="lizard_f" type="enemy" gid="489" x="572.639" y="764.829" width="16" height="16"/>
   <object id="53" name="lizard_f" type="enemy" gid="489" x="630.601" y="796.352" width="16" height="16"/>
   <object id="54" name="lizard_f" type="enemy" gid="489" x="817.707" y="787.2" width="16" height="16"/>
