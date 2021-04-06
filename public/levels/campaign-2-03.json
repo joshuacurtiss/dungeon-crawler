@@ -1262,7 +1262,7 @@
                  "id":1657,
                  "name":"",
                  "rotation":0,
-                 "type":"",
+                 "type":"crate",
                  "visible":true,
                  "width":16,
                  "x":256,
@@ -1529,7 +1529,7 @@
  "nextobjectid":1759,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.4.3",
+ "tiledversion":"2021.02.15",
  "tileheight":16,
  "tilesets":[
         {
@@ -16619,6 +16619,6 @@
         }],
  "tilewidth":16,
  "type":"map",
- "version":1.4,
+ "version":1.5,
  "width":100
 }

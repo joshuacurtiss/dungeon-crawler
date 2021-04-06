@@ -8436,7 +8436,7 @@
   <object id="1654" name="outside" type="entrance" gid="323" x="1552" y="1600" width="16" height="16"/>
   <object id="1655" name="outside" type="entrance" gid="323" x="1568" y="1600" width="16" height="16"/>
   <object id="1656" type="crate" gid="627" x="592" y="176" width="16" height="16"/>
-  <object id="1657" gid="627" x="256" y="256" width="16" height="16"/>
+  <object id="1657" type="crate" gid="627" x="256" y="256" width="16" height="16"/>
   <object id="1658" gid="388" x="288" y="192" width="16" height="16"/>
   <object id="1660" type="button_blue" gid="388" x="287" y="192" width="16" height="16"/>
   <object id="1661" type="button_blue" gid="388" x="384.527" y="400.494" width="16" height="16" rotation="356.341"/>
