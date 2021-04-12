@@ -30,7 +30,7 @@ export default class Creep extends Enemy {
     }
 
     hit() {
-        this.sndmgr.play('monster-nec-' + Phaser.Math.Between(1,3))
+        this.sndmgr.play('monster-creep-' + Phaser.Math.Between(1,3))
         super.hit()
     }
 

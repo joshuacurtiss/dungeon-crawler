@@ -32,11 +32,11 @@ export default class Salgie extends Enemy {
 
     hit() {
         super.hit()
-		if( !this.dead ) this.sndmgr.play('monster-zombie-' + Phaser.Math.Between(1,2))
+		if( !this.dead ) this.sndmgr.play('monster-salgie-' + Phaser.Math.Between(1,2))
     }
 
     die() {
-		this.sndmgr.play('monster-zombie-3')
+		this.sndmgr.play('monster-salgie-3')
         super.die()
     }
 

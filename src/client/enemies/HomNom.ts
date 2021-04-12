@@ -32,11 +32,11 @@ export default class HomNom extends Enemy {
 
     hit() {
         super.hit()
-		if( !this.dead ) this.sndmgr.play('monster-demon-' + Phaser.Math.Between(1,2))
+		if( !this.dead ) this.sndmgr.play('monster-homnom-' + Phaser.Math.Between(1,2))
     }
 
     die() {
-		this.sndmgr.play('monster-demon-3')
+		this.sndmgr.play('monster-homnom-3')
         super.die()
     }
 
