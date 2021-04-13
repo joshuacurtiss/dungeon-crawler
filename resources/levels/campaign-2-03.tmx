@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="1829">
+<map version="1.4" tiledversion="1.4.3" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="11" nextobjectid="1830">
  <editorsettings>
   <export target="." format="json"/>
  </editorsettings>
@@ -8399,7 +8399,7 @@
   <object id="1721" name="bacon" type="enemy" gid="120" x="626" y="833" width="16" height="16"/>
   <object id="1722" name="bacon" type="enemy" gid="120" x="463" y="1429" width="16" height="16"/>
   <object id="1723" name="bacon" type="enemy" gid="120" x="301" y="1220" width="16" height="16"/>
-  <object id="1724" name="bacon" type="enemy" gid="120" x="178" y="1131" width="16" height="16"/>
+  <object id="1724" name="bacon" type="enemy" gid="120" x="179.667" y="1128.67" width="16" height="16"/>
   <object id="1725" name="bacon" type="enemy" gid="120" x="180" y="1081" width="16" height="16"/>
   <object id="1726" name="bacon" type="enemy" gid="120" x="232" y="874" width="16" height="16"/>
   <object id="1727" name="bacon" type="enemy" gid="120" x="212" y="753" width="16" height="16"/>
@@ -8425,7 +8425,7 @@
   <object id="1757" name="stumpy" type="enemy" gid="169" x="744" y="844" width="16" height="16"/>
   <object id="1758" name="stumpy" type="enemy" gid="169" x="610" y="857.333" width="16" height="16"/>
  </objectgroup>
- <objectgroup id="3" name="Items" visible="0">
+ <objectgroup id="3" name="Items">
   <object id="1633" name="900" type="chest" gid="596" x="1464" y="1487.51" width="16" height="16"/>
   <object id="1635" name="1" type="chest" gid="596" x="1560.5" y="1487.51" width="16" height="16"/>
   <object id="1636" name="hut" type="destination" gid="105" x="1536" y="1568" width="16" height="16"/>
@@ -8502,6 +8502,7 @@
   <object id="1826" gid="452" x="903.5" y="224.25" width="16" height="16"/>
   <object id="1827" gid="483" x="887.5" y="240.26" width="16" height="16"/>
   <object id="1828" gid="484" x="903.5" y="240.26" width="16" height="16"/>
+  <object id="1829" name="hut2" type="destination" gid="105" x="1513.33" y="1179.33" width="16" height="16"/>
  </objectgroup>
  <objectgroup id="10" name="Teleport"/>
  <layer id="8" name="Above" width="100" height="100">
