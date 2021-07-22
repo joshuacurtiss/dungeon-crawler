@@ -50,6 +50,29 @@ cd dungeon-crawler
 npm install
 ```
 
+## How to build a Docker image
+
+Run the command:
+```
+npm run build:docker
+```
+
+This will create an image called `joshuacurtiss/dungeon-crawler`. At this point, you could instatiate the image locally like this: 
+```
+docker run --rm -it -p 4000 --name dungeon-crawler joshuacurtiss/dungeon-crawler
+```
+
+To save the image to load it into another location:
+```
+docker save joshuacurtiss/dungeon-crawler -o dungeon-crawler.docker.tar
+```
+
+After copying that file to another server, load the image:
+```
+docker load -i dungeon-crawler.docker.tar
+```
+
+Then you can proceed with instantiating it as you normally would.
 ## How to start/run the game
 
 The game has a server component for multiplayer. If you are only using the *single-player* mode, you can start the client:
